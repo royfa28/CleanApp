@@ -33,7 +33,7 @@ public class registerActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         btnLogin = findViewById(R.id.btnLogin);
-        btnRegister = findViewById(R.id.btnRegister);
+        btnRegister = findViewById(R.id.buttonRegister);
         txtValrAcc = findViewById(R.id.textViewAlrAcc);
 
         btnRegister.setOnClickListener(new View.OnClickListener()
