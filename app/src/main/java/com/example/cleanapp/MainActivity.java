@@ -60,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(i);
                 }
                 else
-                    {
-                        Toast.makeText(MainActivity.this, "plz, Login ",Toast.LENGTH_SHORT).show();
-                    }
+                {
+                    Toast.makeText(MainActivity.this, "plz, Login ",Toast.LENGTH_SHORT).show();
+                }
 
             }
         };
@@ -97,16 +97,15 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task)
                             {
-                                if(!task.isSuccessful())
-                                {
-                                    Toast.makeText(MainActivity.this, "Login Error",Toast.LENGTH_SHORT).show();
-                                }
-                                else
-                                    {
-                                        Intent toHome = new Intent(MainActivity.this,HomeActivity.class);
-                                        startActivity(toHome);
-                                    }
-
+                            if(!task.isSuccessful())
+                            {
+                                Toast.makeText(MainActivity.this, "Login Error",Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                Intent toHome = new Intent(MainActivity.this,HomeActivity.class);
+                                startActivity(toHome);
+                            }
                             }
                         });
                     }
