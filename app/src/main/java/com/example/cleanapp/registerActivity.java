@@ -2,6 +2,7 @@ package com.example.cleanapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,6 +29,9 @@ public class registerActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         myFirebaseAuth = FirebaseAuth.getInstance();
         editTextEmail = findViewById(R.id.editTextEmail);
