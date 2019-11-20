@@ -11,7 +11,7 @@
 
         <item android:id="@+id/nav_products"
             android:icon="@drawable/ic_products"
-            android:title="Products"/>
+            android:title="Home"/>
 
         <item android:id="@+id/nav_categories"
             android:icon="@drawable/ic_categories"
@@ -34,15 +34,9 @@
         <menu>
             <item android:id="@+id/nav_share"
                 android:icon="@drawable/ic_feedback"
-                android:title="Share"/>
+                android:title="Feedback"/>
 
         </menu>
-    </item>
-
-    <item
-        android:id="@+id/shopping_cart"
-        android:title="Cart"
-        app:showAsAction="always">
     </item>
 
 </menu>
