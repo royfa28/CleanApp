@@ -3,6 +3,7 @@ package com.example.cleanapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -34,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Login");
 
         myFirebaseAuth = FirebaseAuth.getInstance();
         editTextMail = findViewById(R.id.editTextMail);
@@ -123,8 +128,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
 
     }
 
