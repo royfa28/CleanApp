@@ -38,7 +38,7 @@ public class OwnerMainActivity extends AppCompatActivity implements NavigationVi
         if(savedInstanceState == null){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new OwnerHomeFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_products);
+            navigationView.setCheckedItem(R.id.nav_homepage);
             getSupportActionBar().setTitle("CleanApp");
         }
     }
@@ -54,7 +54,7 @@ public class OwnerMainActivity extends AppCompatActivity implements NavigationVi
                 getSupportActionBar().setTitle("Profile");
                 break;
 
-            case R.id.nav_products:
+            case R.id.nav_homepage:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new OwnerHomeFragment()).commit();
                 getSupportActionBar().setTitle("CleanApp");
