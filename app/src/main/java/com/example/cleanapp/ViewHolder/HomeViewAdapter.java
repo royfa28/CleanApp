@@ -1,6 +1,7 @@
 package com.example.cleanapp.ViewHolder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,13 +36,25 @@ public class HomeViewAdapter extends RecyclerView.Adapter<HomeViewAdapter.HomeVi
 
     @Override
     public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
+        if (!mCursor.moveToPosition(position)){
+            return;
+        }
 
+        // Clicking the house will bring it to house view, where user can see rooms inside the house.
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent intent = new Intent(v.getContext(), ProductViewActivity.class);
+                //v.getContext().startActivity(intent);
+            }
+        });
     }
 
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mCursor.getCount();
     }
 
     public class HomeViewHolder extends  RecyclerView.ViewHolder{

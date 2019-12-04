@@ -13,8 +13,6 @@ public class ProfileFragment extends Fragment {
 
     String userid, userName, userNumber, userAddress, userPassword;
 
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
