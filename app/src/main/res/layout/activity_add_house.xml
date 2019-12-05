@@ -105,7 +105,7 @@
         app:layout_constraintTop_toBottomOf="@+id/room_amount2" />
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/save_house_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="96dp"
