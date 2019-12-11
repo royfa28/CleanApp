@@ -30,7 +30,7 @@
         android:layout_marginRight="32dp"
         android:text="Bedroom"
         android:textSize="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/room_amount"
+        app:layout_constraintEnd_toStartOf="@+id/bedroom_amount"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
@@ -46,7 +46,7 @@
         android:layout_marginRight="32dp"
         android:text="Bathroom"
         android:textSize="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/room_amount2"
+        app:layout_constraintEnd_toStartOf="@+id/bathroom_amount"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -61,12 +61,12 @@
         android:layout_marginRight="32dp"
         android:text="Other rooms"
         android:textSize="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/room_amount3"
+        app:layout_constraintEnd_toStartOf="@+id/room_amount"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
-        android:id="@+id/room_amount"
+        android:id="@+id/bedroom_amount"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -74,12 +74,12 @@
         android:layout_marginRight="16dp"
         android:ems="10"
         android:hint="Your input"
-        android:inputType="textPersonName"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <EditText
-        android:id="@+id/room_amount2"
+        android:id="@+id/bathroom_amount"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -87,12 +87,12 @@
         android:layout_marginRight="16dp"
         android:ems="10"
         android:hint="Your input"
-        android:inputType="textPersonName"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/room_amount" />
+        app:layout_constraintTop_toBottomOf="@+id/bedroom_amount" />
 
     <EditText
-        android:id="@+id/room_amount3"
+        android:id="@+id/room_amount"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -100,9 +100,9 @@
         android:layout_marginRight="16dp"
         android:ems="10"
         android:hint="Your input"
-        android:inputType="textPersonName"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/room_amount2" />
+        app:layout_constraintTop_toBottomOf="@+id/bathroom_amount" />
 
     <Button
         android:id="@+id/save_house_button"

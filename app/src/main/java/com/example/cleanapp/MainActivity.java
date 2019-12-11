@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.internal.zzdym;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -56,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 if(myFirebaseUser != null)// weak no password check
                 {
                     Toast.makeText(MainActivity.this, "LOGIN !",Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(MainActivity.this,HomeActivity.class);
+                    Intent i = new Intent(MainActivity.this,OwnerMainActivity.class);
                     startActivity(i);
                 }
                 else

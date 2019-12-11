@@ -35,7 +35,7 @@ public class OwnerHomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), AddHouseActivity.class);
-                v.getContext().startActivity(intent);
+                startActivity(intent);
             }
         });
 
