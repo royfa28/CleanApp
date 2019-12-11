@@ -77,6 +77,7 @@ public class registerActivity extends AppCompatActivity {
                             }
                             else
                                 {
+                                    //
                                     startActivity(new Intent(registerActivity.this,HomeActivity.class));
                                 }
                         }

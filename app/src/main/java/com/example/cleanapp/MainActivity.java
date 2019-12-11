@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                             else
                             {
+//                                funcition userlvlUiRender
                                 Intent toHome = new Intent(MainActivity.this,HomeActivity.class);
                                 startActivity(toHome);
                             }
