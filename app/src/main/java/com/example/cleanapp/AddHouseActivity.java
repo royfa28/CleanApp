@@ -44,8 +44,8 @@ public class AddHouseActivity extends AppCompatActivity {
         label = (TextView) findViewById(R.id.textView3);
 
         room = new Room();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("User");
+        //firebaseDatabase = FirebaseDatabase.getInstance();
+        //databaseReference = firebaseDatabase.getReference("User");
 
 
 //        bathroom = Integer.parseInt(bathroom_amount.getText().toString());
@@ -54,22 +54,43 @@ public class AddHouseActivity extends AppCompatActivity {
         saveHouseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bedroom = Integer.parseInt(bedroom_amount.getText().toString());
-                getValues();
+                // Write a message to the database
+                //DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
+                databaseReference = FirebaseDatabase.getInstance().getReference().child("Test").child("u1");
+                String myID = databaseReference.getKey();
+                databaseReference.setValue("ABC");
+
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        databaseReference.child("User01").setValue(room);
-                        Toast.makeText(AddHouseActivity.this, "Data inserted", Toast.LENGTH_SHORT).show();
+                        String value = dataSnapshot.getValue(String.class);
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        String value = databaseError.getMessage();
                     }
                 });
-//                Intent intent = new Intent(AddHouseActivity.this, OwnerMainActivity.class);
-//                startActivity(intent);
+
+                //myRef.setValue("Hello, World!");
+
+//                bedroom = Integer.parseInt(bedroom_amount.getText().toString());
+//                getValues();
+//                databaseReference.addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        databaseReference.child("User01").setValue("Testing");
+//                        Toast.makeText(AddHouseActivity.this, "Data inserted", Toast.LENGTH_SHORT).show();
+//                        Log.println('1',"Check", "It work");
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                    }
+//                });
+                Intent intent = new Intent(AddHouseActivity.this, OwnerMainActivity.class);
+                startActivity(intent);
             }
         });
     }

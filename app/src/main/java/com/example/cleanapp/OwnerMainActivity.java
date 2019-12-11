@@ -7,10 +7,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class OwnerMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -58,6 +60,12 @@ public class OwnerMainActivity extends AppCompatActivity implements NavigationVi
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new OwnerHomeFragment()).commit();
                 getSupportActionBar().setTitle("CleanApp");
+                break;
+
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                startActivity(new Intent(this, MainActivity.class));
                 break;
 
         }
