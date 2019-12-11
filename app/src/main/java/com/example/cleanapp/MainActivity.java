@@ -12,8 +12,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.util.Log;
 
-import com.google.android.gms.internal.zzdym;
+import com.google.android.*;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -55,8 +56,15 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser myFirebaseUser = myFirebaseAuth.getCurrentUser();
                 if(myFirebaseUser != null)// weak no password check
                 {
+                    //try
+                    //get firebase auth user key
+                    String firebaseAuthUserId = getUserKeyFireAuth();
+                    Log.d("fireAuthKey : ",firebaseAuthUserId);
+
+                    Toast.makeText(MainActivity.this, firebaseAuthUserId,Toast.LENGTH_SHORT).show();
+                    //try
                     Toast.makeText(MainActivity.this, "LOGIN !",Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(MainActivity.this,HomeActivity.class);
+                    Intent i = new Intent(MainActivity.this,OwnerMainActivity.class);
                     startActivity(i);
                 }
                 else
@@ -136,5 +144,21 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         myFirebaseAuth.addAuthStateListener(myAuthStateListener);
     }
+
+    protected String getUserKeyFireAuth()
+    {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String fireAuthUserKey="";
+
+        if (user != null) {
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+            // FirebaseUser.getIdToken() instead.
+            fireAuthUserKey = user.getUid();
+        }
+
+        return fireAuthUserKey;
+    }
 }
+
 

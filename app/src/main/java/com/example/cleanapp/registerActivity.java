@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class registerActivity extends AppCompatActivity {
 
@@ -77,7 +79,12 @@ public class registerActivity extends AppCompatActivity {
                             }
                             else
                                 {
-                                    //
+                                    //get firebase auth user key
+                                    String firebaseAuthUserId = getUserKeyFireAuth();
+                                    Log.d("fireAuthKey : ",firebaseAuthUserId);
+
+                                    Toast.makeText(registerActivity.this, firebaseAuthUserId,Toast.LENGTH_SHORT).show();
+
                                     startActivity(new Intent(registerActivity.this,HomeActivity.class));
                                 }
                         }
@@ -101,5 +108,20 @@ public class registerActivity extends AppCompatActivity {
             }
         });
     }
+
+    protected String getUserKeyFireAuth(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String fireAuthUserKey="";
+
+        if (user != null) {
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+            // FirebaseUser.getIdToken() instead.
+            fireAuthUserKey = user.getUid();
+        }
+
+        return fireAuthUserKey;
+    }
 }
+
 

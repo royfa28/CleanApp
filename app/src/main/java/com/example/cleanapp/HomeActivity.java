@@ -26,4 +26,10 @@ public class HomeActivity extends AppCompatActivity {
 //                }
 //            }
     }
+
+    protected void logOut()
+    {
+
+    }
+
 }
