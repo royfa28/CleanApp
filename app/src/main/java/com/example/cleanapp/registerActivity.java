@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,10 +17,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class registerActivity extends AppCompatActivity {
 
-    public EditText editTextEmail,editTextPassword;
+    public EditText emailTxt,passwordTxt;
     public Button btnLogin, btnRegister;
     public TextView txtValrAcc;
     FirebaseAuth  myFirebaseAuth;
@@ -36,8 +38,8 @@ public class registerActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Register");
 
         myFirebaseAuth = FirebaseAuth.getInstance();
-        editTextEmail = findViewById(R.id.editTextEmail);
-        editTextPassword = findViewById(R.id.editTextPassword);
+        emailTxt = findViewById(R.id.editTextEmail);
+        passwordTxt = findViewById(R.id.passwordEditText);
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.buttonRegister);
         txtValrAcc = findViewById(R.id.textViewAlrAcc);
@@ -47,18 +49,18 @@ public class registerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                String mail = editTextEmail.getText().toString();
-                String password = editTextEmail.getText().toString();
+                String mail = emailTxt.getText().toString();
+                String password = passwordTxt.getText().toString();
 
                 if( mail.isEmpty() )
                 {
-                    editTextEmail.setError("please enter an email");
-                    editTextEmail.requestFocus();
+                    emailTxt.setError("please enter an emailTextField");
+                    emailTxt.requestFocus();
                 }
                 else if(password.isEmpty())
                 {
-                    editTextPassword.setError("password missing");
-                    editTextPassword.requestFocus();
+                    passwordTxt.setError("password missing");
+                    passwordTxt.requestFocus();
                 }
                 else if(mail.isEmpty() && password.isEmpty())
                 {
@@ -77,6 +79,12 @@ public class registerActivity extends AppCompatActivity {
                             }
                             else
                                 {
+                                    //get firebase auth user key
+                                    String firebaseAuthUserId = getUserKeyFireAuth();
+                                    Log.d("fireAuthKey : ",firebaseAuthUserId);
+
+                                    Toast.makeText(registerActivity.this, firebaseAuthUserId,Toast.LENGTH_SHORT).show();
+
                                     startActivity(new Intent(registerActivity.this,HomeActivity.class));
                                 }
                         }
@@ -100,5 +108,20 @@ public class registerActivity extends AppCompatActivity {
             }
         });
     }
+
+    protected String getUserKeyFireAuth(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String fireAuthUserKey="";
+
+        if (user != null) {
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+            // FirebaseUser.getIdToken() instead.
+            fireAuthUserKey = user.getUid();
+        }
+
+        return fireAuthUserKey;
+    }
 }
+
 
