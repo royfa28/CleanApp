@@ -56,26 +56,23 @@ public class registerActivity extends AppCompatActivity {
                 String password = passwordTxt.getText().toString();
 
                 if (isValidEmail(mail) && password.length() > 7) {
-                    if (validatePassword(password)) {
-                        myFirebaseAuth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(registerActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (!task.isSuccessful()) {
-                                    Toast.makeText(registerActivity.this, "sign up fail", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    //get firebase auth user key
-                                    String firebaseAuthUserId = getUserKeyFireAuth();
-                                    Log.d("fireAuthKey : ", firebaseAuthUserId);
+                    myFirebaseAuth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(registerActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(registerActivity.this, "sign up fail", Toast.LENGTH_SHORT).show();
+                            } else {
+                                //get firebase auth user key
+                                String firebaseAuthUserId = getUserKeyFireAuth();
+                                Log.d("fireAuthKey : ", firebaseAuthUserId);
 
-                                    Toast.makeText(registerActivity.this, firebaseAuthUserId, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(registerActivity.this, firebaseAuthUserId, Toast.LENGTH_SHORT).show();
 
-                                    startActivity(new Intent(registerActivity.this, HomeActivity.class));
-                                }
+                                startActivity(new Intent(registerActivity.this, OwnerMainActivity.class));
                             }
-                        });
-                    } else {
-                        Toast.makeText(registerActivity.this, "Invalid Password", Toast.LENGTH_SHORT).show();
-                    }
+                        }
+                    });
+
                 }else{
                     Toast.makeText(registerActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
                 }
