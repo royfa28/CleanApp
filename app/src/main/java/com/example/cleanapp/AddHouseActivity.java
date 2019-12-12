@@ -1,21 +1,16 @@
 package com.example.cleanapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.cleanapp.Database.FirebaseDatabaseHelper;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.cleanapp.Model.Room;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,8 +24,9 @@ public class AddHouseActivity extends AppCompatActivity {
     TextView label;
 
     Room room;
+
     FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
+    DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +40,6 @@ public class AddHouseActivity extends AppCompatActivity {
         label = (TextView) findViewById(R.id.textView3);
 
         room = new Room();
-        //firebaseDatabase = FirebaseDatabase.getInstance();
-        //databaseReference = firebaseDatabase.getReference("User");
-
 
 //        bathroom = Integer.parseInt(bathroom_amount.getText().toString());
 //        rooms = Integer.parseInt(room_amount.getText().toString());
@@ -56,11 +49,12 @@ public class AddHouseActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Write a message to the database
                 //DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-                databaseReference = FirebaseDatabase.getInstance().getReference().child("Test").child("u1");
-                String myID = databaseReference.getKey();
-                databaseReference.setValue("ABC");
+                mDatabase = FirebaseDatabase.getInstance().getReference("Test").child("u2").child("Child");
+                String myID = mDatabase.getKey();
 
-                databaseReference.addValueEventListener(new ValueEventListener() {
+                mDatabase.setValue("ABC");
+
+                mDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String value = dataSnapshot.getValue(String.class);

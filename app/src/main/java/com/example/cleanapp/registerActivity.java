@@ -1,23 +1,27 @@
 package com.example.cleanapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class registerActivity extends AppCompatActivity {
 
@@ -47,53 +51,34 @@ public class registerActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 String mail = emailTxt.getText().toString();
                 String password = passwordTxt.getText().toString();
 
-                if( mail.isEmpty() )
-                {
-                    emailTxt.setError("please enter an emailTextField");
-                    emailTxt.requestFocus();
-                }
-                else if(password.isEmpty())
-                {
-                    passwordTxt.setError("password missing");
-                    passwordTxt.requestFocus();
-                }
-                else if(mail.isEmpty() && password.isEmpty())
-                {
-                    Toast.makeText(registerActivity.this,"field are empty",Toast.LENGTH_SHORT).show();
-                }
-                else if (!(mail.isEmpty() && password.isEmpty()))
-                {
-                    myFirebaseAuth.createUserWithEmailAndPassword(mail,password).addOnCompleteListener(registerActivity.this, new OnCompleteListener<AuthResult>()
-                    {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task)
-                        {
-                            if(!task.isSuccessful())
-                            {
-                                Toast.makeText(registerActivity.this, "sign up fail",Toast.LENGTH_SHORT).show();
-                            }
-                            else
-                                {
+                if (isValidEmail(mail) && password.length() > 7) {
+                    if (validatePassword(password)) {
+                        myFirebaseAuth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(registerActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (!task.isSuccessful()) {
+                                    Toast.makeText(registerActivity.this, "sign up fail", Toast.LENGTH_SHORT).show();
+                                } else {
                                     //get firebase auth user key
                                     String firebaseAuthUserId = getUserKeyFireAuth();
-                                    Log.d("fireAuthKey : ",firebaseAuthUserId);
+                                    Log.d("fireAuthKey : ", firebaseAuthUserId);
 
-                                    Toast.makeText(registerActivity.this, firebaseAuthUserId,Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(registerActivity.this, firebaseAuthUserId, Toast.LENGTH_SHORT).show();
 
-                                    startActivity(new Intent(registerActivity.this,HomeActivity.class));
+                                    startActivity(new Intent(registerActivity.this, HomeActivity.class));
                                 }
-                        }
-                    });
-                }
-                else
-                    {
-                        Toast.makeText(registerActivity.this, "Error",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+                        Toast.makeText(registerActivity.this, "Invalid Password", Toast.LENGTH_SHORT).show();
                     }
+                }else{
+                    Toast.makeText(registerActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
+                }
             }
 
         });
@@ -121,6 +106,23 @@ public class registerActivity extends AppCompatActivity {
         }
 
         return fireAuthUserKey;
+    }
+
+    public final static boolean isValidEmail(CharSequence target){
+        if (target == null)
+            return false;
+
+        return Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
+    public boolean validatePassword(final String password){
+        Pattern pattern;
+        Matcher matcher;
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.* [@#$%^&+=!])(?=\\S+$).{4,}$";
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
     }
 }
 
