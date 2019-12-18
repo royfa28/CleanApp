@@ -15,6 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class AddHouseActivity extends AppCompatActivity {
@@ -50,14 +51,16 @@ public class AddHouseActivity extends AppCompatActivity {
                 // Write a message to the database
                 //DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
                 mDatabase = FirebaseDatabase.getInstance().getReference("Test").child("u2").child("Child");
+
                 String myID = mDatabase.getKey();
 
-                mDatabase.setValue("ABC");
+                mDatabase.setValue("Test");
 
                 mDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String value = dataSnapshot.getValue(String.class);
+
                     }
 
                     @Override
