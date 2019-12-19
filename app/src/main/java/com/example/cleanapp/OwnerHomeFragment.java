@@ -2,6 +2,7 @@ package com.example.cleanapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cleanapp.Model.House;
+import com.example.cleanapp.ViewHolder.HomeViewAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,11 +27,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class OwnerHomeFragment extends Fragment {
 
 
-    DatabaseReference mDatabase;
+    DatabaseReference mDatabase, getHouse;
     private RecyclerView homeListRecyclerList;
+    ArrayList<House> houseArrayList;
+    HomeViewAdapter adapter;
 
     @Nullable
     @Override
@@ -51,7 +58,8 @@ public class OwnerHomeFragment extends Fragment {
             public void onClick(View v) {
 
                 String houseID = mDatabase.push().getKey();
-                //mDatabase.child("House").child(houseID).child("UserID").setValue(userID);
+                mDatabase.child("House").child(userID).child(houseID).child("Rooms").child("Room 1").setValue("Bedroom");
+                houseArrayList.clear();
 //                mDatabase.child("House").child(userID).child(houseID).child("Room_1").child("roomName").setValue("Bedroom 1");
 //                mDatabase.child("House").child(userID).child(houseID).child("Room_1").child("Description").setValue("Clean the sheet");
 //                mDatabase.child("House").child(userID).child(houseID).child("Room_2").child("roomName").setValue("Bedroom 2");;
@@ -63,15 +71,33 @@ public class OwnerHomeFragment extends Fragment {
             }
         });
 
+        homeListRecyclerList = (RecyclerView) view.findViewById(R.id.homeRecyclerView);
+        homeListRecyclerList.setLayoutManager(new GridLayoutManager(getContext(),3));
+        houseArrayList = new ArrayList<House>();
+
+        getHouse = FirebaseDatabase.getInstance().getReference().child("House").child(userID);
+
+        getHouse.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                houseArrayList.clear();
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    House h = dataSnapshot1.getValue(House.class);
+                    houseArrayList.add(h);
+                }
+                adapter = new HomeViewAdapter(OwnerHomeFragment.this, houseArrayList);
+                homeListRecyclerList.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         /*
         Bundle results = activity.getUserID();
         userid = results.getString("val1");
-
-        RecyclerView myrv = (RecyclerView) view.findViewById(R.id.recyclerView_id);
-        final ProductsAdapter listAdapter = new ProductsAdapter(this, activity.getAllProducts());
-
-        myrv.setLayoutManager(new GridLayoutManager(getContext(),3));
-        myrv.setAdapter(listAdapter);
         */
 
         return view;
@@ -89,5 +115,12 @@ public class OwnerHomeFragment extends Fragment {
         }
 
         return fireAuthUserKey;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
     }
 }

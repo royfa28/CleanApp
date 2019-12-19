@@ -13,17 +13,20 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cleanapp.Model.House;
 import com.example.cleanapp.OwnerHomeFragment;
 import com.example.cleanapp.R;
+
+import java.util.ArrayList;
 
 public class HomeViewAdapter extends RecyclerView.Adapter<HomeViewAdapter.HomeViewHolder> {
 
     private Context mContext;
-    private Cursor mCursor;
+    ArrayList<House> houses;
 
-    public HomeViewAdapter(OwnerHomeFragment mContext, Cursor cursor){
+    public HomeViewAdapter(OwnerHomeFragment mContext,  ArrayList<House> h){
         mContext = mContext;
-        mCursor = cursor;
+        houses = h;
     }
 
     @NonNull
@@ -36,9 +39,7 @@ public class HomeViewAdapter extends RecyclerView.Adapter<HomeViewAdapter.HomeVi
 
     @Override
     public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
-        if (!mCursor.moveToPosition(position)){
-            return;
-        }
+        holder.house_Name.setText(houses.get(position).getHouseID());
 
         // Clicking the house will bring it to house view, where user can see rooms inside the house.
 
@@ -51,10 +52,9 @@ public class HomeViewAdapter extends RecyclerView.Adapter<HomeViewAdapter.HomeVi
         });
     }
 
-
     @Override
     public int getItemCount() {
-        return mCursor.getCount();
+        return houses.size();
     }
 
     public class HomeViewHolder extends  RecyclerView.ViewHolder{
