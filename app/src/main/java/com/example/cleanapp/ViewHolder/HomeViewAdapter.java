@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cleanapp.HouseDetailsActivity;
 import com.example.cleanapp.Model.House;
+import com.example.cleanapp.Model.Room;
 import com.example.cleanapp.OwnerHomeFragment;
 import com.example.cleanapp.R;
 
