@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cleanapp.HouseDetailsActivity;
 import com.example.cleanapp.Model.Room;
 import com.example.cleanapp.R;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -38,8 +36,11 @@ public class RoomViewAdapter extends RecyclerView.Adapter<RoomViewAdapter.RoomVi
 
     @Override
     public void onBindViewHolder(@NonNull RoomViewHolder holder, int position) {
-        String room_name = roomArrayList.get(position).getRoomName();
-        holder.room_name.setText(room_name);
+        String roomName = roomArrayList.get(position).getRoomName();
+        String room_desc = roomArrayList.get(position).getRoomdescription();
+
+        holder.room_name.setText(roomName);
+        holder.room_description.setText(room_desc);
     }
 
     @Override

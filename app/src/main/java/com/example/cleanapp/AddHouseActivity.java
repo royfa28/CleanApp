@@ -76,20 +76,20 @@ public class AddHouseActivity extends AppCompatActivity {
         addRoom = mDatabase.child("House").child(userID).child(houseID).child("Rooms");
 
         for(int i = 1; i <= bedroom ; i++){
-            addRoom.child("Room ").child("Room name").setValue("Bedroom " + i);
-            addRoom.child("Room ").child("Description").setValue("Please fill in task");
+            addRoom.child("Room " + count).child("roomName").setValue("Bedroom " + i);
+            addRoom.child("Room " + count).child("roomDescription").setValue("Please fill in task");
             count++;
         }
 
         for(int j = 1 ; j <= bathroom ; j++){
-            addRoom.child("Room " + count).child("Room name").setValue("Bathroom " + j);
-            addRoom.child("Room " + count).child("Description").setValue("Please fill in task");
+            addRoom.child("Room " + count).child("roomName").setValue("Bathroom " + j);
+            addRoom.child("Room " + count).child("roomDescription").setValue("Please fill in task");
             count++;
         }
 
         for(int k = 1 ; k <= rooms ; k++){
-            addRoom.child("Room " + count).child("Room name").setValue("Other room " + k);
-            addRoom.child("Room " + count).child("Description").setValue("Please fill in task");
+            addRoom.child("Room " + count).child("roomName").setValue("Other room " + k);
+            addRoom.child("Room " + count).child("roomDescription").setValue("Please fill in task");
             count++;
         }
     }

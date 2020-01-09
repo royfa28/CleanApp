@@ -2,14 +2,14 @@ package com.example.cleanapp.Model;
 
 public class Room {
 
-    String roomName, description;
+    String roomName, roomDescription;
 
     public Room() {
     }
 
     public Room(String room, String description) {
         this.roomName = room;
-        this.description = description;
+        this.roomDescription = description;
     }
 
     public String getRoomName() {
@@ -20,11 +20,11 @@ public class Room {
         this.roomName = roomName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getRoomdescription() {
+        return roomDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setRoomdescription(String roomdescription) {
+        this.roomDescription = roomdescription;
     }
 }

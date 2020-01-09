@@ -46,7 +46,7 @@ public class HouseDetailsActivity extends AppCompatActivity {
         String houseID = intent.getStringExtra("houseID");
         String userID = getUserKeyFireAuth();
 
-        rooms = new ArrayList<Room>();
+        rooms = new ArrayList<>();
         roomListRecycleView = (RecyclerView)findViewById(R.id.roomListRecyclerView);
         roomListRecycleView.setLayoutManager(new GridLayoutManager(this,1));
 
@@ -54,17 +54,13 @@ public class HouseDetailsActivity extends AppCompatActivity {
         getRoom.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //rooms.clear();
+                rooms.clear();
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 for (DataSnapshot ds : children) {
-
-                    Room r = ds.getValue(Room.class);
-//                    r.setRoomName(RoomID);
-//                    House h = dataSnapshot1.getValue(House.class);
-                    rooms.add(r);
+                    Room room = ds.getValue(Room.class);
+                    rooms.add(room);
                 }
                 adapter = new RoomViewAdapter(HouseDetailsActivity.this, rooms);
-//                adapter = new RoomViewAdapter(HouseDetailsActivity.this, rooms);
                 roomListRecycleView.setAdapter(adapter);
             }
 
@@ -73,7 +69,6 @@ public class HouseDetailsActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     @Override
