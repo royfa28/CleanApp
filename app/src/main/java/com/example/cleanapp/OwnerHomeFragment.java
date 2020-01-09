@@ -57,9 +57,9 @@ public class OwnerHomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                String houseID = mDatabase.push().getKey();
-                mDatabase.child("House").child(userID).child(houseID).child("Rooms").child("Room 1").setValue("Bedroom");
-                houseArrayList.clear();
+//                String houseID = mDatabase.push().getKey();
+//                mDatabase.child("House").child(userID).child(houseID).child("Rooms").child("Room 1").setValue("Bedroom");
+//                houseArrayList.clear();
 //                mDatabase.child("House").child(userID).child(houseID).child("Room_1").child("roomName").setValue("Bedroom 1");
 //                mDatabase.child("House").child(userID).child(houseID).child("Room_1").child("Description").setValue("Clean the sheet");
 //                mDatabase.child("House").child(userID).child(houseID).child("Room_2").child("roomName").setValue("Bedroom 2");;

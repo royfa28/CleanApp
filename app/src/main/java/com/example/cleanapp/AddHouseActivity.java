@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cleanapp.Model.Room;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,10 +26,8 @@ public class AddHouseActivity extends AppCompatActivity {
     Integer bedroom, bathroom, rooms;
     TextView label;
 
-    Room room;
-
-    FirebaseDatabase firebaseDatabase;
     DatabaseReference mDatabase;
+    DatabaseReference addRoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,52 +40,23 @@ public class AddHouseActivity extends AppCompatActivity {
         room_amount = (EditText) findViewById(R.id.room_amount);
         label = (TextView) findViewById(R.id.textView3);
 
-        room = new Room();
-
-//        bathroom = Integer.parseInt(bathroom_amount.getText().toString());
-//        rooms = Integer.parseInt(room_amount.getText().toString());
-
         saveHouseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getValues();
                 // Write a message to the database
                 //DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-                mDatabase = FirebaseDatabase.getInstance().getReference("Test").child("u2").child("Child");
-
-                String myID = mDatabase.getKey();
-
-                mDatabase.setValue("Test");
-
-                mDatabase.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String value = dataSnapshot.getValue(String.class);
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        String value = databaseError.getMessage();
-                    }
-                });
-
-                //myRef.setValue("Hello, World!");
-
-//                bedroom = Integer.parseInt(bedroom_amount.getText().toString());
-//                getValues();
-//                databaseReference.addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        databaseReference.child("User01").setValue("Testing");
-//                        Toast.makeText(AddHouseActivity.this, "Data inserted", Toast.LENGTH_SHORT).show();
-//                        Log.println('1',"Check", "It work");
-//                    }
+//                mDatabase = FirebaseDatabase.getInstance().getReference();
+//                String userID = getUserKeyFireAuth();
 //
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                    }
-//                });
+//                String houseID = mDatabase.push().getKey();
+//                mDatabase.child("House").child(userID).child(houseID).child("Rooms").child("Room 1").setValue("Bedroom");
+
+//                mDatabase.child("House").child(userID).child(houseID).child("Room_1").child("roomName").setValue("Bedroom 1");
+//                mDatabase.child("House").child(userID).child(houseID).child("Room_1").child("Description").setValue("Clean the sheet");
+//                mDatabase.child("House").child(userID).child(houseID).child("Room_2").child("roomName").setValue("Bedroom 2");;
+//                mDatabase.child("House").child(userID).child(houseID).child("Room_2").child("Description").setValue("Clean the sheet");;
+
                 Intent intent = new Intent(AddHouseActivity.this, OwnerMainActivity.class);
                 startActivity(intent);
             }
@@ -93,12 +64,47 @@ public class AddHouseActivity extends AppCompatActivity {
     }
 
     private void getValues(){
-        room.setRoomName("Bedroom");
-        room.setDescription("");
+        int count = 1;
+        bedroom = Integer.parseInt(bedroom_amount.getText().toString());
+        bathroom = Integer.parseInt(bathroom_amount.getText().toString());
+        rooms = Integer.parseInt(room_amount.getText().toString());
+
+        String userID = getUserKeyFireAuth();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        String houseID = mDatabase.push().getKey();
+        addRoom = mDatabase.child("House").child(userID).child(houseID).child("Rooms");
 
         for(int i = 1; i <= bedroom ; i++){
-            room.setRoomName("Bedroom " + i);
-            room.setDescription("Empty");
+            addRoom.child("Room " + count).child("Room name").setValue("Bedroom " + i);
+            addRoom.child("Room " + count).child("Description").setValue("Please fill in task");
+            count++;
         }
+
+        for(int j = 1 ; j <= bathroom ; j++){
+            addRoom.child("Room " + count).child("Room name").setValue("Bathroom " + j);
+            addRoom.child("Room " + count).child("Description").setValue("Please fill in task");
+            count++;
+        }
+
+        for(int k = 1 ; k <= rooms ; k++){
+            addRoom.child("Room " + count).child("Room name").setValue("Other room " + k);
+            addRoom.child("Room " + count).child("Description").setValue("Please fill in task");
+            count++;
+        }
+    }
+
+    protected String getUserKeyFireAuth(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String fireAuthUserKey="";
+
+        if (user != null) {
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+            // FirebaseUser.getIdToken() instead.
+            fireAuthUserKey = user.getUid();
+        }
+
+        return fireAuthUserKey;
     }
 }

@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SetuserlvlActivity"></activity>
+        <activity android:name=".HouseDetailsActivity"></activity>
+        <activity android:name=".SetuserlvlActivity" />
         <activity android:name=".AddHouseActivity" />
-        <activity android:name=".OwnerMainActivity"></activity>
+        <activity android:name=".OwnerMainActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".registerActivity" />
         <activity android:name=".MainActivity">

@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cleanapp.HouseDetailsActivity;
 import com.example.cleanapp.Model.House;
 import com.example.cleanapp.OwnerHomeFragment;
 import com.example.cleanapp.R;
@@ -46,8 +47,8 @@ public class HomeViewAdapter extends RecyclerView.Adapter<HomeViewAdapter.HomeVi
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(v.getContext(), ProductViewActivity.class);
-                //v.getContext().startActivity(intent);
+                Intent intent = new Intent(v.getContext(), HouseDetailsActivity.class);
+                v.getContext().startActivity(intent);
             }
         });
     }
