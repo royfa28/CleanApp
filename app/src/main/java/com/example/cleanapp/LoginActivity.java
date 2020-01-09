@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,7 +17,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     public EditText emailTxt, passwordTxt;
     public Button btnLogin, btnRegister;
@@ -49,21 +48,19 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser myFirebaseUser = myFirebaseAuth.getCurrentUser();
                 if(myFirebaseUser != null)// weak no password check
                 {
-                    Toast.makeText(MainActivity.this, "LOGIN !",Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(MainActivity.this,OwnerMainActivity.class);
+                    Toast.makeText(LoginActivity.this, "LOGIN !",Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(LoginActivity.this,OwnerMainActivity.class);
                     startActivity(i);
                 }
                 else
                 {
-                    Toast.makeText(MainActivity.this, "plz, Login ",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "plz, Login ",Toast.LENGTH_SHORT).show();
                 }
 
             }
         };
 
-        btnLogin.setOnClickListener(new View.OnClickListener()
-        {
-
+        btnLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v)
                 {
@@ -82,23 +79,22 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else if(mail.isEmpty() && password.isEmpty())
                     {
-                        Toast.makeText(MainActivity.this,"field are empty",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this,"field are empty",Toast.LENGTH_SHORT).show();
                     }
                     else if (!(mail.isEmpty() && password.isEmpty()))
                     {
                         myFirebaseAuth.signInWithEmailAndPassword(mail,password)
-                                .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>()
-                        {
+                                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task)
                             {
                             if(!task.isSuccessful())
                             {
-                                Toast.makeText(MainActivity.this, "Login Error",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Login Error",Toast.LENGTH_SHORT).show();
                             }
                             else
                             {
-                                Intent toHome = new Intent(MainActivity.this,OwnerMainActivity.class);
+                                Intent toHome = new Intent(LoginActivity.this,OwnerMainActivity.class);
                                 startActivity(toHome);
                             }
                             }
@@ -106,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else
                     {
-                        Toast.makeText(MainActivity.this, "Error",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Error",Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -117,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                Intent intoRegister = new Intent(MainActivity.this,registerActivity.class);
+                Intent intoRegister = new Intent(LoginActivity.this,registerActivity.class);
                 startActivity(intoRegister);
 
             }

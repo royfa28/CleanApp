@@ -40,7 +40,8 @@ public class HomeViewAdapter extends RecyclerView.Adapter<HomeViewAdapter.HomeVi
 
     @Override
     public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
-        holder.house_Name.setText(houses.get(position).getHouseID());
+        String houseID = houses.get(position).getHouseID();
+        holder.house_Name.setText(houseID);
 
         // Clicking the house will bring it to house view, where user can see rooms inside the house.
 
@@ -48,6 +49,7 @@ public class HomeViewAdapter extends RecyclerView.Adapter<HomeViewAdapter.HomeVi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), HouseDetailsActivity.class);
+                intent.putExtra("houseID", houseID);
                 v.getContext().startActivity(intent);
             }
         });

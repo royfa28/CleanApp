@@ -65,7 +65,7 @@ public class OwnerMainActivity extends AppCompatActivity implements NavigationVi
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
                 finish();
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
 
         }

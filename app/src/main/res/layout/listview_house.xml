@@ -18,13 +18,14 @@
             android:id="@+id/house_image_id"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:scaleType="centerCrop"
-            android:background="#2d2d2d"/>
+            android:background="#2d2d2d"
+            android:scaleType="centerCrop" />
+
         <TextView
             android:id="@+id/house_name_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Product Title"
+            android:text="House Name"
             android:textColor="#2d2d2d"
             android:gravity="center"
             android:textSize="13sp"/>

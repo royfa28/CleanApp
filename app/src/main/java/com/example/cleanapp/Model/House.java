@@ -1,6 +1,6 @@
 package com.example.cleanapp.Model;
 
-public class House {
+public class House{
 
     String houseID;
 
