@@ -10,11 +10,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.cleanapp.Model.House;
 import com.example.cleanapp.Model.Room;
 import com.example.cleanapp.ViewHolder.HomeViewAdapter;
 import com.example.cleanapp.ViewHolder.RoomViewAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -32,10 +34,20 @@ public class HouseDetailsActivity extends AppCompatActivity {
     RoomViewAdapter adapter;
     ArrayList<Room> rooms;
 
+    protected FloatingActionButton tenantListFloatingButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_house_details);
+
+        tenantListFloatingButton = findViewById(R.id.tenantListFloatingButton);
+        tenantListFloatingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
