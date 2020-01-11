@@ -45,13 +45,14 @@ public class HouseDetailsActivity extends AppCompatActivity {
         tenantListFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(HouseDetailsActivity.this, TenantList.class);
+                startActivity(i);
             }
         });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Room list");
+        getSupportActionBar().setTitle("House Management");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
