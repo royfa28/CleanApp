@@ -27,4 +27,9 @@ public class HouseInvitation extends AppCompatActivity {
         //get the info owner to fill house invitation model
 
     }
+
+    protected void getOwnerID()
+    {
+
+    }
 }
