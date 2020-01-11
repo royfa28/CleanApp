@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.cleanapp.Model.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -25,7 +26,7 @@ import java.util.regex.Pattern;
 
 public class registerActivity extends AppCompatActivity {
 
-    public EditText emailTxt,passwordTxt;
+    public EditText emailTxt,passwordTxt, editTextPhone;
     public Button btnLogin, btnRegister;
     public TextView txtValrAcc;
     FirebaseAuth  myFirebaseAuth;
@@ -43,6 +44,7 @@ public class registerActivity extends AppCompatActivity {
 
         myFirebaseAuth = FirebaseAuth.getInstance();
         emailTxt = findViewById(R.id.editTextEmail);
+        editTextPhone = findViewById(R.id.editTextPhone);
         passwordTxt = findViewById(R.id.passwordEditText);
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.buttonRegister);
@@ -123,7 +125,12 @@ public class registerActivity extends AppCompatActivity {
     }
 
     protected void createUserInDB()
-    {}
+    {
+        UserModel myUser = new UserModel();
+        myUser.setUserMail(emailTxt.getText().toString());
+        myUser.setUserPhone(editTextPhone.getText().toString());
+        //myUser.set
+    }
 }
 
 
