@@ -4,6 +4,7 @@ public class UserModel {
     Boolean userLvl;
     String userMail;
     String userPhone;
+    String userKey;
 
     //Constructor
     public UserModel() {
@@ -37,5 +38,13 @@ public class UserModel {
 
     public void setUserPhone(String userPhone) {
         this.userPhone = userPhone;
+    }
+
+    public String getUserKey() {
+        return userKey;
+    }
+
+    public void setUserKey(String userKey) {
+        this.userKey = userKey;
     }
 }
