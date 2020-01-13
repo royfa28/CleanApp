@@ -85,8 +85,10 @@ public class registerActivity extends AppCompatActivity {
                                 Toast.makeText(registerActivity.this, firebaseAuthUserId, Toast.LENGTH_SHORT).show();
                                 createUserInDB();
                                 getUser.setValue(myUser.getUserKey());
-                                getUser.child(myUser.getUserKey()).setValue(myUser.getUserMail());
-                                getUser.child(myUser.getUserKey()).setValue(myUser.getUserPhone());
+
+                                /*getUser.child(myUser.getUserKey()).addChildEventListener(getUser);*/
+                                getUser.child(myUser.getUserKey()).child("user mail").setValue(myUser.getUserMail());
+                                getUser.child(myUser.getUserKey()).child("user phone").setValue(myUser.getUserPhone());
 
                                 if(!(radioButtonOwner.isChecked())&&!(radioButtonTenant.isChecked()))
                                 {
@@ -95,13 +97,13 @@ public class registerActivity extends AppCompatActivity {
                                 else if((radioButtonOwner.isChecked())&&!(radioButtonTenant.isChecked()))
                                 {
                                     myUser.setUserLvl(true);
-                                    getUser.child(myUser.getUserKey()).setValue(myUser.getUserLvl());
+                                    getUser.child(myUser.getUserKey()).child("user lvl").setValue(myUser.getUserLvl());
                                     startActivity(new Intent(registerActivity.this, OwnerMainActivity.class));
                                 }
                                 else if(!(radioButtonOwner.isChecked())&& (radioButtonTenant.isChecked()))
                                 {
                                     myUser.setUserLvl(false);
-                                    getUser.child(myUser.getUserKey()).setValue(myUser.getUserLvl());
+                                    getUser.child(myUser.getUserKey()).child("user lvl").setValue(myUser.getUserLvl());
                                     startActivity(new Intent(registerActivity.this, OwnerMainActivity.class));//tenant screen
                                 }
                             }
