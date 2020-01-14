@@ -104,7 +104,7 @@ public class registerActivity extends AppCompatActivity {
                                 {
                                     myUser.setUserLvl(false);
                                     getUser.child(myUser.getUserKey()).child("user lvl").setValue(myUser.getUserLvl());
-                                    startActivity(new Intent(registerActivity.this, OwnerMainActivity.class));//tenant screen
+                                    //startActivity(new Intent(registerActivity.this, OwnerMainActivity.class));//tenant screen
                                 }
                             }
                         }
