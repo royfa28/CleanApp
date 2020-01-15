@@ -19,8 +19,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public EditText emailTxt, passwordTxt;
-    public Button btnLogin, btnRegister;
+    protected EditText emailTxt, passwordTxt;
+    protected Button btnLogin, btnRegister;
     FirebaseAuth  myFirebaseAuth;
     private FirebaseAuth.AuthStateListener myAuthStateListener;
 

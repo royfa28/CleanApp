@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 public class registerActivity extends AppCompatActivity {
 
     public EditText emailTxt,passwordTxt, editTextPhone;
-    public Button btnLogin, btnRegister;
+    protected Button btnLogin, btnRegister;
     public TextView txtValrAcc;
     protected RadioGroup userLvlradioGroup;
     protected RadioButton radioButtonTenant,radioButtonOwner;
@@ -84,17 +84,23 @@ public class registerActivity extends AppCompatActivity {
 
                                 Toast.makeText(registerActivity.this, firebaseAuthUserId, Toast.LENGTH_SHORT).show();
                                 createUserInDB();
-                                getUser.setValue(myUser.getUserKey());
+                                getUser.child(myUser.getUserKey());
 
                                 /*getUser.child(myUser.getUserKey()).addChildEventListener(getUser);*/
                                 getUser.child(myUser.getUserKey()).child("user mail").setValue(myUser.getUserMail());
                                 getUser.child(myUser.getUserKey()).child("user phone").setValue(myUser.getUserPhone());
+                                setUserLvl();
+                                getUser.child(myUser.getUserKey()).child("user lvl").setValue(myUser.getUserLvl());
 
-                                if(!(radioButtonOwner.isChecked())&&!(radioButtonTenant.isChecked()))
+                                startActivity(new Intent(registerActivity.this, OwnerMainActivity.class));
+
+
+                                /*if(!(radioButtonOwner.isChecked())&&!(radioButtonTenant.isChecked()))
                                 {
                                     Toast.makeText(registerActivity.this, "owner or tenant?", Toast.LENGTH_SHORT).show();
                                 }
-                                else if((radioButtonOwner.isChecked())&&!(radioButtonTenant.isChecked()))
+                                else */
+                                /*if((radioButtonOwner.isChecked())&&!(radioButtonTenant.isChecked()))
                                 {
                                     myUser.setUserLvl(true);
                                     getUser.child(myUser.getUserKey()).child("user lvl").setValue(myUser.getUserLvl());
@@ -105,7 +111,7 @@ public class registerActivity extends AppCompatActivity {
                                     myUser.setUserLvl(false);
                                     getUser.child(myUser.getUserKey()).child("user lvl").setValue(myUser.getUserLvl());
                                     //startActivity(new Intent(registerActivity.this, OwnerMainActivity.class));//tenant screen
-                                }
+                                }*/
                             }
                         }
                     });
@@ -165,6 +171,15 @@ public class registerActivity extends AppCompatActivity {
         myUser.setUserPhone(editTextPhone.getText().toString());
         myUser.setUserKey(getUserKeyFireAuth());
     }
+
+    protected void setUserLvl(){
+        if(radioButtonOwner.isChecked()){
+            myUser.setUserLvl(true);
+        }else{
+            myUser.setUserLvl(false);
+        }
+    }
+
 
 
 }
