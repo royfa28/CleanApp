@@ -9,14 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RoomDetailModal"></activity>
+        <activity android:name=".TenantHomeActivity"></activity>
+        <activity android:name=".RoomDetailModal" />
         <activity android:name=".HouseInvitation" />
         <activity android:name=".TenantList" />
         <activity android:name=".HouseDetailsActivity" />
         <activity android:name=".SetuserlvlActivity" />
         <activity android:name=".AddHouseActivity" />
         <activity android:name=".OwnerMainActivity" />
-        <activity android:name=".HomeActivity" />
+        <activity android:name=".TenantMainFragment" />
         <activity android:name=".registerActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>

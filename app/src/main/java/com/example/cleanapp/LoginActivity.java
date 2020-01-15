@@ -11,11 +11,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.cleanapp.Model.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -23,6 +29,8 @@ public class LoginActivity extends AppCompatActivity {
     protected Button btnLogin, btnRegister;
     FirebaseAuth  myFirebaseAuth;
     private FirebaseAuth.AuthStateListener myAuthStateListener;
+    DatabaseReference userLevel;
+    UserModel user = new UserModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                 FirebaseUser myFirebaseUser = myFirebaseAuth.getCurrentUser();
                 if(myFirebaseUser != null)// weak no password check
                 {
-                    Toast.makeText(LoginActivity.this, "LOGIN !",Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(LoginActivity.this,OwnerMainActivity.class);
-                    startActivity(i);
+                   getUserLevel();
                 }
                 else
                 {
@@ -94,8 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             else
                             {
-                                Intent toHome = new Intent(LoginActivity.this,OwnerMainActivity.class);
-                                startActivity(toHome);
+                                getUserLevel();
                             }
                             }
                         });
@@ -105,7 +110,6 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Error",Toast.LENGTH_SHORT).show();
                     }
                 }
-
             });
 
         btnRegister.setOnClickListener(new View.OnClickListener()
@@ -119,6 +123,44 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    protected String getUserKeyFireAuth(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String fireAuthUserKey="";
+
+        if (user != null) {
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+            // FirebaseUser.getIdToken() instead.
+            fireAuthUserKey = user.getUid();
+        }
+
+        return fireAuthUserKey;
+    }
+
+    protected void getUserLevel(){
+        userLevel = FirebaseDatabase.getInstance().getReference().child("User").child(getUserKeyFireAuth()).child("user lvl");
+        userLevel.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Boolean userlvl = dataSnapshot.getValue(Boolean.class);
+                if(userlvl == true){
+                    Toast.makeText(LoginActivity.this, userlvl.toString(),Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(LoginActivity.this,OwnerMainActivity.class);
+                    startActivity(i);
+                }else{
+                    Toast.makeText(LoginActivity.this, userlvl.toString(),Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(LoginActivity.this, TenantMainFragment.class);
+                    startActivity(i);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override

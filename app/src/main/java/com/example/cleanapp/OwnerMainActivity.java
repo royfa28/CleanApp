@@ -28,8 +28,8 @@ public class OwnerMainActivity extends AppCompatActivity implements NavigationVi
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        drawer = findViewById(R.id.owner_drawer);
-        NavigationView navigationView = findViewById(R.id.owner_nav_view);
+        drawer = findViewById(R.id.nav_drawer);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -52,7 +52,7 @@ public class OwnerMainActivity extends AppCompatActivity implements NavigationVi
         switch (item.getItemId()){
             case R.id.nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ProfileFragment()).commit();
+                        new OwnerProfileFragment()).commit();
                 getSupportActionBar().setTitle("Profile");
                 break;
 
