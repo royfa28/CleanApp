@@ -1,9 +1,11 @@
 package com.example.cleanapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -28,10 +30,12 @@ public class LoginActivity extends AppCompatActivity {
 
     protected EditText emailTxt, passwordTxt;
     protected Button btnLogin, btnRegister;
+
     FirebaseAuth  myFirebaseAuth;
     private FirebaseAuth.AuthStateListener myAuthStateListener;
+
     DatabaseReference userLevel;
-    UserModel user = new UserModel();
+    UserModel userModel = new UserModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
         myFirebaseAuth = FirebaseAuth.getInstance();
 
+
         myAuthStateListener = new FirebaseAuth.AuthStateListener()
         {
             @Override
@@ -57,13 +62,10 @@ public class LoginActivity extends AppCompatActivity {
                 FirebaseUser myFirebaseUser = myFirebaseAuth.getCurrentUser();
                 if(myFirebaseUser != null)// weak no password check
                 {
-                   getUserLevel();
-                }
-                else
-                {
+                    verifyDialog();
+                } else {
                     Toast.makeText(LoginActivity.this, "plz, Login ",Toast.LENGTH_SHORT).show();
                 }
-
             }
         };
 
@@ -74,40 +76,35 @@ public class LoginActivity extends AppCompatActivity {
                     String mail = emailTxt.getText().toString();
                     String password = passwordTxt.getText().toString();
 
-                    if( mail.isEmpty() )
-                    {
+                    if( mail.isEmpty() ) {
                         emailTxt.setError("please enter an emailTextField");
                         emailTxt.requestFocus();
-                    }
-                    else if(password.isEmpty())
-                    {
+                    } else if(password.isEmpty()) {
                         passwordTxt.setError("password missing");
                         passwordTxt.requestFocus();
-                    }
-                    else if(mail.isEmpty() && password.isEmpty())
-                    {
+                    } else if(mail.isEmpty() && password.isEmpty()) {
                         Toast.makeText(LoginActivity.this,"field are empty",Toast.LENGTH_SHORT).show();
-                    }
-                    else if (!(mail.isEmpty() && password.isEmpty()))
-                    {
+                    } else if (!(mail.isEmpty() && password.isEmpty())) {
                         myFirebaseAuth.signInWithEmailAndPassword(mail,password)
                                 .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task)
                             {
-                            if(!task.isSuccessful())
-                            {
-                                Toast.makeText(LoginActivity.this, "Login Error",Toast.LENGTH_SHORT).show();
-                            }
-                            else
-                            {
-                                getUserLevel();
-                            }
+                                if(!task.isSuccessful()) {
+                                    Toast.makeText(LoginActivity.this, "Login Error",Toast.LENGTH_SHORT).show();
+                                } else {
+                                    FirebaseUser user = myFirebaseAuth.getCurrentUser();
+                                    if(user.isEmailVerified()){
+                                        getUserLevel();
+                                    }else{
+                                        verifyDialog();
+                                        Toast.makeText(LoginActivity.this, "Try login",Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }
                             }
                         });
-                    }
-                    else
-                    {
+                    } else {
                         Toast.makeText(LoginActivity.this, "Error",Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -169,5 +166,30 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         myFirebaseAuth.addAuthStateListener(myAuthStateListener);
     }
+
+    void verifyDialog(){
+        FirebaseUser user = myFirebaseAuth.getCurrentUser();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+        builder.setTitle("Verify account")
+                .setMessage("Your email is not verified yet. Please click on the button below to send a verification email")
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("Verify", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        user.sendEmailVerification();
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
 }
 

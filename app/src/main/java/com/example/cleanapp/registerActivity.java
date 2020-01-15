@@ -16,14 +16,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.cleanapp.Fragment.TenantMainFragment;
 import com.example.cleanapp.Model.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,10 +39,13 @@ public class registerActivity extends AppCompatActivity {
     public TextView txtValrAcc;
     protected RadioGroup userLvlradioGroup;
     protected RadioButton radioButtonTenant,radioButtonOwner;
+
     FirebaseAuth  myFirebaseAuth;
     UserModel myUser = new UserModel();
     DatabaseReference myDataBase= FirebaseDatabase.getInstance().getReference();
     DatabaseReference getUser = FirebaseDatabase.getInstance().getReference().child("User");
+    DatabaseReference userLevel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -82,6 +89,8 @@ public class registerActivity extends AppCompatActivity {
 
                                 Toast.makeText(registerActivity.this, firebaseAuthUserId, Toast.LENGTH_SHORT).show();
                                 createUserInDB();
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                user.sendEmailVerification();
                                 getUser.child(myUser.getUserKey());
 
                                 /*getUser.child(myUser.getUserKey()).addChildEventListener(getUser);*/
@@ -90,7 +99,8 @@ public class registerActivity extends AppCompatActivity {
                                 setUserLvl();
                                 getUser.child(myUser.getUserKey()).child("user lvl").setValue(myUser.getUserLvl());
 
-                                startActivity(new Intent(registerActivity.this, OwnerMainActivity.class));
+                                Toast.makeText(registerActivity.this, "Please verify your email", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(registerActivity.this, LoginActivity.class));
                             }
                         }
                     });
@@ -158,7 +168,29 @@ public class registerActivity extends AppCompatActivity {
         }
     }
 
+    protected void getUserLevel(){
+        userLevel = FirebaseDatabase.getInstance().getReference().child("User").child(getUserKeyFireAuth()).child("user lvl");
+        userLevel.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Boolean userlvl = dataSnapshot.getValue(Boolean.class);
+                if(userlvl == true){
+                    Toast.makeText(registerActivity.this, userlvl.toString(),Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(registerActivity.this,OwnerMainActivity.class);
+                    startActivity(i);
+                }else{
+                    Toast.makeText(registerActivity.this, userlvl.toString(),Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(registerActivity.this, TenantMainFragment.class);
+                    startActivity(i);
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 }
 
