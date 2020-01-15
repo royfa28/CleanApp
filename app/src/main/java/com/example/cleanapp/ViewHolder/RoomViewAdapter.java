@@ -1,10 +1,12 @@
 package com.example.cleanapp.ViewHolder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -38,9 +40,17 @@ public class RoomViewAdapter extends RecyclerView.Adapter<RoomViewAdapter.RoomVi
     public void onBindViewHolder(@NonNull RoomViewHolder holder, int position) {
         String roomName = roomArrayList.get(position).getRoomName();
         String room_desc = roomArrayList.get(position).getRoomdescription();
+        String roomID = roomArrayList.get(position).getRoomID();
 
         holder.room_name.setText(roomName);
         holder.room_description.setText(room_desc);
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), roomID , Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

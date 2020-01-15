@@ -70,7 +70,10 @@ public class HouseDetailsActivity extends AppCompatActivity {
                 rooms.clear();
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 for (DataSnapshot ds : children) {
-                    Room room = ds.getValue(Room.class);
+                    String roomID = ds.getKey();
+                    Room room = new Room();
+                    room = ds.getValue(Room.class);
+                    room.setRoomID(roomID);
                     rooms.add(room);
                 }
                 adapter = new RoomViewAdapter(HouseDetailsActivity.this, rooms);
