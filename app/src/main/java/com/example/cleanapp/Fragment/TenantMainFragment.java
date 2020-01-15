@@ -1,4 +1,4 @@
-package com.example.cleanapp;
+package com.example.cleanapp.Fragment;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -11,6 +11,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.cleanapp.LoginActivity;
+import com.example.cleanapp.R;
+import com.example.cleanapp.TenantHomeActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 

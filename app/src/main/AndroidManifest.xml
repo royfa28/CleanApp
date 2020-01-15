@@ -17,7 +17,7 @@
         <activity android:name=".SetuserlvlActivity" />
         <activity android:name=".AddHouseActivity" />
         <activity android:name=".OwnerMainActivity" />
-        <activity android:name=".TenantMainFragment" />
+        <activity android:name=".Fragment.TenantMainFragment" />
         <activity android:name=".registerActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>

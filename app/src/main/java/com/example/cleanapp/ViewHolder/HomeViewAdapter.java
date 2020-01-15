@@ -2,7 +2,6 @@ package com.example.cleanapp.ViewHolder;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cleanapp.HouseDetailsActivity;
 import com.example.cleanapp.Model.House;
-import com.example.cleanapp.Model.Room;
-import com.example.cleanapp.OwnerHomeFragment;
+import com.example.cleanapp.Fragment.OwnerHomeFragment;
 import com.example.cleanapp.R;
 
 import java.util.ArrayList;
