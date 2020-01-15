@@ -74,6 +74,7 @@ public class HouseDetailsActivity extends AppCompatActivity {
                     Room room = new Room();
                     room = ds.getValue(Room.class);
                     room.setRoomID(roomID);
+                    room.setHouseID(houseID);
                     rooms.add(room);
                 }
                 adapter = new RoomViewAdapter(HouseDetailsActivity.this, rooms);

@@ -41,6 +41,7 @@ public class RoomViewAdapter extends RecyclerView.Adapter<RoomViewAdapter.RoomVi
         String roomName = roomArrayList.get(position).getRoomName();
         String room_desc = roomArrayList.get(position).getRoomdescription();
         String roomID = roomArrayList.get(position).getRoomID();
+        String houseID = roomArrayList.get(position).getHouseID();
 
         holder.room_name.setText(roomName);
         holder.room_description.setText(room_desc);
@@ -48,7 +49,7 @@ public class RoomViewAdapter extends RecyclerView.Adapter<RoomViewAdapter.RoomVi
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), roomID , Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), houseID , Toast.LENGTH_SHORT).show();
             }
         });
     }

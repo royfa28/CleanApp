@@ -2,7 +2,7 @@ package com.example.cleanapp.Model;
 
 public class Room {
 
-    String roomName, roomDescription, roomID;
+    String roomName, roomDescription, roomID, houseID;
 
     public Room() {
     }
@@ -10,6 +10,10 @@ public class Room {
     public Room(String room, String description) {
         this.roomName = room;
         this.roomDescription = description;
+    }
+
+    public Room(String roomID) {
+        this.roomID = roomID;
     }
 
     public String getRoomName() {
@@ -28,15 +32,19 @@ public class Room {
         this.roomDescription = roomdescription;
     }
 
-    public Room(String roomID) {
-        this.roomID = roomID;
-    }
-
     public String getRoomID() {
         return roomID;
     }
 
     public void setRoomID(String roomID) {
         this.roomID = roomID;
+    }
+
+    public String getHouseID() {
+        return houseID;
+    }
+
+    public void setHouseID(String houseID) {
+        this.houseID = houseID;
     }
 }

@@ -62,8 +62,6 @@ public class registerActivity extends AppCompatActivity {
         radioButtonOwner = findViewById(R.id.radioButtonOwner);
         radioButtonTenant = findViewById(R.id.radioButtonTenant);
 
-
-
         btnRegister.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -93,25 +91,6 @@ public class registerActivity extends AppCompatActivity {
                                 getUser.child(myUser.getUserKey()).child("user lvl").setValue(myUser.getUserLvl());
 
                                 startActivity(new Intent(registerActivity.this, OwnerMainActivity.class));
-
-
-                                /*if(!(radioButtonOwner.isChecked())&&!(radioButtonTenant.isChecked()))
-                                {
-                                    Toast.makeText(registerActivity.this, "owner or tenant?", Toast.LENGTH_SHORT).show();
-                                }
-                                else */
-                                /*if((radioButtonOwner.isChecked())&&!(radioButtonTenant.isChecked()))
-                                {
-                                    myUser.setUserLvl(true);
-                                    getUser.child(myUser.getUserKey()).child("user lvl").setValue(myUser.getUserLvl());
-                                    startActivity(new Intent(registerActivity.this, OwnerMainActivity.class));
-                                }
-                                else if(!(radioButtonOwner.isChecked())&& (radioButtonTenant.isChecked()))
-                                {
-                                    myUser.setUserLvl(false);
-                                    getUser.child(myUser.getUserKey()).child("user lvl").setValue(myUser.getUserLvl());
-                                    //startActivity(new Intent(registerActivity.this, OwnerMainActivity.class));//tenant screen
-                                }*/
                             }
                         }
                     });
@@ -120,7 +99,6 @@ public class registerActivity extends AppCompatActivity {
                     Toast.makeText(registerActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
                 }
             }
-
         });
 
         txtValrAcc.setOnClickListener(new View.OnClickListener()
