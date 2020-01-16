@@ -41,11 +41,16 @@ public class HouseDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_house_details);
 
+        Intent intent = getIntent();
+        String houseID = intent.getStringExtra("houseID");
+        String userID = getUserKeyFireAuth();
+
         tenantListFloatingButton = findViewById(R.id.tenantListFloatingButton);
         tenantListFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(HouseDetailsActivity.this, TenantList.class);
+                i.putExtra("HouseId",houseID);
                 startActivity(i);
             }
         });
@@ -55,9 +60,7 @@ public class HouseDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("House Management");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Intent intent = getIntent();
-        String houseID = intent.getStringExtra("houseID");
-        String userID = getUserKeyFireAuth();
+
 
         rooms = new ArrayList<>();
         roomListRecycleView = (RecyclerView)findViewById(R.id.roomListRecyclerView);
@@ -70,7 +73,11 @@ public class HouseDetailsActivity extends AppCompatActivity {
                 rooms.clear();
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 for (DataSnapshot ds : children) {
-                    Room room = ds.getValue(Room.class);
+                    String roomID = ds.getKey();
+                    Room room = new Room();
+                    room = ds.getValue(Room.class);
+                    room.setRoomID(roomID);
+                    room.setHouseID(houseID);
                     rooms.add(room);
                 }
                 adapter = new RoomViewAdapter(HouseDetailsActivity.this, rooms);

@@ -1,10 +1,13 @@
 package com.example.cleanapp.ViewHolder;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -13,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cleanapp.HouseDetailsActivity;
 import com.example.cleanapp.Model.Room;
 import com.example.cleanapp.R;
+import com.example.cleanapp.RoomDetailModal;
 
 import java.util.ArrayList;
 
@@ -38,9 +42,24 @@ public class RoomViewAdapter extends RecyclerView.Adapter<RoomViewAdapter.RoomVi
     public void onBindViewHolder(@NonNull RoomViewHolder holder, int position) {
         String roomName = roomArrayList.get(position).getRoomName();
         String room_desc = roomArrayList.get(position).getRoomdescription();
+        String roomID = roomArrayList.get(position).getRoomID();
+        String houseID = roomArrayList.get(position).getHouseID();
 
         holder.room_name.setText(roomName);
         holder.room_description.setText(room_desc);
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), RoomDetailModal.class);
+                intent.putExtra("Room Name", roomName);
+                intent.putExtra("Room Description", room_desc);
+                intent.putExtra("Room ID",roomID);
+                intent.putExtra("House ID", houseID);
+                v.getContext().startActivity(intent);
+                //Toast.makeText(v.getContext(), houseID , Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

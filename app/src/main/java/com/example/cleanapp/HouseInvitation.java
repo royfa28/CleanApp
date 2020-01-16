@@ -2,6 +2,7 @@ package com.example.cleanapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,12 +22,16 @@ public class HouseInvitation extends AppCompatActivity {
     protected HouseInvitationModel myHouseInvitation;
     FirebaseAuth myFirebaseAuth;
     DatabaseReference myDataBase= FirebaseDatabase.getInstance().getReference();
+    String houseID;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_house_invitation);
+
+
+        Intent i  = getIntent();
+        houseID = i.getStringExtra("houseID");
 
         myToolbar = findViewById(R.id.toolbar2);
         phoneNumberTenant = findViewById(R.id.editText);
@@ -34,14 +39,18 @@ public class HouseInvitation extends AppCompatActivity {
         myHouseInvitation = new HouseInvitationModel();
         //get n set the info owner to fill house invitation model
         myHouseInvitation.setIdOwner(myFirebaseAuth.getCurrentUser().getUid());
+        //datasnapshot from house .userID
 
         //get n set info Tenant
 
 
     }
 
-    protected void getOwnerID()
+    protected void prepHouseInvit()
     {
+        myHouseInvitation.setIdOwner(myFirebaseAuth.getCurrentUser().getUid());
+        myHouseInvitation.setIdHouse(houseID);
+        //myHouseInvitation.setOwnerPhone();
 
 
     }

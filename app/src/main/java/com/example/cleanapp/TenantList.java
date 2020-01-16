@@ -18,11 +18,16 @@ public class TenantList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tenant_list);
 
+        Intent i = getIntent();
+        String houseID = i.getStringExtra("houseID");
+
+
         addTenantfloatingActionButton = findViewById(R.id.addTenantfloatingActionButton);
         addTenantfloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(TenantList.this, HouseInvitation.class);
+                i.putExtra("houseId",houseID);
                 startActivity(i);
             }
         });

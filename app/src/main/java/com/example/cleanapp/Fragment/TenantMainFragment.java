@@ -1,4 +1,4 @@
-package com.example.cleanapp;
+package com.example.cleanapp.Fragment;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -11,28 +11,29 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.cleanapp.Fragment.OwnerHomeFragment;
-import com.example.cleanapp.Fragment.OwnerProfileFragment;
+import com.example.cleanapp.LoginActivity;
+import com.example.cleanapp.R;
+import com.example.cleanapp.TenantHomeActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class OwnerMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class TenantMainFragment extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_main);
-
-        final OwnerHomeFragment product = new OwnerHomeFragment();
+        setContentView(R.layout.activity_tenant_home);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Clean App - Tenant");
 
         drawer = findViewById(R.id.nav_drawer);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open,R.string.navigation_drawer_close);
@@ -41,27 +42,25 @@ public class OwnerMainActivity extends AppCompatActivity implements NavigationVi
 
         if(savedInstanceState == null){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new OwnerHomeFragment()).commit();
+                    new TenantHomeActivity()).commit();
             navigationView.setCheckedItem(R.id.nav_homepage);
-            getSupportActionBar().setTitle("CleanApp");
+            getSupportActionBar().setTitle("CleanApp - Tenant");
         }
     }
 
-
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new OwnerProfileFragment()).commit();
+                        new TenantProfileFragment()).commit();
                 getSupportActionBar().setTitle("Profile");
                 break;
 
             case R.id.nav_homepage:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new OwnerHomeFragment()).commit();
-                getSupportActionBar().setTitle("CleanApp");
+                        new TenantHomeActivity()).commit();
+                getSupportActionBar().setTitle("CleanApp - Tenant");
                 break;
 
             case R.id.logout:
@@ -69,9 +68,7 @@ public class OwnerMainActivity extends AppCompatActivity implements NavigationVi
                 finish();
                 startActivity(new Intent(this, LoginActivity.class));
                 break;
-
         }
-
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -84,5 +81,4 @@ public class OwnerMainActivity extends AppCompatActivity implements NavigationVi
             super.onBackPressed();
         }
     }
-
 }
