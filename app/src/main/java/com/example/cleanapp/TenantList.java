@@ -18,23 +18,23 @@ public class TenantList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tenant_list);
 
-        Intent i = getIntent();
-        String houseID = i.getStringExtra("houseID");
-
-
-        addTenantfloatingActionButton = findViewById(R.id.addTenantfloatingActionButton);
-        addTenantfloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(TenantList.this, HouseInvitation.class);
-                i.putExtra("houseId",houseID);
-                startActivity(i);
-            }
-        });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Tenant list");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        addTenantfloatingActionButton = findViewById(R.id.addTenantfloatingActionButton);
+        addTenantfloatingActionButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(TenantList.this, HouseInvitation.class);
+                startActivity(i);
+            }
+        });
+
+
     }
 }

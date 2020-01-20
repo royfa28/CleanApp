@@ -42,25 +42,10 @@
             android:ems="10"
             android:inputType="phone" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-             >
-
-            <Button
-                android:id="@+id/valdBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ok"></Button>
-
-            <Button
-                android:id="@+id/cancelBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@android:string/cancel" />
-
-        </LinearLayout>
-
+        <Button
+            android:id="@+id/valdBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@android:string/ok"></Button>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
