@@ -6,16 +6,23 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class TenantList extends AppCompatActivity {
 
     protected FloatingActionButton addTenantfloatingActionButton;
+    protected Button btnAddTenant;
+    String houseID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent i  = getIntent();
+        houseID = i.getStringExtra("houseID");
+
         setContentView(R.layout.activity_tenant_list);
 
 
@@ -31,9 +38,21 @@ public class TenantList extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(TenantList.this, HouseInvitation.class);
+                i.putExtra("houseId",houseID);
                 startActivity(i);
             }
         });
+
+        btnAddTenant = findViewById(R.id.btnAddTenant);
+        btnAddTenant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(TenantList.this, HouseInvitation.class);
+                i.putExtra("houseId",houseID);
+                startActivity(i);
+            }
+        });
+
 
 
     }

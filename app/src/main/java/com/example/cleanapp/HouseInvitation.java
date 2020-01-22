@@ -33,12 +33,15 @@ public class HouseInvitation extends AppCompatActivity {
         Intent i  = getIntent();
         houseID = i.getStringExtra("houseID");
 
+        myFirebaseAuth = FirebaseAuth.getInstance();
+
         myToolbar = findViewById(R.id.toolbar2);
+
         phoneNumberTenant = findViewById(R.id.editText);
         validationBtn = findViewById(R.id.valdBtn);
         myHouseInvitation = new HouseInvitationModel();
         //get n set the info owner to fill house invitation model
-        myHouseInvitation.setIdOwner(myFirebaseAuth.getCurrentUser().getUid());
+        //myHouseInvitation.setIdOwner(myFirebaseAuth.getCurrentUser().getUid());
         //datasnapshot from house .userID
 
         //get n set info Tenant
@@ -46,11 +49,13 @@ public class HouseInvitation extends AppCompatActivity {
 
     }
 
+
+
     protected void prepHouseInvit()
     {
         myHouseInvitation.setIdOwner(myFirebaseAuth.getCurrentUser().getUid());
         myHouseInvitation.setIdHouse(houseID);
-        //myHouseInvitation.setOwnerPhone();
+        myHouseInvitation.setOwnerPhone(Integer.parseInt(phoneNumberTenant.toString()));
 
 
     }
