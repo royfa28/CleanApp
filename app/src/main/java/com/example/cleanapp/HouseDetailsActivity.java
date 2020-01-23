@@ -50,7 +50,7 @@ public class HouseDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(HouseDetailsActivity.this, TenantList.class);
-                i.putExtra("houseId",houseID);
+                i.putExtra("houseID",houseID);
                 startActivity(i);
             }
         });

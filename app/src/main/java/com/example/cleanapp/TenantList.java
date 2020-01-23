@@ -13,7 +13,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class TenantList extends AppCompatActivity {
 
     protected FloatingActionButton addTenantfloatingActionButton;
-    protected Button btnAddTenant;
     String houseID;
 
     @Override
@@ -38,20 +37,11 @@ public class TenantList extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(TenantList.this, HouseInvitation.class);
-                i.putExtra("houseId",houseID);
+                i.putExtra("houseID",houseID);
                 startActivity(i);
             }
         });
 
-        btnAddTenant = findViewById(R.id.btnAddTenant);
-        btnAddTenant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(TenantList.this, HouseInvitation.class);
-                i.putExtra("houseId",houseID);
-                startActivity(i);
-            }
-        });
 
 
 
