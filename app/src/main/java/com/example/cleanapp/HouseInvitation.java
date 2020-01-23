@@ -64,6 +64,7 @@ public class HouseInvitation extends AppCompatActivity {
                 Log.d("FIREPATH", getHouseInvitation.child(phoneNumberTenant.getText().toString()).toString());
                 getHouseInvitation.child(phoneNumberTenant.getText().toString());
                 getHouseInvitation.child(phoneNumberTenant.getText().toString()).child("House id").setValue(houseID);
+                Log.d("try",houseID);
             }
         });
 
