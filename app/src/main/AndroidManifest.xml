@@ -21,7 +21,6 @@
             android:theme="@style/AppTheme.Popme" />
         <activity android:name=".HouseInvitationActivity" />
         <activity android:name=".Fragment.TenantListFragment" />
-        <activity android:name=".HouseDetailsActivity" />
         <activity android:name=".SetuserlvlActivity" />
         <activity android:name=".AddHouseActivity" />
         <activity android:name=".OwnerMainActivity" />
