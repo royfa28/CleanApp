@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-import android.util.*;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -45,8 +43,8 @@ public class HouseInvitation extends AppCompatActivity {
 
         myToolbar = findViewById(R.id.toolbar2);
 
-        phoneNumberTenant = findViewById(R.id.editText);
-        validationBtn = findViewById(R.id.valdBtn);
+        phoneNumberTenant = findViewById(R.id.tenantPhoneEditText);
+        validationBtn = findViewById(R.id.validBtn);
         myHouseInvitation = new HouseInvitationModel();
         //get n set the info owner to fill house invitation model
         //myHouseInvitation.setIdOwner(myFirebaseAuth.getCurrentUser().getUid());
