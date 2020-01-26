@@ -3,19 +3,30 @@ package com.example.cleanapp;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.cleanapp.Fragment.HouseDetailFragment;
+import com.example.cleanapp.Fragment.RoomDetailFragment;
+import com.example.cleanapp.Fragment.TenantListFragment;
+//import com.example.cleanapp.ui.main.PageViewModel;
+//import com.example.cleanapp.ui.main.PlaceholderFragment;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class HouseActivityTab extends AppCompatActivity {
 
@@ -47,7 +58,7 @@ public class HouseActivityTab extends AppCompatActivity {
         houseID = intent.getStringExtra("houseID");
         Bundle bundle = new Bundle();
         bundle.putString("house", houseID);
-//        HouseDetailFragment houseDetailFragment = new HouseDetailFragment();
+//        RoomDetailFragment houseDetailFragment = new RoomDetailFragment();
         Log.d("C", houseID);
 //        houseDetailFragment.setArguments(bundle);
 
@@ -58,7 +69,14 @@ public class HouseActivityTab extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                if(tab.getPosition() == 1){
+                    new RoomDetailFragment(houseID);
+                }else if(tab.getPosition() == 2){
 
+                }else{
+                    new TenantListFragment(houseID);
+                }
             }
 
             @Override
@@ -86,11 +104,11 @@ public class HouseActivityTab extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                    return new HouseDetailFragment(houseID);
+                    return new RoomDetailFragment(houseID);
                 case 1:
-                    return new HouseDetailFragment(houseID);
+                    return new RoomDetailFragment(houseID);
                 case 2:
-                    return new HouseDetailFragment(houseID);
+                    return new TenantListFragment(houseID);
                 default:
                     return null;
             }
@@ -100,5 +118,38 @@ public class HouseActivityTab extends AppCompatActivity {
         public int getCount() {
             return numOfTabs;
         }
+    }
+
+    public static class PlaceholderFragment extends Fragment {
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        public PlaceholderFragment(){
+
+        }
+
+        public static PlaceholderFragment newInstance(int sectionNumber){
+            PlaceholderFragment fragment = new PlaceholderFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_house_activity_tab,container, false);
+            return rootView;
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

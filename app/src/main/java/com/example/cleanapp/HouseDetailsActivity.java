@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.cleanapp.Fragment.TenantListFragment;
 import com.example.cleanapp.Model.Room;
 import com.example.cleanapp.ViewHolder.RoomViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -47,7 +48,7 @@ public class HouseDetailsActivity extends AppCompatActivity {
         tenantListFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(HouseDetailsActivity.this, TenantList.class);
+                Intent i = new Intent(HouseDetailsActivity.this, TenantListFragment.class);
                 i.putExtra("houseID",houseID);
                 startActivity(i);
             }

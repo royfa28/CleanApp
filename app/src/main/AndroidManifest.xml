@@ -19,14 +19,14 @@
         <activity
             android:name=".RoomDetailModal"
             android:theme="@style/AppTheme.Popme" />
-        <activity android:name=".HouseInvitation" />
-        <activity android:name=".TenantList" />
+        <activity android:name=".HouseInvitationActivity" />
+        <activity android:name=".Fragment.TenantListFragment" />
         <activity android:name=".HouseDetailsActivity" />
         <activity android:name=".SetuserlvlActivity" />
         <activity android:name=".AddHouseActivity" />
         <activity android:name=".OwnerMainActivity" />
         <activity android:name=".Fragment.TenantMainFragment" />
-        <activity android:name=".Fragment.HouseDetailFragment" />
+        <activity android:name=".Fragment.RoomDetailFragment" />
         <activity android:name=".registerActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
