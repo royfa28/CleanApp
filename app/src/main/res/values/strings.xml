@@ -10,4 +10,7 @@
     <string name="password">Password</string>
     <string name="phone">Phone Number</string>
     <string name="address">Address</string>
+    <string name="title_activity_house_tab">HouseActivityTab</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 </resources>

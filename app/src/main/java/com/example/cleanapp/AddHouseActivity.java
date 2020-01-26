@@ -44,18 +44,6 @@ public class AddHouseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getValues();
-                // Write a message to the database
-                //DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-//                mDatabase = FirebaseDatabase.getInstance().getReference();
-//                String userID = getUserKeyFireAuth();
-//
-//                String houseID = mDatabase.push().getKey();
-//                mDatabase.child("House").child(userID).child(houseID).child("Rooms").child("Room 1").setValue("Bedroom");
-
-//                mDatabase.child("House").child(userID).child(houseID).child("Room_1").child("roomName").setValue("Bedroom 1");
-//                mDatabase.child("House").child(userID).child(houseID).child("Room_1").child("Description").setValue("Clean the sheet");
-//                mDatabase.child("House").child(userID).child(houseID).child("Room_2").child("roomName").setValue("Bedroom 2");;
-//                mDatabase.child("House").child(userID).child(houseID).child("Room_2").child("Description").setValue("Clean the sheet");;
 
                 Intent intent = new Intent(AddHouseActivity.this, OwnerMainActivity.class);
                 startActivity(intent);

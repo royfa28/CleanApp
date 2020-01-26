@@ -12,9 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.cleanapp.Model.House;
 import com.example.cleanapp.Model.Room;
-import com.example.cleanapp.ViewHolder.HomeViewAdapter;
 import com.example.cleanapp.ViewHolder.RoomViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,7 +37,7 @@ public class HouseDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_house_details);
+        setContentView(R.layout.fragment_room_detail);
 
         Intent intent = getIntent();
         String houseID = intent.getStringExtra("houseID");
@@ -80,7 +78,7 @@ public class HouseDetailsActivity extends AppCompatActivity {
                     room.setHouseID(houseID);
                     rooms.add(room);
                 }
-                adapter = new RoomViewAdapter(HouseDetailsActivity.this, rooms);
+//                adapter = new RoomViewAdapter(HouseDetailsActivity.this, rooms);
                 roomListRecycleView.setAdapter(adapter);
             }
 
