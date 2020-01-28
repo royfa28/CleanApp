@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HouseInvitation">
+    tools:context=".HouseInvitationActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -28,7 +28,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar2">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <TextView
             android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
 
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/tenantPhoneEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -47,7 +47,7 @@
             android:hint="+61000000000"/>
 
         <Button
-            android:id="@+id/valdBtn"
+            android:id="@+id/validBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@android:string/ok"></Button>

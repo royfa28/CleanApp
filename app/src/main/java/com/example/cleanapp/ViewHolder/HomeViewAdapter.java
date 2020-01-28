@@ -2,6 +2,7 @@ package com.example.cleanapp.ViewHolder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cleanapp.HouseDetailsActivity;
-import com.example.cleanapp.Model.House;
+import com.example.cleanapp.Fragment.RoomDetailFragment;
 import com.example.cleanapp.Fragment.OwnerHomeFragment;
+import com.example.cleanapp.HouseActivityTab;
+import com.example.cleanapp.Model.House;
 import com.example.cleanapp.R;
 
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ public class HomeViewAdapter extends RecyclerView.Adapter<HomeViewAdapter.HomeVi
     private Context mContext;
     ArrayList<House> houses;
 
-    public HomeViewAdapter(OwnerHomeFragment mContext,  ArrayList<House> h){
+    public HomeViewAdapter(OwnerHomeFragment mContext, ArrayList<House> h){
         mContext = mContext;
         houses = h;
     }
@@ -41,14 +43,18 @@ public class HomeViewAdapter extends RecyclerView.Adapter<HomeViewAdapter.HomeVi
     public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
         String houseID = houses.get(position).getHouseID();
         holder.house_Name.setText(houseID);
+        Bundle bundle = new Bundle();
 
         // Clicking the house will bring it to house view, where user can see rooms inside the house.
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), HouseDetailsActivity.class);
+                Intent intent = new Intent(v.getContext(), HouseActivityTab.class);
                 intent.putExtra("houseID", houseID);
+                bundle.putString("house",houseID);
+                RoomDetailFragment roomDetailFragment = new RoomDetailFragment(houseID);
+                roomDetailFragment.setArguments(bundle);
                 v.getContext().startActivity(intent);
             }
         });

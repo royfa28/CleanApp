@@ -62,7 +62,13 @@ public class LoginActivity extends AppCompatActivity {
                 FirebaseUser myFirebaseUser = myFirebaseAuth.getCurrentUser();
                 if(myFirebaseUser != null)// weak no password check
                 {
-                    verifyDialog();
+                    FirebaseUser user = myFirebaseAuth.getCurrentUser();
+                    if(user.isEmailVerified()){
+                        getUserLevel();
+                    }else{
+                        verifyDialog();
+                    }
+                    getUserLevel();
                 } else {
                     Toast.makeText(LoginActivity.this, "plz, Login ",Toast.LENGTH_SHORT).show();
                 }

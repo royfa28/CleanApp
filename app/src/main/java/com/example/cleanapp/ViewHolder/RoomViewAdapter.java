@@ -1,19 +1,17 @@
 package com.example.cleanapp.ViewHolder;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cleanapp.HouseDetailsActivity;
+import com.example.cleanapp.Fragment.RoomDetailFragment;
 import com.example.cleanapp.Model.Room;
 import com.example.cleanapp.R;
 import com.example.cleanapp.RoomDetailModal;
@@ -25,7 +23,7 @@ public class RoomViewAdapter extends RecyclerView.Adapter<RoomViewAdapter.RoomVi
     ArrayList<Room> roomArrayList;
     private Context mContext;
 
-    public RoomViewAdapter(HouseDetailsActivity mContext, ArrayList<Room> rooms) {
+    public RoomViewAdapter(RoomDetailFragment mContext, ArrayList<Room> rooms) {
         mContext = mContext;
         roomArrayList = rooms;
     }
