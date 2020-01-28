@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -58,11 +59,18 @@ public class HouseInvitationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 prepHouseInvit();
                 addHouseInviteDB();
+                returnToTenabtList();
 
             }
         });
 
 
+    }
+    protected  void returnToTenabtList(){
+        Toast.makeText(HouseInvitationActivity.this, "Your invitation have been sent",Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(HouseInvitationActivity.this,HouseActivityTab.class);
+        i.putExtra("houseID",houseID);
+        startActivity(i);
     }
     protected  void addHouseInviteDB()
     {
