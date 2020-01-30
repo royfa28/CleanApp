@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.cleanapp.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class TenantProfileFragment extends Fragment {
 
@@ -26,5 +28,19 @@ public class TenantProfileFragment extends Fragment {
         //userid = results.getString("userID");
 
         return view;
+    }
+
+    protected String getUserKeyFireAuth(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String fireAuthUserKey="";
+
+        if (user != null) {
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+            // FirebaseUser.getIdToken() instead.
+            fireAuthUserKey = user.getUid();
+        }
+
+        return fireAuthUserKey;
     }
 }
