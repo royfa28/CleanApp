@@ -18,7 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.cleanapp.Fragment.TenantMainFragment;
 import com.example.cleanapp.Model.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,7 +35,7 @@ import java.util.regex.Pattern;
 
 public class registerActivity extends AppCompatActivity {
 
-    public EditText emailTxt,passwordTxt, editTextPhone, editTextFullName, editTextConfirmPass;
+    protected EditText emailTxt,passwordTxt, editTextPhone, editTextFullName, editTextConfirmPass;
     protected Button btnLogin, btnRegister;
     public TextView txtValrAcc;
     protected RadioGroup userLvlradioGroup;
@@ -72,13 +71,14 @@ public class registerActivity extends AppCompatActivity {
         passwordTxt.addTextChangedListener(mTextWatcher);
         editTextConfirmPass.addTextChangedListener(mTextWatcher);
 
-
-        btnLogin = findViewById(R.id.btnLogin);
+        myFirebaseAuth = FirebaseAuth.getInstance();
         btnRegister = findViewById(R.id.buttonRegister);
         txtValrAcc = findViewById(R.id.textViewAlrAcc);
         userLvlradioGroup = findViewById(R.id.radioGroup);
         radioButtonOwner = findViewById(R.id.radioButtonOwner);
         radioButtonTenant = findViewById(R.id.radioButtonTenant);
+
+        checkIsEmpty();
 
         btnRegister.setOnClickListener(new View.OnClickListener()
         {
@@ -88,7 +88,7 @@ public class registerActivity extends AppCompatActivity {
                 String password = passwordTxt.getText().toString();
                 String confirmPass = editTextConfirmPass.getText().toString();
 
-                if(confirmPass.equals(password)){
+                if(password.equals(confirmPass)){
                     if (isValidEmail(mail) && password.length() > 7) {
                         myFirebaseAuth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(registerActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -107,11 +107,11 @@ public class registerActivity extends AppCompatActivity {
                                     getUser.child(myUser.getUserKey());
 
                                     /*getUser.child(myUser.getUserKey()).addChildEventListener(getUser);*/
-                                    getUser.child(myUser.getUserKey()).child("user mail").setValue(myUser.getUserMail());
-                                    getUser.child(myUser.getUserKey()).child("user phone").setValue(myUser.getUserPhone());
+                                    getUser.child(myUser.getUserKey()).child("userMail").setValue(myUser.getUserMail());
+                                    getUser.child(myUser.getUserKey()).child("userPhone").setValue(myUser.getUserPhone());
                                     setUserLvl();
-                                    getUser.child(myUser.getUserKey()).child("user lvl").setValue(myUser.getUserLvl());
-                                    getUser.child(myUser.getUserKey()).child("user fullName").setValue(myUser.getUserFullName());
+                                    getUser.child(myUser.getUserKey()).child("userLvl").setValue(myUser.getUserLvl());
+                                    getUser.child(myUser.getUserKey()).child("userFullName").setValue(myUser.getUserFullName());
 
                                     Toast.makeText(registerActivity.this, "Please verify your email", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(registerActivity.this, LoginActivity.class));
@@ -124,7 +124,7 @@ public class registerActivity extends AppCompatActivity {
                         Toast.makeText(registerActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
                     }
                 }else {
-                    Toast.makeText(registerActivity.this, "Password is not the same", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(registerActivity.this, "Password are not the same", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -219,6 +219,31 @@ public class registerActivity extends AppCompatActivity {
             myUser.setUserLvl(false);
         }
     }
+
+    protected void getUserLevel(){
+        userLevel = FirebaseDatabase.getInstance().getReference().child("User").child(getUserKeyFireAuth()).child("user lvl");
+        userLevel.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Boolean userlvl = dataSnapshot.getValue(Boolean.class);
+                if(userlvl == true){
+                    Toast.makeText(registerActivity.this, userlvl.toString(),Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(registerActivity.this,OwnerMainActivity.class);
+                    startActivity(i);
+                }else{
+                    Toast.makeText(registerActivity.this, userlvl.toString(),Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(registerActivity.this, RoomDetailModal.TenantMainActivity.class);
+                    startActivity(i);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 }
 
 
