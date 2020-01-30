@@ -77,7 +77,7 @@ public class HouseInvitationActivity extends AppCompatActivity {
         getHouseInvitation.child(phoneNumberTenant.getText().toString());
         getHouseInvitation.child(phoneNumberTenant.getText().toString()).child("House id").setValue(myHouseInvitation.getIdHouse());
         getHouseInvitation.child(phoneNumberTenant.getText().toString()).child("Owner Key").setValue(myHouseInvitation.getIdOwner());
-        getHouseInvitation.child(phoneNumberTenant.getText().toString()).child("isRead").setValue(myHouseInvitation.getRead());
+        getHouseInvitation.child(phoneNumberTenant.getText().toString()).child("isRead").setValue(myHouseInvitation.getIsRead());
 
 
     }
