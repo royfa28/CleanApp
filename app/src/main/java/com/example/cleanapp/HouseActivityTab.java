@@ -139,7 +139,7 @@ public class HouseActivityTab extends AppCompatActivity {
         @Nullable
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_house_activity_tab,container, false);
+            View rootView = inflater.inflate(R.layout.fragment_room_detail,container, false);
             return rootView;
         }
     }
