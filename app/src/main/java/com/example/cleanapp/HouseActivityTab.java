@@ -36,7 +36,7 @@ public class HouseActivityTab extends AppCompatActivity {
     SectionsPagerAdapter pagerAdapter;
     FragmentManager fragmentManager;
     TabItem tabRoom, tabTask, tabTenant;
-    String houseID;
+    String houseID, ownerID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
