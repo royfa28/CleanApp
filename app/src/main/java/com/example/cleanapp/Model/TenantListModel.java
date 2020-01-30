@@ -1,30 +1,27 @@
 package com.example.cleanapp.Model;
 
 public class TenantListModel {
-    String nameTenant, phoneNumbertenant,IdTenant;
-
-    //constructor
-
+    String name,number, IdTenant;
+//constructor
     public TenantListModel() {
     }
+    //getter setter
 
-    //GETTER SETTER
 
-
-    public String getNameTenant() {
-        return nameTenant;
+    public String getName() {
+        return name;
     }
 
-    public void setNameTenant(String nameTenant) {
-        this.nameTenant = nameTenant;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPhoneNumbertenant() {
-        return phoneNumbertenant;
+    public String getNumber() {
+        return number;
     }
 
-    public void setPhoneNumbertenant(String phoneNumbertenant) {
-        this.phoneNumbertenant = phoneNumbertenant;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getIdTenant() {

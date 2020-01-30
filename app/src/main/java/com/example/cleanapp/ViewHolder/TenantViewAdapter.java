@@ -36,13 +36,19 @@ public class TenantViewAdapter extends RecyclerView.Adapter<TenantViewAdapter.Te
     @NonNull
     @Override
     public TenantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.listview_tenant, parent, false);
+        return new TenantViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TenantViewAdapter.TenantViewHolder holder, int position) {
 //        String houseID = houses.get(position).getHouseID();
 //        holder.house_Name.setText(houseID);
+        String num = userTenant.get(position).getNumber();
+        holder.tenant_phone.setText(num);
+        holder.tenant_name.setText(userTenant.get(position).getName());
+        //holder.teant_profileImg.setImageIcon();
         Bundle bundle = new Bundle();
 
         // Clicking the house will bring it to house view, where user can see rooms inside the house.
@@ -50,19 +56,16 @@ public class TenantViewAdapter extends RecyclerView.Adapter<TenantViewAdapter.Te
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), HouseActivityTab.class);
-//                intent.putExtra("houseID", houseID);
-//                bundle.putString("house",houseID);
-//                RoomDetailFragment roomDetailFragment = new RoomDetailFragment(houseID);
-//                roomDetailFragment.setArguments(bundle);
-                v.getContext().startActivity(intent);
+//                Intent intent = new Intent(v.getContext(), HouseActivityTab.class);
+//
+//                v.getContext().startActivity(intent);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return userTenant.size();
     }
 
 //    @Override

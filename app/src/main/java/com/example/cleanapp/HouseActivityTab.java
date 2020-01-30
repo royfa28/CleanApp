@@ -3,6 +3,7 @@ package com.example.cleanapp;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.cleanapp.Fragment.CalendarFragment;
 import com.example.cleanapp.Fragment.RoomDetailFragment;
 import com.example.cleanapp.Fragment.TenantListFragment;
 //import com.example.cleanapp.ui.main.PageViewModel;
@@ -50,7 +51,7 @@ public class HouseActivityTab extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tabLayout);
         tabRoom = findViewById(R.id.tabRoom);
-        tabTask = findViewById(R.id.tabTask);
+        tabTask = findViewById(R.id.tabCalendar);
         tabTenant = findViewById(R.id.tabTenant);
         viewPager = findViewById(R.id.view_pager);
 
@@ -106,7 +107,7 @@ public class HouseActivityTab extends AppCompatActivity {
                 case 0:
                     return new RoomDetailFragment(houseID);
                 case 1:
-                    return new RoomDetailFragment(houseID);
+                    return new CalendarFragment(houseID);
                 case 2:
                     return new TenantListFragment(houseID);
                 default:

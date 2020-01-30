@@ -25,6 +25,7 @@
             android:id="@+id/TenantimageView2"
             android:layout_width="134dp"
             android:layout_height="97dp"
+            android:background="#C616B173"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/linearLayout3"

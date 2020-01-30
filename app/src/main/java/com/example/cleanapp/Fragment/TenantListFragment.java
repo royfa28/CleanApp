@@ -3,6 +3,7 @@ package com.example.cleanapp.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -39,6 +40,8 @@ public class TenantListFragment extends Fragment {
     ArrayList<TenantListModel>Tenants = new ArrayList<>();
     TenantViewAdapter adapter;
     protected RecyclerView tenantRecyclerView ;
+
+    //constructo
     public TenantListFragment (String houseID){
         Bundle bundle = new Bundle();
         bundle.putString("house", houseID);
@@ -53,6 +56,7 @@ public class TenantListFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_tenant_list, container,false);
 
         tenantRecyclerView = (RecyclerView) view.findViewById(R.id.tenantRecyclerView);
+        tenantRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
 
         Bundle bundle = getArguments();
         String houseID = bundle.getString("house");
@@ -71,7 +75,6 @@ public class TenantListFragment extends Fragment {
                     TenantListModel t = new TenantListModel();
                     //fill model
                     t = dataSnapshot1.getValue(TenantListModel.class);
-                    t.setIdTenant(tenantID);
                     //add to array
 //                    House h = dataSnapshot1.getValue(House.class);
                     Tenants.add(t);

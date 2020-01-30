@@ -76,7 +76,6 @@ public class RoomViewAdapter extends RecyclerView.Adapter<RoomViewAdapter.RoomVi
             room_name = (TextView) itemView.findViewById(R.id.room_name_Textview);
             room_description = (TextView) itemView.findViewById(R.id.room_description_TextView);
             cardView = (CardView) itemView.findViewById(R.id.room_cardview);
-
         }
     }
 }
