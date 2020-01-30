@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.cleanapp.R;
+import com.example.cleanapp.RoomDetailModal;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -22,7 +23,7 @@ public class TenantProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        final TenantMainFragment activity = (TenantMainFragment) getActivity();
+        final RoomDetailModal.TenantMainActivity activity = (RoomDetailModal.TenantMainActivity) getActivity();
 
         //Bundle results = activity.getUserID();            Getting the user ID
         //userid = results.getString("userID");

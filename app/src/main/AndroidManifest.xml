@@ -14,7 +14,7 @@
             android:label="@string/title_activity_house_tab"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".TenantHomeActivity" />
+        <activity android:name=".Fragment.TenantHomeFragment" />
 
         <activity
             android:name=".RoomDetailModal"
@@ -24,7 +24,7 @@
         <activity android:name=".SetuserlvlActivity" />
         <activity android:name=".AddHouseActivity" />
         <activity android:name=".OwnerMainActivity" />
-        <activity android:name=".Fragment.TenantMainFragment" />
+        <activity android:name=".RoomDetailModal$TenantMainActivity" />
         <activity android:name=".Fragment.RoomDetailFragment" />
         <activity android:name=".registerActivity" />
         <activity android:name=".LoginActivity">
