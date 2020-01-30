@@ -2,6 +2,8 @@ package com.example.cleanapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -34,7 +36,7 @@ import java.util.regex.Pattern;
 
 public class registerActivity extends AppCompatActivity {
 
-    public EditText emailTxt,passwordTxt, editTextPhone;
+    public EditText emailTxt,passwordTxt, editTextPhone, editTextFullName, editTextConfirmPass;
     protected Button btnLogin, btnRegister;
     public TextView txtValrAcc;
     protected RadioGroup userLvlradioGroup;
@@ -58,10 +60,19 @@ public class registerActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Register");
 
-        myFirebaseAuth = FirebaseAuth.getInstance();
-        emailTxt = findViewById(R.id.editTextEmail);
-        editTextPhone = findViewById(R.id.editTextPhone);
-        passwordTxt = findViewById(R.id.passwordEditText);
+        editTextFullName = (EditText) findViewById(R.id.editTextFullName);
+        emailTxt = (EditText) findViewById(R.id.registerEmailEditText);
+        editTextPhone = (EditText) findViewById(R.id.editTextPhone);
+        passwordTxt = (EditText) findViewById(R.id.registerPasswordEditText);
+        editTextConfirmPass  = (EditText) findViewById(R.id.registerConfirmPasswordEditText);
+
+        editTextFullName.addTextChangedListener(mTextWatcher);
+        emailTxt.addTextChangedListener(mTextWatcher);
+        editTextPhone.addTextChangedListener(mTextWatcher);
+        passwordTxt.addTextChangedListener(mTextWatcher);
+        editTextConfirmPass.addTextChangedListener(mTextWatcher);
+
+
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.buttonRegister);
         txtValrAcc = findViewById(R.id.textViewAlrAcc);
@@ -75,40 +86,47 @@ public class registerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String mail = emailTxt.getText().toString();
                 String password = passwordTxt.getText().toString();
+                String confirmPass = editTextConfirmPass.getText().toString();
 
-                if (isValidEmail(mail) && password.length() > 7) {
-                    myFirebaseAuth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(registerActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (!task.isSuccessful()) {
-                                Toast.makeText(registerActivity.this, "sign up fail", Toast.LENGTH_SHORT).show();
-                            } else {
-                                //get firebase auth user key
-                                String firebaseAuthUserId = getUserKeyFireAuth();
-                                Log.d("fireAuthKey : ", firebaseAuthUserId);
+                if(confirmPass.equals(password)){
+                    if (isValidEmail(mail) && password.length() > 7) {
+                        myFirebaseAuth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(registerActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (!task.isSuccessful()) {
+                                    Toast.makeText(registerActivity.this, "sign up fail", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    //get firebase auth user key
+                                    String firebaseAuthUserId = getUserKeyFireAuth();
+                                    Log.d("fireAuthKey : ", firebaseAuthUserId);
 
-                                Toast.makeText(registerActivity.this, firebaseAuthUserId, Toast.LENGTH_SHORT).show();
-                                createUserInDB();
-                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                user.sendEmailVerification();
-                                getUser.child(myUser.getUserKey());
+                                    Toast.makeText(registerActivity.this, firebaseAuthUserId, Toast.LENGTH_SHORT).show();
+                                    createUserInDB();
+                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                    user.sendEmailVerification();
+                                    getUser.child(myUser.getUserKey());
 
-                                /*getUser.child(myUser.getUserKey()).addChildEventListener(getUser);*/
-                                getUser.child(myUser.getUserKey()).child("user mail").setValue(myUser.getUserMail());
-                                getUser.child(myUser.getUserKey()).child("user phone").setValue(myUser.getUserPhone());
-                                setUserLvl();
-                                getUser.child(myUser.getUserKey()).child("user lvl").setValue(myUser.getUserLvl());
+                                    /*getUser.child(myUser.getUserKey()).addChildEventListener(getUser);*/
+                                    getUser.child(myUser.getUserKey()).child("user mail").setValue(myUser.getUserMail());
+                                    getUser.child(myUser.getUserKey()).child("user phone").setValue(myUser.getUserPhone());
+                                    setUserLvl();
+                                    getUser.child(myUser.getUserKey()).child("user lvl").setValue(myUser.getUserLvl());
+                                    getUser.child(myUser.getUserKey()).child("user fullName").setValue(myUser.getUserFullName());
 
-                                Toast.makeText(registerActivity.this, "Please verify your email", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(registerActivity.this, LoginActivity.class));
-                                //getUserLevel();
+                                    Toast.makeText(registerActivity.this, "Please verify your email", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(registerActivity.this, LoginActivity.class));
+                                    //getUserLevel();
+                                }
                             }
-                        }
-                    });
+                        });
 
-                }else{
-                    Toast.makeText(registerActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(registerActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Toast.makeText(registerActivity.this, "Password is not the same", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
@@ -122,6 +140,38 @@ public class registerActivity extends AppCompatActivity {
             }
         });
     }
+
+    private TextWatcher mTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            checkIsEmpty();
+        }
+    };
+
+    void checkIsEmpty(){
+        String fullname = editTextFullName.getText().toString();
+        String email = emailTxt.getText().toString();
+        String phone = editTextPhone.getText().toString();
+        String password = passwordTxt.getText().toString();
+
+        if(fullname.equals("") || email.equals("") || phone.equals("") || password.equals("")){
+            btnRegister.setEnabled(false);
+        }else{
+            btnRegister.setEnabled(true);
+        }
+
+    }
+
 
     protected String getUserKeyFireAuth(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -159,6 +209,7 @@ public class registerActivity extends AppCompatActivity {
         myUser.setUserMail(emailTxt.getText().toString());
         myUser.setUserPhone(editTextPhone.getText().toString());
         myUser.setUserKey(getUserKeyFireAuth());
+        myUser.setUserFullName(editTextFullName.getText().toString());
     }
 
     protected void setUserLvl(){
@@ -168,31 +219,6 @@ public class registerActivity extends AppCompatActivity {
             myUser.setUserLvl(false);
         }
     }
-
-    protected void getUserLevel(){
-        userLevel = FirebaseDatabase.getInstance().getReference().child("User").child(getUserKeyFireAuth()).child("user lvl");
-        userLevel.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Boolean userlvl = dataSnapshot.getValue(Boolean.class);
-                if(userlvl == true){
-                    Toast.makeText(registerActivity.this, userlvl.toString(),Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(registerActivity.this,OwnerMainActivity.class);
-                    startActivity(i);
-                }else{
-                    Toast.makeText(registerActivity.this, userlvl.toString(),Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(registerActivity.this, TenantMainFragment.class);
-                    startActivity(i);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
 }
 
 

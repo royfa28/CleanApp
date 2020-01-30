@@ -53,7 +53,6 @@ public class LoginActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
         myFirebaseAuth = FirebaseAuth.getInstance();
 
-
         myAuthStateListener = new FirebaseAuth.AuthStateListener()
         {
             @Override
@@ -65,12 +64,11 @@ public class LoginActivity extends AppCompatActivity {
                     FirebaseUser user = myFirebaseAuth.getCurrentUser();
                     if(user.isEmailVerified()){
                         getUserLevel();
-                    }else{
+                    }else {
                         verifyDialog();
                     }
-                    getUserLevel();
                 } else {
-                    Toast.makeText(LoginActivity.this, "plz, Login ",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Please, Login ",Toast.LENGTH_SHORT).show();
                 }
             }
         };
