@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.cleanapp.Model.Room;
 import com.example.cleanapp.Model.TenantListModel;
@@ -34,6 +35,8 @@ public class CalendarFragment extends Fragment {
     View view;
     ArrayList<Room>rooms = new ArrayList<>();
     ArrayList<TenantListModel> tenant = new ArrayList<>();
+    String houseID;
+    String userID;
 
 
 
@@ -50,9 +53,34 @@ public class CalendarFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_calendar, container, false);
 
         Bundle bundle = getArguments();
-        String houseID = bundle.getString("house");
-        String userID = getUserKeyFireAuth();
+        houseID = bundle.getString("house");
+        userID = getUserKeyFireAuth();
 
+        //prep array
+        prepArrayRoom();
+        prepArraytenant();
+
+
+
+
+
+
+
+return view;
+}
+
+    protected String getUserKeyFireAuth(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String fireAuthUserKey="";
+
+        if (user != null) {
+            fireAuthUserKey = user.getUid();
+        }
+
+        return fireAuthUserKey;
+    }
+
+    protected void prepArrayRoom(){
         //prep the array of room
         getRoom = FirebaseDatabase.getInstance().getReference().child("House").child(userID).child(houseID).child("Rooms");
         getRoom.addValueEventListener(new ValueEventListener() {
@@ -67,16 +95,18 @@ public class CalendarFragment extends Fragment {
                     room.setRoomID(roomID);
                     room.setHouseID(houseID);
                     rooms.add(room);
-            }}
+                }}
 
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
-                {
+            {
 
             }
         });
 
+    }
+    protected void prepArraytenant(){
         //prep array tenant
         getTenant = FirebaseDatabase.getInstance().getReference().child("House").child(houseID).child("Tenant");
         getTenant.addValueEventListener(new ValueEventListener() {
@@ -100,18 +130,5 @@ public class CalendarFragment extends Fragment {
 
             }
         });
-
-return view;
-}
-
-    protected String getUserKeyFireAuth(){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String fireAuthUserKey="";
-
-        if (user != null) {
-            fireAuthUserKey = user.getUid();
-        }
-
-        return fireAuthUserKey;
     }
 }
