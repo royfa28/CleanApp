@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -58,18 +59,25 @@ public class HouseInvitationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 prepHouseInvit();
                 addHouseInviteDB();
+                returnToTenabtList();
 
             }
         });
 
 
     }
+    protected  void returnToTenabtList(){
+        Toast.makeText(HouseInvitationActivity.this, "Your invitation have been sent",Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(HouseInvitationActivity.this,HouseActivityTab.class);
+        i.putExtra("houseID",houseID);
+        startActivity(i);
+    }
     protected  void addHouseInviteDB()
     {
         getHouseInvitation.child(phoneNumberTenant.getText().toString());
         getHouseInvitation.child(phoneNumberTenant.getText().toString()).child("House id").setValue(myHouseInvitation.getIdHouse());
         getHouseInvitation.child(phoneNumberTenant.getText().toString()).child("Owner Key").setValue(myHouseInvitation.getIdOwner());
-        getHouseInvitation.child(phoneNumberTenant.getText().toString()).child("isRead").setValue(myHouseInvitation.getRead());
+        getHouseInvitation.child(phoneNumberTenant.getText().toString()).child("isRead").setValue(myHouseInvitation.getIsRead());
 
 
     }

@@ -100,6 +100,7 @@ public class OwnerHomeFragment extends Fragment {
             // authenticate with your backend server, if you have one. Use
             // FirebaseUser.getIdToken() instead.
             fireAuthUserKey = user.getUid();
+
         }
 
         return fireAuthUserKey;

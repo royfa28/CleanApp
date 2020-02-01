@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.cleanapp.Fragment.TenantMainFragment;
 import com.example.cleanapp.Model.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -53,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
         myFirebaseAuth = FirebaseAuth.getInstance();
 
-
         myAuthStateListener = new FirebaseAuth.AuthStateListener()
         {
             @Override
@@ -65,12 +63,11 @@ public class LoginActivity extends AppCompatActivity {
                     FirebaseUser user = myFirebaseAuth.getCurrentUser();
                     if(user.isEmailVerified()){
                         getUserLevel();
-                    }else{
+                    }else {
                         verifyDialog();
                     }
-                    getUserLevel();
                 } else {
-                    Toast.makeText(LoginActivity.this, "plz, Login ",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Please, Login ",Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -144,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     protected void getUserLevel(){
-        userLevel = FirebaseDatabase.getInstance().getReference().child("User").child(getUserKeyFireAuth()).child("user lvl");
+        userLevel = FirebaseDatabase.getInstance().getReference().child("User").child(getUserKeyFireAuth()).child("userLvl");
         userLevel.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -155,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(i);
                 }else{
                     Toast.makeText(LoginActivity.this, userlvl.toString(),Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(LoginActivity.this, TenantMainFragment.class);
+                    Intent i = new Intent(LoginActivity.this, RoomDetailModal.TenantMainActivity.class);
                     startActivity(i);
                 }
             }

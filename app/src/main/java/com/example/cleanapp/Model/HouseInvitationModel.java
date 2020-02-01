@@ -7,8 +7,8 @@ public class HouseInvitationModel {
 
     //tenant info
     String idTenant , mailTenant,tenantPhone;
-    //boolean read
-    Boolean read=false;
+    //boolean isRead
+    Boolean isRead =false;
 
     String messageInvitation;
 
@@ -25,12 +25,12 @@ public class HouseInvitationModel {
         return ownerPhone;
     }
 
-    public Boolean getRead() {
-        return read;
+    public Boolean getIsRead() {
+        return isRead;
     }
 
-    public void setRead(Boolean read) {
-        this.read = read;
+    public void setIsRead(Boolean isRead) {
+        this.isRead = isRead;
     }
 
     public void setOwnerPhone(String ownerPhone) {

@@ -5,6 +5,7 @@ public class UserModel {
     String userMail;
     String userPhone;
     String userKey;
+    String userFullName;
 
     //Constructor
     public UserModel() {
@@ -13,6 +14,7 @@ public class UserModel {
     public UserModel(String userMail, String userPhone) {
         this.userMail = userMail;
         this.userPhone = userPhone;
+
     }
 
     //GETTER SETTER
@@ -46,5 +48,13 @@ public class UserModel {
 
     public void setUserKey(String userKey) {
         this.userKey = userKey;
+    }
+
+    public String getUserFullName() {
+        return userFullName;
+    }
+
+    public void setUserFullName(String userFullName) {
+        this.userFullName = userFullName;
     }
 }
