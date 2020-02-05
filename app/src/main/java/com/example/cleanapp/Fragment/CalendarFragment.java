@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.cleanapp.Model.Room;
+import com.example.cleanapp.Model.TaskAssignCardModel;
 import com.example.cleanapp.Model.TenantListModel;
 import com.example.cleanapp.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,12 +32,20 @@ public class CalendarFragment extends Fragment {
 
     //retrieve the info from db
     DatabaseReference getRoom,getTenant;
-    ArrayList roomAssign = new ArrayList();
-    View view;
+
+
+    //prep array for assignation
     ArrayList<Room>rooms = new ArrayList<>();
     ArrayList<TenantListModel> tenant = new ArrayList<>();
+    ArrayList roomAssign = new ArrayList();
+    ArrayList<TaskAssignCardModel> taskAssignCard = new ArrayList<>();
+
+
     String houseID;
     String userID;
+
+    View view;
+    //recycler
 
 
 
@@ -59,6 +68,10 @@ public class CalendarFragment extends Fragment {
         //prep array
         prepArrayRoom();
         prepArraytenant();
+        
+        //fill card assign
+
+        
 
 
 
