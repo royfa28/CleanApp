@@ -2,6 +2,9 @@ package com.example.cleanapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class AddHouseActivity extends AppCompatActivity {
 
-    EditText bedroom_amount, bathroom_amount, room_amount;
+    EditText bathroom_amount, room_amount;
     Integer bedroom, bathroom, rooms;
     TextView label;
 
@@ -35,9 +38,10 @@ public class AddHouseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_house);
 
         Button saveHouseButton = (Button) findViewById(R.id.save_house_button);
-        bedroom_amount = (EditText) findViewById(R.id.bedroom_amount);
         bathroom_amount = (EditText) findViewById(R.id.bathroom_amount);
+        bathroom_amount.setFilters( new InputFilter[]{ new MinMaxInputFilter( "1" , "10" )}) ;
         room_amount = (EditText) findViewById(R.id.room_amount);
+        room_amount.setFilters( new InputFilter[]{ new MinMaxInputFilter( "1" , "10" )}) ;
         label = (TextView) findViewById(R.id.textView3);
 
         saveHouseButton.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +57,6 @@ public class AddHouseActivity extends AppCompatActivity {
 
     private void getValues(){
         int count = 1;
-        bedroom = Integer.parseInt(bedroom_amount.getText().toString());
         bathroom = Integer.parseInt(bathroom_amount.getText().toString());
         rooms = Integer.parseInt(room_amount.getText().toString());
 
@@ -81,6 +84,23 @@ public class AddHouseActivity extends AppCompatActivity {
             count++;
         }
     }
+
+    private TextWatcher mTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
     protected String getUserKeyFireAuth(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

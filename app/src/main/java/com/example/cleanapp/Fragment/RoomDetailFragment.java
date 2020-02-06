@@ -69,6 +69,7 @@ public class RoomDetailFragment extends Fragment {
                     rooms.add(room);
                 }
                 adapter = new RoomViewAdapter(RoomDetailFragment.this, rooms);
+
                 roomListRecycleView.setAdapter(adapter);
             }
 

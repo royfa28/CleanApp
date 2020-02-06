@@ -6,16 +6,21 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.cleanapp.Model.Room;
 import com.example.cleanapp.Model.TaskAssignCardModel;
 import com.example.cleanapp.Model.TenantListModel;
 import com.example.cleanapp.R;
+import com.example.cleanapp.ViewHolder.TaskAssignViewAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,14 +36,14 @@ import java.util.ArrayList;
 public class CalendarFragment extends Fragment {
 
     //retrieve the info from db
-    DatabaseReference getRoom,getTenant;
+    DatabaseReference getRoom, getTenant;
 
 
     //prep array for assignation
-    ArrayList<Room>rooms = new ArrayList<>();
+    ArrayList<Room> rooms = new ArrayList<>();
     ArrayList<TenantListModel> tenant = new ArrayList<>();
-    ArrayList roomAssign = new ArrayList();
     ArrayList<TaskAssignCardModel> taskAssignCard = new ArrayList<>();
+    ArrayList<Integer> garbage = new ArrayList<Integer>();
 
 
     String houseID;
@@ -46,7 +51,8 @@ public class CalendarFragment extends Fragment {
 
     View view;
     //recycler
-
+    TaskAssignViewAdapter adapter;
+    RecyclerView TaskAssignRecycler;
 
 
     public CalendarFragment(String houseID) {
@@ -60,68 +66,33 @@ public class CalendarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_calendar, container, false);
+        TaskAssignRecycler = (RecyclerView) view.findViewById(R.id.recyclerViewAssignTask);
+        TaskAssignRecycler.setLayoutManager(new GridLayoutManager(getContext(), 1));
 
         Bundle bundle = getArguments();
         houseID = bundle.getString("house");
         userID = getUserKeyFireAuth();
 
-        //prep array
-        prepArrayRoom();
-        prepArraytenant();
-        
-        //fill card assign
+        adapter = new TaskAssignViewAdapter(taskAssignCard, CalendarFragment.this);
+        TaskAssignRecycler.setAdapter(adapter);
 
-        
+        //prep arrays
 
 
 
-
-
-
-
-return view;
-}
-
-    protected String getUserKeyFireAuth(){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String fireAuthUserKey="";
-
-        if (user != null) {
-            fireAuthUserKey = user.getUid();
-        }
-
-        return fireAuthUserKey;
-    }
-
-    protected void prepArrayRoom(){
-        //prep the array of room
-        getRoom = FirebaseDatabase.getInstance().getReference().child("House").child(userID).child(houseID).child("Rooms");
-        getRoom.addValueEventListener(new ValueEventListener() {
+        //btn
+        Button btnRandom = view.findViewById(R.id.button);
+        btnRandom.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                rooms.clear();
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                for (DataSnapshot ds : children) {
-                    String roomID = ds.getKey();
-                    Room room = new Room();
-                    room = ds.getValue(Room.class);
-                    room.setRoomID(roomID);
-                    room.setHouseID(houseID);
-                    rooms.add(room);
-                }}
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError)
-            {
-
+            public void onClick(View v) {
+               // prepArrayRoom();
             }
         });
 
-    }
-    protected void prepArraytenant(){
-        //prep array tenant
-        getTenant = FirebaseDatabase.getInstance().getReference().child("House").child(houseID).child("Tenant");
+        //prep array
+
+        //load Tenant array on create
+        getTenant = FirebaseDatabase.getInstance().getReference().child("House").child(userID).child(houseID).child("Tenant");
         getTenant.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -136,6 +107,7 @@ return view;
                     //add to array
                     tenant.add(t);
                 }
+                Log.d("TENANT LIST", "onDataChange: " + tenant);
             }
 
             @Override
@@ -143,5 +115,77 @@ return view;
 
             }
         });
+
+        //load Room Array
+        getRoom = FirebaseDatabase.getInstance().getReference().child("House").child(userID).child(houseID).child("Rooms");
+        getRoom.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                rooms.clear();
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                for (DataSnapshot ds : children) {
+                    String roomID = ds.getKey();
+                    Room room = new Room();
+                    room = ds.getValue(Room.class);
+                    room.setRoomID(roomID);
+                    room.setHouseID(houseID);
+                    rooms.add(room);
+                }
+                Log.d("TAG", "onDataChange: " + rooms);
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        return view;
     }
+
+    protected String getUserKeyFireAuth() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String fireAuthUserKey = "";
+
+        if (user != null) {
+            fireAuthUserKey = user.getUid();
+        }
+
+        return fireAuthUserKey;
+    }
+
+    protected void prepArrayRoomAndRand() {
+
+        int totalTask = rooms.size();
+        int count = 1;
+        while (rooms.size() > 0) {
+            TaskAssignCardModel myTaskCard = new TaskAssignCardModel();
+
+            int randNumGarb = (int) (Math.random() * ((rooms.size() - 1) + 1)) + 0;
+
+            int tenantIndex = count % tenant.size();
+
+            myTaskCard.setRoomName(rooms.get(randNumGarb).getRoomName());
+            myTaskCard.setRoomName(rooms.get(randNumGarb).getRoomdescription());
+            myTaskCard.setTenantName(tenant.get(tenantIndex).getName());
+            myTaskCard.setTenantNumber(tenant.get(tenantIndex).getNumber());
+
+            taskAssignCard.add(myTaskCard);
+            //need to track in db
+            String roomID = rooms.get(randNumGarb).getRoomID();
+            String tenantID = tenant.get(tenantIndex).getIdTenant();
+
+            //Write to database
+            //write on House....OWNERID...HouseID ... tenant...TenanID
+            //write on House....OWNERID...HouseID...TaskAssign...RoomID
+            //
+            count++;
+            rooms.remove(randNumGarb);
+        }
+    }
+
 }
+

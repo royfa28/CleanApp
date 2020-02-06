@@ -1,5 +1,8 @@
 package com.example.cleanapp.ViewHolder;
 
+import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,12 +13,57 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class TaskAssignViewAdapter {
+import com.example.cleanapp.Fragment.CalendarFragment;
+import com.example.cleanapp.Model.Room;
+import com.example.cleanapp.Model.TaskAssignCardModel;
+import com.example.cleanapp.Model.UserModel;
+import com.example.cleanapp.R;
+
+import java.util.ArrayList;
+
+public class TaskAssignViewAdapter extends RecyclerView.Adapter<TaskAssignViewAdapter.TaskAssignViewHolder> {
     private static final String TAG = "TaskAssignViewAdapter";
+
+
+    ArrayList<TaskAssignCardModel> myTaskAssignCardModelArrayList;
+    private Context myContext;
+
+    public TaskAssignViewAdapter(ArrayList<TaskAssignCardModel> assignArray,  CalendarFragment myContext) {
+        myTaskAssignCardModelArrayList = assignArray;
+        myContext = myContext;
+    }
+
+    @NonNull
+    @Override
+    public TaskAssignViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.assign_task,parent,false);
+        TaskAssignViewHolder mytaskAssignViewHolder = new TaskAssignViewHolder(view);
+        return mytaskAssignViewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull TaskAssignViewHolder holder, int position) {
+        Log.d(TAG, "onBindViewHolder: CALLED");
+
+        String roomName = myTaskAssignCardModelArrayList.get(position).getRoomName();
+        String room_desc = myTaskAssignCardModelArrayList.get(position).getRoomTaskDescription();
+        String tenantName = myTaskAssignCardModelArrayList.get(position).getTenantName();
+        String tenantNumber = myTaskAssignCardModelArrayList.get(position).getTenantNumber();
+
+        holder.textView_TenantName.setText(tenantName);
+        holder.textView_TenantNumber.setText(tenantNumber);
+        holder.textView_roomName.setText(roomName);
+        holder.textView_TaskDescription.setText(room_desc);
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return 0;
+    }
 
     public class TaskAssignViewHolder extends RecyclerView.ViewHolder{
         //hold the widget => declare all elemtents of assign task layout
-
 
         CardView cardview_TaskAssign_Parent;
         LinearLayout linearLayout_TaskAssign,linearLayout_Tenant_Child,linearLayout_Task_child;
@@ -26,6 +74,15 @@ public class TaskAssignViewAdapter {
         public TaskAssignViewHolder(@NonNull View itemView) {
             super(itemView);
             cardview_TaskAssign_Parent = itemView.findViewById(R.id.cardview_TaskAssign_Parent);
+            linearLayout_TaskAssign = itemView.findViewById(R.id.linearLayout_TaskAssign);
+            linearLayout_Tenant_Child = itemView.findViewById(R.id.linearLayout_Tenant_Child);
+            linearLayout_Task_child = itemView.findViewById(R.id.linearLayout_Task_child);
+
+            textView_TenantName = itemView.findViewById(R.id.textView_TenantName);
+            textView_TenantNumber = itemView.findViewById(R.id.textView_TenantNumber);
+            textView_roomName = itemView.findViewById(R.id.textView_roomName);
+            textView_TaskDescription = itemView.findViewWithTag(R.id.textView_TaskDescription);
+            imageView_ProfilePicTenant = itemView.findViewById(R.id.imageView_ProfilePicTenant);
         }
     }
 }

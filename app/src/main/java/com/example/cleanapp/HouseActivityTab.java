@@ -74,7 +74,7 @@ public class HouseActivityTab extends AppCompatActivity {
                 if(tab.getPosition() == 1){
                     new RoomDetailFragment(houseID);
                 }else if(tab.getPosition() == 2){
-
+                    new CalendarFragment(houseID);
                 }else{
                     new TenantListFragment(houseID);
                 }
