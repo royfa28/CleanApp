@@ -66,11 +66,11 @@ public class AddHouseActivity extends AppCompatActivity {
         String houseID = mDatabase.push().getKey();
         addRoom = mDatabase.child("House").child(userID).child(houseID).child("Rooms");
 
-        for(int i = 1; i <= bedroom ; i++){
-            addRoom.child("Room " + count).child("roomName").setValue("Bedroom " + i);
-            addRoom.child("Room " + count).child("roomDescription").setValue("Please fill in task");
-            count++;
-        }
+//        for(int i = 1; i <= bedroom ; i++){
+//            addRoom.child("Room " + count).child("roomName").setValue("Bedroom " + i);
+//            addRoom.child("Room " + count).child("roomDescription").setValue("Please fill in task");
+//            count++;
+//        }
 
         for(int j = 1 ; j <= bathroom ; j++){
             addRoom.child("Room " + count).child("roomName").setValue("Bathroom " + j);

@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this,"field are empty",Toast.LENGTH_SHORT).show();
                     } else if (!(mail.isEmpty() && password.isEmpty())) {
                         myFirebaseAuth.signInWithEmailAndPassword(mail,password)
-                                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                .addOnCompleteListener(LoginActivity.this, new  OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task)
                             {
@@ -106,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 }
                             }
+
                         });
                     } else {
                         Toast.makeText(LoginActivity.this, "Error",Toast.LENGTH_SHORT).show();

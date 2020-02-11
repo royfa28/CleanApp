@@ -78,14 +78,12 @@ public class CalendarFragment extends Fragment {
 
         //prep arrays
 
-
-
         //btn
         Button btnRandom = view.findViewById(R.id.button);
         btnRandom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // prepArrayRoom();
+                prepArrayRoomAndRand();
             }
         });
 
@@ -103,7 +101,9 @@ public class CalendarFragment extends Fragment {
                     //start model
                     TenantListModel t = new TenantListModel();
                     //fill model
+
                     t = dataSnapshot1.getValue(TenantListModel.class);
+                    t.setIdTenant(tenantID);
                     //add to array
                     tenant.add(t);
                 }
@@ -132,7 +132,6 @@ public class CalendarFragment extends Fragment {
                     rooms.add(room);
                 }
                 Log.d("TAG", "onDataChange: " + rooms);
-
             }
 
 
@@ -169,7 +168,7 @@ public class CalendarFragment extends Fragment {
             int tenantIndex = count % tenant.size();
 
             myTaskCard.setRoomName(rooms.get(randNumGarb).getRoomName());
-            myTaskCard.setRoomName(rooms.get(randNumGarb).getRoomdescription());
+            myTaskCard.setRoomTaskDescription(rooms.get(randNumGarb).getRoomdescription());
             myTaskCard.setTenantName(tenant.get(tenantIndex).getName());
             myTaskCard.setTenantNumber(tenant.get(tenantIndex).getNumber());
 
@@ -180,7 +179,18 @@ public class CalendarFragment extends Fragment {
 
             //Write to database
             //write on House....OWNERID...HouseID ... tenant...TenanID
-            //write on House....OWNERID...HouseID...TaskAssign...RoomID
+            getRoom = FirebaseDatabase.getInstance().getReference().child("House").child(userID).child(houseID).child("TaskAssign");
+            //add to house task assign
+            getRoom.child(roomID).child("TenanName").setValue(myTaskCard.getTenantName());
+            getRoom.child(roomID).child("TenantNumber").setValue(myTaskCard.getTenantNumber());
+            getRoom.child(roomID).child("isDone").setValue(false);
+            getRoom.child(roomID).child("roomDescription").setValue(myTaskCard.getRoomTaskDescription());
+            getRoom.child(roomID).child("roomName").setValue(myTaskCard.getRoomName());
+            //write on Tenant....OWNERID...HouseID...TaskAssign...RoomID
+            getTenant = FirebaseDatabase.getInstance().getReference().child("House").child(userID).child(houseID).child("Tenant").child(tenantID);
+            //add to the tenant Task
+            getTenant.child("Task").child(roomID).child("roomDesc").setValue(myTaskCard.getRoomTaskDescription());
+            getTenant.child("Task").child(roomID).child("roomName").setValue(myTaskCard.getRoomName());
             //
             count++;
             rooms.remove(randNumGarb);
