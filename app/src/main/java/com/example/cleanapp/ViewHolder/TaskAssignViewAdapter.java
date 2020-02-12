@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cleanapp.Fragment.CalendarFragment;
@@ -53,20 +54,20 @@ public class TaskAssignViewAdapter extends RecyclerView.Adapter<TaskAssignViewAd
         holder.textView_TenantName.setText(tenantName);
         holder.textView_TenantNumber.setText(tenantNumber);
         holder.textView_roomName.setText(roomName);
-        holder.textView_TaskDescription.setText(room_desc);
+        //holder.textView_TaskDescription.setText(room_desc);
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return myTaskAssignCardModelArrayList.size();
     }
 
     public class TaskAssignViewHolder extends RecyclerView.ViewHolder{
         //hold the widget => declare all elemtents of assign task layout
 
         CardView cardview_TaskAssign_Parent;
-        LinearLayout linearLayout_TaskAssign,linearLayout_Tenant_Child,linearLayout_Task_child;
+        ConstraintLayout ConstraintLayout_TaskAssign;
         TextView textView_TenantName,textView_TenantNumber,textView_roomName,textView_TaskDescription;
         ImageView imageView_ProfilePicTenant;
 
@@ -74,9 +75,7 @@ public class TaskAssignViewAdapter extends RecyclerView.Adapter<TaskAssignViewAd
         public TaskAssignViewHolder(@NonNull View itemView) {
             super(itemView);
             cardview_TaskAssign_Parent = itemView.findViewById(R.id.cardview_TaskAssign_Parent);
-            linearLayout_TaskAssign = itemView.findViewById(R.id.linearLayout_TaskAssign);
-            linearLayout_Tenant_Child = itemView.findViewById(R.id.linearLayout_Tenant_Child);
-            linearLayout_Task_child = itemView.findViewById(R.id.linearLayout_Task_child);
+            ConstraintLayout_TaskAssign = itemView.findViewById(R.id.linearLayout_TaskAssign);
 
             textView_TenantName = itemView.findViewById(R.id.textView_TenantName);
             textView_TenantNumber = itemView.findViewById(R.id.textView_TenantNumber);

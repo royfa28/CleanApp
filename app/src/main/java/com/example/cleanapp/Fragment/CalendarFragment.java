@@ -162,7 +162,7 @@ public class CalendarFragment extends Fragment {
                     TaskAssignCardModel mytaskAssignCardModel = new TaskAssignCardModel();
                     mytaskAssignCardModel=ds.getValue(TaskAssignCardModel.class);
                     assignationList.add(mytaskAssignCardModel);
-                    
+
                 }
                 adapter = new TaskAssignViewAdapter(assignationList, CalendarFragment.this);
                 TaskAssignRecycler.setAdapter(adapter);
@@ -172,6 +172,7 @@ public class CalendarFragment extends Fragment {
                 Log.w("tas assign", "Failed to read value.", databaseError.toException());
             }
         });
+
 
 
         return view;
@@ -220,8 +221,8 @@ public class CalendarFragment extends Fragment {
             //write on Tenant....OWNERID...HouseID...TaskAssign...RoomID
             getTenant = FirebaseDatabase.getInstance().getReference().child("House").child(userID).child(houseID).child("Tenant").child(tenantID);
             //add to house tenant Task
-            getTenant.child("Task").child(roomID).child("roomDesc").setValue(myTaskCard.getRoomDescription());
-            getTenant.child("Task").child(roomID).child("roomName").setValue(myTaskCard.getRoomName());
+//            getTenant.child("Task").child(roomID).child("roomDesc").setValue(myTaskCard.getRoomDescription());
+//            getTenant.child("Task").child(roomID).child("roomName").setValue(myTaskCard.getRoomName());
             //problem if owner clic several time on btn it just keep adding to the tenant task
             //but work well in task assign
             //adapter + layout
@@ -233,29 +234,29 @@ public class CalendarFragment extends Fragment {
     }
 
     protected void taskAssignUi(){
-//        assignationList = new ArrayList<>();
-//        getTaskAssign = FirebaseDatabase.getInstance().getReference().child("House").child(userID).child(houseID).child("TaskAssign");
-//        getTaskAssign.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                assignationList.clear();
-//                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-//                for (DataSnapshot ds : children)
-//                {
-//                    String taskAssignCardModelID = ds.getKey() ;
-//                    TaskAssignCardModel mytaskAssignCardModel = new TaskAssignCardModel();
-//                    mytaskAssignCardModel=ds.getValue(TaskAssignCardModel.class);
-//                    assignationList.add(mytaskAssignCardModel);
-//
-//                }
-//                adapter = new TaskAssignViewAdapter(assignationList, CalendarFragment.this);
-//                TaskAssignRecycler.setAdapter(adapter);
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                Log.w("tas assign", "Failed to read value.", databaseError.toException());
-//            }
-//        });
+        assignationList = new ArrayList<>();
+        getTaskAssign = FirebaseDatabase.getInstance().getReference().child("House").child(userID).child(houseID).child("TaskAssign");
+        getTaskAssign.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                assignationList.clear();
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                for (DataSnapshot ds : children)
+                {
+                    String taskAssignCardModelID = ds.getKey() ;
+                    TaskAssignCardModel mytaskAssignCardModel = new TaskAssignCardModel();
+                    mytaskAssignCardModel=ds.getValue(TaskAssignCardModel.class);
+                    assignationList.add(mytaskAssignCardModel);
+
+                }
+                adapter = new TaskAssignViewAdapter(assignationList, CalendarFragment.this);
+                TaskAssignRecycler.setAdapter(adapter);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("tas assign", "Failed to read value.", databaseError.toException());
+            }
+        });
     }
 
 }

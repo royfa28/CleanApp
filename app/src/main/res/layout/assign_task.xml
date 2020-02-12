@@ -5,65 +5,81 @@
     android:id="@+id/cardview_TaskAssign_Parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginRight="16dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/linearLayout_TaskAssign">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout_TaskAssign"
+        android:layout_width="378dp"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+
+        <ImageView
+            android:id="@+id/imageView_ProfilePicTenant"
+            android:layout_width="120dp"
+            android:layout_height="110dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/textView_TenantName"
+            android:layout_width="95dp"
+            android:layout_height="18dp"
+            android:layout_marginBottom="12dp"
+            android:text="Tenant Name"
+            app:layout_constraintBottom_toTopOf="@+id/textView_TenantNumber"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.25"
+            app:layout_constraintStart_toEndOf="@+id/imageView_ProfilePicTenant"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/textView_TenantNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Tenant Number"
+            app:layout_constraintBottom_toTopOf="@+id/textView_roomName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.255"
+            app:layout_constraintStart_toEndOf="@+id/imageView_ProfilePicTenant" />
+
+        <TextView
+            android:id="@+id/textView_roomName"
+            android:layout_width="209dp"
+            android:layout_height="23dp"
+            android:layout_marginBottom="9dp"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:id="@+id/linearLayout_Tenant_Child">
+            android:text="Room Name"
+            app:layout_constraintBottom_toTopOf="@+id/textView_TaskDescription"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView_ProfilePicTenant" />
 
-            <ImageView
-                android:id="@+id/imageView_ProfilePicTenant"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:srcCompat="@tools:sample/avatars" />
-
-            <TextView
-                android:id="@+id/textView_TenantName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tenant Name" />
-
-            <TextView
-                android:id="@+id/textView_TenantNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tenant Number" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
+        <TextView
+            android:id="@+id/textView_TaskDescription"
+            android:layout_width="211dp"
+            android:layout_height="19dp"
+            android:layout_marginBottom="36dp"
             android:layout_weight="1"
-            android:id="@+id/linearLayout_Task_child">
-
-            <TextView
-                android:id="@+id/textView_roomName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Room Name" />
-
-            <TextView
-                android:id="@+id/textView_TaskDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Task Description" />
-        </LinearLayout>
+            android:text="Task Description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.513"
+            app:layout_constraintStart_toEndOf="@+id/imageView_ProfilePicTenant" />
 
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

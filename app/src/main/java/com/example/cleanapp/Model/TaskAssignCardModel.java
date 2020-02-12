@@ -2,6 +2,7 @@ package com.example.cleanapp.Model;
 
 public class TaskAssignCardModel {
     String TenantName, TenantNumber, RoomName, roomDescription;
+    Boolean isDone;
 
     //constructor
 
@@ -9,6 +10,14 @@ public class TaskAssignCardModel {
     }
     //getter setter
 
+
+    public Boolean getDone() {
+        return isDone;
+    }
+
+    public void setDone(Boolean done) {
+        isDone = done;
+    }
 
     public String getTenantName() {
         return TenantName;

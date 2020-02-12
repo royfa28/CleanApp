@@ -1,6 +1,9 @@
 package com.example.cleanapp.ViewHolder;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cleanapp.Fragment.RoomDetailFragment;
@@ -56,8 +60,12 @@ public class TenantViewAdapter extends RecyclerView.Adapter<TenantViewAdapter.Te
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), HouseActivityTab.class);
-//
+
+//              Intent intent = new Intent(v.getContext(), RoomDetailModal.class);
+//                intent.putExtra("Room Name", roomName);
+//                intent.putExtra("Room Description", room_desc);
+//                intent.putExtra("Room ID",roomID);
+//                intent.putExtra("House ID", houseID);
 //                v.getContext().startActivity(intent);
             }
         });
@@ -86,7 +94,32 @@ public class TenantViewAdapter extends RecyclerView.Adapter<TenantViewAdapter.Te
             teant_profileImg = (ImageView) itemView.findViewById(R.id.TenantimageView2);
             tenant_phone = (TextView) itemView.findViewById(R.id.tenant_phone_TextView);
             cardView = (CardView) itemView.findViewById(R.id.tenant_cardview);
+        }
+    }
 
+    public class AlertTenantDelet extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("Are you sure, do you want to delete this tenant from your house ?")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // FIRE ZE MISSILES!
+
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User cancelled the dialog
+
+                        }
+                    });
+            // Create the AlertDialog object and return it
+            return builder.create();
         }
     }
 }
+
+
+

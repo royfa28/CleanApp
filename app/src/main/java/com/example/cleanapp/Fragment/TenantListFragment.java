@@ -101,6 +101,8 @@ public class TenantListFragment extends Fragment {
             }
         });
 
+        //listner card tenant for delet
+
         return view;
     }
 
