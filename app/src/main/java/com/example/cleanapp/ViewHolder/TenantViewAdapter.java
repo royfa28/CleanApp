@@ -1,8 +1,12 @@
 package com.example.cleanapp.ViewHolder;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +15,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.cleanapp.Fragment.RoomDetailFragment;
 import com.example.cleanapp.Fragment.TenantListFragment;
-import com.example.cleanapp.HouseActivityTab;
 import com.example.cleanapp.Model.TenantListModel;
-import com.example.cleanapp.Model.UserModel;
 import com.example.cleanapp.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -26,10 +31,14 @@ public class TenantViewAdapter extends RecyclerView.Adapter<TenantViewAdapter.Te
 
     private Context mContext;
     ArrayList<TenantListModel> userTenant;
+    Context context;
+    String houseID;
 
-    public TenantViewAdapter(TenantListFragment mContext, ArrayList<TenantListModel> t){
+
+    public TenantViewAdapter(TenantListFragment mContext, ArrayList<TenantListModel> t, String HouseID){
         mContext = mContext;
         userTenant = t;
+        houseID = HouseID;
     }
 
 
@@ -43,22 +52,58 @@ public class TenantViewAdapter extends RecyclerView.Adapter<TenantViewAdapter.Te
 
     @Override
     public void onBindViewHolder(@NonNull TenantViewAdapter.TenantViewHolder holder, int position) {
-//        String houseID = houses.get(position).getHouseID();
+
 //        holder.house_Name.setText(houseID);
         String num = userTenant.get(position).getNumber();
         holder.tenant_phone.setText(num);
         holder.tenant_name.setText(userTenant.get(position).getName());
         //holder.teant_profileImg.setImageIcon();
-        Bundle bundle = new Bundle();
+        String TenantID = userTenant.get(position).getIdTenant();
+        Log.d("IS IT ?",TenantID);
+
+
 
         // Clicking the house will bring it to house view, where user can see rooms inside the house.
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), HouseActivityTab.class);
-//
+//              Intent intent = new Intent(v.getContext(), RoomDetailModal.class);
+//                intent.putExtra("Room Name", roomName);
+//                intent.putExtra("Room Description", room_desc);
+//                intent.putExtra("Room ID",roomID);
+//                intent.putExtra("House ID", houseID);
 //                v.getContext().startActivity(intent);
+                context= v.getContext();
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("Are you sure, You want to remove the tenant from your house?" )
+                        .setTitle("Delete Tenant")
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton("remove", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                //read db ref
+                                DatabaseReference myRef= FirebaseDatabase.getInstance().getReference()
+                                        .child("House")
+                                        .child(getUserKeyFireAuth())
+                                        .child(houseID)
+                                        .child("Tenant")
+                                        .child(TenantID);
+                                myRef.removeValue();
+
+                                //remove from db
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+
             }
         });
     }
@@ -67,12 +112,6 @@ public class TenantViewAdapter extends RecyclerView.Adapter<TenantViewAdapter.Te
     public int getItemCount() {
         return userTenant.size();
     }
-
-//    @Override
-//    public int getItemCount() {
-//        //return houses.size();
-//    }
-
 
     public class TenantViewHolder extends  RecyclerView.ViewHolder{
 
@@ -87,6 +126,26 @@ public class TenantViewAdapter extends RecyclerView.Adapter<TenantViewAdapter.Te
             tenant_phone = (TextView) itemView.findViewById(R.id.tenant_phone_TextView);
             cardView = (CardView) itemView.findViewById(R.id.tenant_cardview);
 
+
         }
     }
+
+    protected String getUserKeyFireAuth(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String fireAuthUserKey="";
+
+        if (user != null) {
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+            // FirebaseUser.getIdToken() instead.
+            fireAuthUserKey = user.getUid();
+        }
+
+        return fireAuthUserKey;
+    }
+
+
 }
+
+
+

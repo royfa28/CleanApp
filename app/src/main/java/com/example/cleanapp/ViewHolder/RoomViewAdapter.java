@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cleanapp.Fragment.RoomDetailFragment;
+import com.example.cleanapp.Fragment.OwnerRoomDetailFragment;
 import com.example.cleanapp.Model.Room;
 import com.example.cleanapp.R;
 import com.example.cleanapp.RoomDetailModal;
@@ -23,7 +23,7 @@ public class RoomViewAdapter extends RecyclerView.Adapter<RoomViewAdapter.RoomVi
     ArrayList<Room> roomArrayList;
     private Context mContext;
 
-    public RoomViewAdapter(RoomDetailFragment mContext, ArrayList<Room> rooms) {
+    public RoomViewAdapter(OwnerRoomDetailFragment mContext, ArrayList<Room> rooms) {
         mContext = mContext;
         roomArrayList = rooms;
     }

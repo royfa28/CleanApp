@@ -6,8 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +18,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.cleanapp.Model.HouseInvitationModel;
+import com.example.cleanapp.Model.TaskAssignCardModel;
 import com.example.cleanapp.Model.UserModel;
 import com.example.cleanapp.R;
+import com.example.cleanapp.ViewHolder.HomeViewAdapter;
+import com.example.cleanapp.ViewHolder.TenantTaskListViewAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,8 +41,13 @@ public class TenantHomeFragment extends Fragment {
     Button agreeBtn;
     CardView homepageCard;
 
+    private RecyclerView taskListRecyclerView;
+    TenantTaskListViewAdapter adapter;
+
     ArrayList<UserModel> userDetails;
     ArrayList<HouseInvitationModel> invite;
+    ArrayList<TaskAssignCardModel> taskArrayList;
+
     protected UserModel userModel = new UserModel();
     protected HouseInvitationModel inviteModel = new HouseInvitationModel();
 
@@ -51,6 +62,13 @@ public class TenantHomeFragment extends Fragment {
         notificationText = (TextView) view.findViewById(R.id.notificationTextView);
         agreeBtn = (Button) view.findViewById(R.id.agreeBtn);
 
+        homepageCard = (CardView) view.findViewById(R.id.tenantHomepageCardView);
+        homepageCard.setVisibility(view.GONE);
+
+        taskListRecyclerView = (RecyclerView) view.findViewById(R.id.taskListRecyclerView);
+        taskListRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        taskListRecyclerView.setVisibility(view.GONE);
+
         userDetails = new ArrayList<>();
         invite = new ArrayList<>();
 
@@ -62,7 +80,7 @@ public class TenantHomeFragment extends Fragment {
                 userModel = dataSnapshot.getValue(UserModel.class);
                 userModel.setUserKey(userID);
                 userDetails.add(userModel);
-                checkInvite();
+                getInviteData();
             }
 
             @Override
@@ -70,8 +88,6 @@ public class TenantHomeFragment extends Fragment {
 
             }
         });
-        homepageCard = (CardView) view.findViewById(R.id.tenantHomepageCardView);
-        homepageCard.setVisibility(view.GONE);
 
         agreeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,31 +114,6 @@ public class TenantHomeFragment extends Fragment {
         return view;
     }
 
-    void checkInvite(){
-        String phoneNumber = userDetails.get(0).getUserPhone();
-        String fullName = userDetails.get(0).getUserFullName();
-
-        checkInvite = FirebaseDatabase.getInstance().getReference().child("Invitation House");
-        checkInvite.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String userPhone = ds.getKey();
-                    userModel.setUserKey(userPhone);
-
-                    if(userPhone.equals(phoneNumber)){
-                        getInviteData();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
     void getInviteData(){
         getInvite = FirebaseDatabase.getInstance().getReference().child("Invitation House").child(userModel.getUserPhone());
         getInvite.addValueEventListener(new ValueEventListener() {
@@ -131,9 +122,11 @@ public class TenantHomeFragment extends Fragment {
                 inviteModel = dataSnapshot.getValue(HouseInvitationModel.class);
                 invite.add(inviteModel);
 
-                if(invite.get(0).getIsRead() == true){
-                    homepageCard.setVisibility(getView().VISIBLE);
-                    notificationText.setText(userModel.getUserKey());
+                if(inviteModel.getIsRead() == true){
+                    Log.d("Read", "True");
+                    taskListRecyclerView.setVisibility(getView().VISIBLE);
+                    adapter = new TenantTaskListViewAdapter(TenantHomeFragment.this, taskArrayList);
+                    taskListRecyclerView.setAdapter(adapter);
                 }else{
                     homepageCard.setVisibility(getView().VISIBLE);
                     notificationText.setText(userModel.getUserMail());

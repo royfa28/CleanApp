@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cleanapp.Fragment.RoomDetailFragment;
+import com.example.cleanapp.Fragment.OwnerRoomDetailFragment;
 import com.example.cleanapp.Fragment.OwnerHomeFragment;
 import com.example.cleanapp.HouseActivityTab;
 import com.example.cleanapp.Model.House;
@@ -53,7 +53,7 @@ public class HomeViewAdapter extends RecyclerView.Adapter<HomeViewAdapter.HomeVi
                 Intent intent = new Intent(v.getContext(), HouseActivityTab.class);
                 intent.putExtra("houseID", houseID);
                 bundle.putString("house",houseID);
-                RoomDetailFragment roomDetailFragment = new RoomDetailFragment(houseID);
+                OwnerRoomDetailFragment roomDetailFragment = new OwnerRoomDetailFragment(houseID);
                 roomDetailFragment.setArguments(bundle);
                 v.getContext().startActivity(intent);
             }

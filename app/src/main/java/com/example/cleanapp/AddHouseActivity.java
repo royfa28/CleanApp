@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.cleanapp.Model.Room;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,6 +37,11 @@ public class AddHouseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_house);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Set House");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Button saveHouseButton = (Button) findViewById(R.id.save_house_button);
         bathroom_amount = (EditText) findViewById(R.id.bathroom_amount);
@@ -66,11 +72,11 @@ public class AddHouseActivity extends AppCompatActivity {
         String houseID = mDatabase.push().getKey();
         addRoom = mDatabase.child("House").child(userID).child(houseID).child("Rooms");
 
-        for(int i = 1; i <= bedroom ; i++){
-            addRoom.child("Room " + count).child("roomName").setValue("Bedroom " + i);
-            addRoom.child("Room " + count).child("roomDescription").setValue("Please fill in task");
-            count++;
-        }
+//        for(int i = 1; i <= bedroom ; i++){
+//            addRoom.child("Room " + count).child("roomName").setValue("Bedroom " + i);
+//            addRoom.child("Room " + count).child("roomDescription").setValue("Please fill in task");
+//            count++;
+//        }
 
         for(int j = 1 ; j <= bathroom ; j++){
             addRoom.child("Room " + count).child("roomName").setValue("Bathroom " + j);

@@ -88,8 +88,6 @@ public class RoomDetailModal extends Activity {
         params.y = -20;
 
         getWindow().setAttributes(params);
-
-
     }
 
     protected String getUserKeyFireAuth(){

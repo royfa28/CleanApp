@@ -10,15 +10,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cleanapp.HouseInvitationActivity;
-import com.example.cleanapp.Model.House;
 import com.example.cleanapp.Model.TenantListModel;
 import com.example.cleanapp.R;
-import com.example.cleanapp.ViewHolder.HomeViewAdapter;
 import com.example.cleanapp.ViewHolder.TenantViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,7 +50,7 @@ public class TenantListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_tenant_list, container,false);
+        view = inflater.inflate(R.layout.fragment_owner_tenant_list, container,false);
 
         tenantRecyclerView = (RecyclerView) view.findViewById(R.id.tenantRecyclerView);
         tenantRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
@@ -75,11 +72,12 @@ public class TenantListFragment extends Fragment {
                     TenantListModel t = new TenantListModel();
                     //fill model
                     t = dataSnapshot1.getValue(TenantListModel.class);
+                    t.setIdTenant(tenantID);
                     //add to array
 //                    House h = dataSnapshot1.getValue(House.class);
                     Tenants.add(t);
                 }
-                adapter = new TenantViewAdapter(TenantListFragment.this, Tenants);
+                adapter = new TenantViewAdapter(TenantListFragment.this, Tenants, houseID);
                 tenantRecyclerView.setAdapter(adapter);
             }
 
@@ -100,6 +98,8 @@ public class TenantListFragment extends Fragment {
                 startActivity(i);
             }
         });
+
+        //listner card tenant for delet
 
         return view;
     }
