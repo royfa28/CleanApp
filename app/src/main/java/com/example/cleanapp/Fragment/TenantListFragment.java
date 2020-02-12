@@ -75,11 +75,12 @@ public class TenantListFragment extends Fragment {
                     TenantListModel t = new TenantListModel();
                     //fill model
                     t = dataSnapshot1.getValue(TenantListModel.class);
+                    t.setIdTenant(tenantID);
                     //add to array
 //                    House h = dataSnapshot1.getValue(House.class);
                     Tenants.add(t);
                 }
-                adapter = new TenantViewAdapter(TenantListFragment.this, Tenants);
+                adapter = new TenantViewAdapter(TenantListFragment.this, Tenants, houseID);
                 tenantRecyclerView.setAdapter(adapter);
             }
 
