@@ -46,7 +46,7 @@ public class TaskAssignViewAdapter extends RecyclerView.Adapter<TaskAssignViewAd
         Log.d(TAG, "onBindViewHolder: CALLED");
 
         String roomName = myTaskAssignCardModelArrayList.get(position).getRoomName();
-        String room_desc = myTaskAssignCardModelArrayList.get(position).getRoomTaskDescription();
+        String room_desc = myTaskAssignCardModelArrayList.get(position).getRoomDescription();
         String tenantName = myTaskAssignCardModelArrayList.get(position).getTenantName();
         String tenantNumber = myTaskAssignCardModelArrayList.get(position).getTenantNumber();
 

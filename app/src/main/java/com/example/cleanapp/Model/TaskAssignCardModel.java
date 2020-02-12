@@ -1,7 +1,7 @@
 package com.example.cleanapp.Model;
 
 public class TaskAssignCardModel {
-    String tenantName,TenantNumber,RoomName,RoomTaskDescription;
+    String TenantName, TenantNumber, RoomName, roomDescription;
 
     //constructor
 
@@ -9,12 +9,13 @@ public class TaskAssignCardModel {
     }
     //getter setter
 
+
     public String getTenantName() {
-        return tenantName;
+        return TenantName;
     }
 
     public void setTenantName(String tenantName) {
-        this.tenantName = tenantName;
+        TenantName = tenantName;
     }
 
     public String getTenantNumber() {
@@ -33,11 +34,11 @@ public class TaskAssignCardModel {
         RoomName = roomName;
     }
 
-    public String getRoomTaskDescription() {
-        return RoomTaskDescription;
+    public String getRoomDescription() {
+        return roomDescription;
     }
 
-    public void setRoomTaskDescription(String roomTaskDescription) {
-        RoomTaskDescription = roomTaskDescription;
+    public void setRoomDescription(String roomDescription) {
+        this.roomDescription = roomDescription;
     }
 }
