@@ -9,13 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".OwnerTaskHistory"></activity>
         <activity
             android:name=".HouseActivityTab"
             android:label="@string/title_activity_house_tab"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".Fragment.TenantHomeFragment" />
-
         <activity
             android:name=".RoomDetailModal"
             android:theme="@style/AppTheme.Popme" />

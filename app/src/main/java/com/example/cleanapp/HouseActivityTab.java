@@ -52,11 +52,10 @@ public class HouseActivityTab extends AppCompatActivity {
 
         Intent intent = getIntent();
         houseID = intent.getStringExtra("houseID");
+
         Bundle bundle = new Bundle();
         bundle.putString("house", houseID);
-//        RoomDetailFragment houseDetailFragment = new RoomDetailFragment();
         Log.d("C", houseID);
-//        houseDetailFragment.setArguments(bundle);
 
         pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);

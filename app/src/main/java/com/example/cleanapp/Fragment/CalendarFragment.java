@@ -1,5 +1,6 @@
 package com.example.cleanapp.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,9 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.cleanapp.AddHouseActivity;
 import com.example.cleanapp.Model.Room;
 import com.example.cleanapp.Model.TaskAssignCardModel;
 import com.example.cleanapp.Model.TenantListModel;
+import com.example.cleanapp.OwnerTaskHistory;
 import com.example.cleanapp.R;
 import com.example.cleanapp.ViewHolder.TaskAssignViewAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -83,6 +86,14 @@ public class CalendarFragment extends Fragment {
                 saveTaskHistory();
             }
         });
+
+        Button historyBtn = view.findViewById(R.id.buttonHistory);
+        historyBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), OwnerTaskHistory.class);
+            intent.putExtra("HouseID", houseID);
+            intent.putExtra("UserID", userID);
+            startActivity(intent);
+        });
         //prep array
 
         //load Tenant array on create
@@ -143,13 +154,11 @@ public class CalendarFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 assignationList.clear();
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                for (DataSnapshot ds : children)
-                {
+                for (DataSnapshot ds : children){
                     String taskAssignCardModelID = ds.getKey() ;
                     TaskAssignCardModel mytaskAssignCardModel = new TaskAssignCardModel();
                     mytaskAssignCardModel = ds.getValue(TaskAssignCardModel.class);
                     assignationList.add(mytaskAssignCardModel);
-
                 }
                 adapter = new TaskAssignViewAdapter(assignationList, CalendarFragment.this);
                 TaskAssignRecycler.setAdapter(adapter);
@@ -178,7 +187,7 @@ public class CalendarFragment extends Fragment {
         String date = new SimpleDateFormat("yyyy-MMM-dd", Locale.getDefault()).format(new Date());
         Log.d("Date", "Current date: " + date);
 
-        addTaskHistory = FirebaseDatabase.getInstance().getReference().child("House").child(userID).child(houseID).child("TaskHistory");
+        addTaskHistory = FirebaseDatabase.getInstance().getReference().child("House").child(userID).child(houseID).child("TaskHistoryModel");
 
         getTaskAssign = FirebaseDatabase.getInstance().getReference().child("House").child(userID).child(houseID).child("TaskAssign");
         getTaskAssign.addListenerForSingleValueEvent(new ValueEventListener() {
