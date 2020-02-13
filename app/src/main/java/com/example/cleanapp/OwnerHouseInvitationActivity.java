@@ -1,7 +1,5 @@
 package com.example.cleanapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -10,13 +8,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.cleanapp.Model.HouseInvitationModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import com.example.cleanapp.Model.HouseInvitationModel;
 
 public class OwnerHouseInvitationActivity extends AppCompatActivity {
 
@@ -42,15 +40,12 @@ public class OwnerHouseInvitationActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Tenant Invite");
+        getSupportActionBar().setTitle("House invite");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         phoneNumberTenant = findViewById(R.id.tenantPhoneEditText);
         validationBtn = findViewById(R.id.validBtn);
         myHouseInvitation = new HouseInvitationModel();
-        //get n set the info owner to fill house invitation model
-        //myHouseInvitation.setIdOwner(myFirebaseAuth.getCurrentUser().getUid());
-        //datasnapshot from house .userID
 
         //get n set info Tenant
 
@@ -90,7 +85,6 @@ public class OwnerHouseInvitationActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish(); // close this activity and return to preview activity (if there is any)
         }
-
         return super.onOptionsItemSelected(item);
     }
 

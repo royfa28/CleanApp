@@ -1,16 +1,18 @@
 package com.example.cleanapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -28,6 +30,7 @@ public class OwnerAddHouseActivity extends AppCompatActivity {
 
     DatabaseReference mDatabase;
     DatabaseReference addRoom;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +54,22 @@ public class OwnerAddHouseActivity extends AppCompatActivity {
 
         saveHouseButton.setEnabled(false);
 
-        saveHouseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getValues();
+        saveHouseButton.setOnClickListener(v -> {
+            context = v.getContext();
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-                Intent intent = new Intent(OwnerAddHouseActivity.this, OwnerMainActivity.class);
-                startActivity(intent);
-            }
+            //Dialog box for confirmation
+            builder.setMessage("Are you sure with the room amount? \nNote that you cannot change number of rooms after setting it.")
+                    .setTitle("Confirmation")
+                    .setPositiveButton("OK", (dialog, which) -> {
+                        getValues();
+                        Intent intent = new Intent(OwnerAddHouseActivity.this, OwnerMainActivity.class);
+                        startActivity(intent);
+                        Toast.makeText(OwnerAddHouseActivity.this, "House deleted!", Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("Cancel", ((dialog, which) -> dialog.dismiss()));
+            builder.show();
+            builder.create();
         });
     }
 
