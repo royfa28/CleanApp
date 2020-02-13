@@ -59,33 +59,28 @@ public class HouseInvitationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 prepHouseInvit();
                 addHouseInviteDB();
-                returnToTenabtList();
-
+                returntoTenantList();
             }
         });
 
 
     }
-    protected  void returnToTenabtList(){
+    protected  void returntoTenantList(){
         Toast.makeText(HouseInvitationActivity.this, "Your invitation have been sent",Toast.LENGTH_SHORT).show();
         Intent i = new Intent(HouseInvitationActivity.this,HouseActivityTab.class);
         i.putExtra("houseID",houseID);
         startActivity(i);
     }
-    protected  void addHouseInviteDB()
-    {
+    protected  void addHouseInviteDB(){
         getHouseInvitation.child(phoneNumberTenant.getText().toString());
         getHouseInvitation.child(phoneNumberTenant.getText().toString()).child("House id").setValue(myHouseInvitation.getIdHouse());
         getHouseInvitation.child(phoneNumberTenant.getText().toString()).child("Owner Key").setValue(myHouseInvitation.getIdOwner());
-        getHouseInvitation.child(phoneNumberTenant.getText().toString()).child("isRead").setValue(myHouseInvitation.getIsRead());
-
+        getHouseInvitation.child(phoneNumberTenant.getText().toString()).child("isRead").setValue(myHouseInvitation.getisRead());
 
     }
-    protected void prepHouseInvit()
-    {
+    protected void prepHouseInvit(){
         myHouseInvitation.setIdOwner(myFirebaseAuth.getCurrentUser().getUid());
         myHouseInvitation.setIdHouse(houseID);
-        myHouseInvitation.setTenantPhone(phoneNumberTenant.getText().toString());
 
     }
 

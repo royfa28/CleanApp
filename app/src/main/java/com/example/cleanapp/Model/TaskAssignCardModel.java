@@ -1,7 +1,7 @@
 package com.example.cleanapp.Model;
 
 public class TaskAssignCardModel {
-    String TenantName, TenantNumber, RoomName, roomDescription;
+    String TenantName, TenantNumber, RoomName, roomDescription, roomID;
     Boolean isDone;
 
     //constructor
@@ -11,11 +11,19 @@ public class TaskAssignCardModel {
     //getter setter
 
 
-    public Boolean getDone() {
+    public String getRoomID() {
+        return roomID;
+    }
+
+    public void setRoomID(String roomID) {
+        this.roomID = roomID;
+    }
+
+    public Boolean getisDone() {
         return isDone;
     }
 
-    public void setDone(Boolean done) {
+    public void setisDone(Boolean done) {
         isDone = done;
     }
 

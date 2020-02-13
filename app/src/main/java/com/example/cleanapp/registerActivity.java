@@ -172,7 +172,6 @@ public class registerActivity extends AppCompatActivity {
 
     }
 
-
     protected String getUserKeyFireAuth(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String fireAuthUserKey="";
@@ -219,31 +218,6 @@ public class registerActivity extends AppCompatActivity {
             myUser.setUserLvl(false);
         }
     }
-
-    protected void getUserLevel(){
-        userLevel = FirebaseDatabase.getInstance().getReference().child("User").child(getUserKeyFireAuth()).child("user lvl");
-        userLevel.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Boolean userlvl = dataSnapshot.getValue(Boolean.class);
-                if(userlvl == true){
-                    Toast.makeText(registerActivity.this, userlvl.toString(),Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(registerActivity.this,OwnerMainActivity.class);
-                    startActivity(i);
-                }else{
-                    Toast.makeText(registerActivity.this, userlvl.toString(),Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(registerActivity.this, RoomDetailModal.TenantMainActivity.class);
-                    startActivity(i);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
 }
 
 

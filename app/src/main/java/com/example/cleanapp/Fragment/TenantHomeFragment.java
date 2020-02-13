@@ -21,7 +21,6 @@ import com.example.cleanapp.Model.HouseInvitationModel;
 import com.example.cleanapp.Model.TaskAssignCardModel;
 import com.example.cleanapp.Model.UserModel;
 import com.example.cleanapp.R;
-import com.example.cleanapp.ViewHolder.HomeViewAdapter;
 import com.example.cleanapp.ViewHolder.TenantTaskListViewAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,7 +34,7 @@ import java.util.ArrayList;
 
 public class TenantHomeFragment extends Fragment {
 
-    DatabaseReference getUserDetails, checkInvite, getInvite, addTenant;
+    DatabaseReference getUserDetails, getInvite, addTenant, getTask, getTenantTask;
 
     TextView notificationText;
     Button agreeBtn;
@@ -44,8 +43,6 @@ public class TenantHomeFragment extends Fragment {
     private RecyclerView taskListRecyclerView;
     TenantTaskListViewAdapter adapter;
 
-    ArrayList<UserModel> userDetails;
-    ArrayList<HouseInvitationModel> invite;
     ArrayList<TaskAssignCardModel> taskArrayList;
 
     protected UserModel userModel = new UserModel();
@@ -69,8 +66,7 @@ public class TenantHomeFragment extends Fragment {
         taskListRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
         taskListRecyclerView.setVisibility(view.GONE);
 
-        userDetails = new ArrayList<>();
-        invite = new ArrayList<>();
+        taskArrayList = new ArrayList<>();
 
         getUserDetails = FirebaseDatabase.getInstance().getReference().child("User").child(userID);
         getUserDetails.addValueEventListener(new ValueEventListener() {
@@ -79,7 +75,6 @@ public class TenantHomeFragment extends Fragment {
 //                userDetails.clear();
                 userModel = dataSnapshot.getValue(UserModel.class);
                 userModel.setUserKey(userID);
-                userDetails.add(userModel);
                 getInviteData();
             }
 
@@ -92,10 +87,10 @@ public class TenantHomeFragment extends Fragment {
         agreeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addTenant = FirebaseDatabase.getInstance().getReference().child("House").child(invite.get(0).getIdOwner())
-                        .child(invite.get(0).getIdHouse()).child("Tenant").child(userID);
-                addTenant.child("name").setValue(userDetails.get(0).getUserFullName());
-                addTenant.child("number").setValue(userDetails.get(0).getUserPhone());
+                addTenant = FirebaseDatabase.getInstance().getReference().child("House").child(inviteModel.getIdOwner())
+                        .child(inviteModel.getIdHouse()).child("Tenant").child(userID);
+                addTenant.child("name").setValue(userModel.getUserFullName());
+                addTenant.child("number").setValue(userModel.getUserPhone());
                 getInvite = FirebaseDatabase.getInstance().getReference().child("Invitation House").child(userModel.getUserPhone());
                 getInvite.child("isRead").setValue(true);
 
@@ -120,13 +115,12 @@ public class TenantHomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 inviteModel = dataSnapshot.getValue(HouseInvitationModel.class);
-                invite.add(inviteModel);
 
-                if(inviteModel.getIsRead() == true){
-                    Log.d("Read", "True");
+                if(inviteModel.getisRead() == true){
+                    Log.d("Read", "ID house" + inviteModel.getIdHouse() + "Get id owner" + inviteModel.getIdOwner() + "Get phone number" + userModel.getUserPhone());
                     taskListRecyclerView.setVisibility(getView().VISIBLE);
-                    adapter = new TenantTaskListViewAdapter(TenantHomeFragment.this, taskArrayList);
-                    taskListRecyclerView.setAdapter(adapter);
+                    getTaskList();
+
                 }else{
                     homepageCard.setVisibility(getView().VISIBLE);
                     notificationText.setText(userModel.getUserMail());
@@ -140,6 +134,59 @@ public class TenantHomeFragment extends Fragment {
         });
     }
 
+    void getTaskList(){
+        getTask = FirebaseDatabase.getInstance().getReference().child("House").child(inviteModel.getIdOwner()).child(inviteModel.getIdHouse()).child("TaskAssign");
+        getTask.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                taskArrayList.clear();
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Log.d("ID", "Room ID: " + ds.getKey());
+
+                    // Go to find specific phone number
+                    getOwnTask(ds.getKey());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    void getOwnTask(String roomID){
+// Find the tenant number on each child
+        getTenantTask = FirebaseDatabase.getInstance().getReference().child("House").child(inviteModel.getIdOwner()).child(inviteModel.getIdHouse()).child("TaskAssign").child(roomID);
+        getTenantTask.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+
+                // For each room id
+                for (DataSnapshot ds1 : dataSnapshot1.getChildren()) {
+                    String phoneNumber = dataSnapshot1.child("TenantNumber").getValue().toString();
+
+                    if(phoneNumber.equals(userModel.getUserPhone())){
+                        TaskAssignCardModel taskAssign = new TaskAssignCardModel();
+                        taskAssign = dataSnapshot1.getValue(TaskAssignCardModel.class);
+                        taskAssign.setRoomID(roomID);
+                        taskArrayList.add(taskAssign);
+                        Log.d("IF correct: ", "Tenant Numb: " + phoneNumber);
+                    }
+                    break;
+                }
+                adapter = new TenantTaskListViewAdapter(TenantHomeFragment.this, taskArrayList, inviteModel.getIdOwner(), inviteModel.getIdHouse());
+                taskListRecyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
 
     protected String getUserKeyFireAuth(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

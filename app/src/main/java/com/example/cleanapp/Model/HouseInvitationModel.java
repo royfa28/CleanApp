@@ -3,39 +3,16 @@ package com.example.cleanapp.Model;
 public class HouseInvitationModel {
 
     //owner info
-    String idHouse,idOwner,ownerPhone;
+    String idHouse,idOwner;
 
-    //tenant info
-    String idTenant , mailTenant,tenantPhone;
     //boolean isRead
     Boolean isRead =false;
 
-    String messageInvitation;
-
     //constructor
-
-
     public HouseInvitationModel() {
     }
 
     //GETTER SETTER
-
-
-    public String getOwnerPhone() {
-        return ownerPhone;
-    }
-
-    public Boolean getIsRead() {
-        return isRead;
-    }
-
-    public void setIsRead(Boolean isRead) {
-        this.isRead = isRead;
-    }
-
-    public void setOwnerPhone(String ownerPhone) {
-        this.ownerPhone = ownerPhone;
-    }
 
     public String getIdHouse() {
         return idHouse;
@@ -53,35 +30,11 @@ public class HouseInvitationModel {
         this.idOwner = idOwner;
     }
 
-    public String getIdTenant() {
-        return idTenant;
+    public Boolean getisRead() {
+        return isRead;
     }
 
-    public void setIdTenant(String idTenant) {
-        this.idTenant = idTenant;
-    }
-
-    public String getMailTenant() {
-        return mailTenant;
-    }
-
-    public void setMailTenant(String mailTenant) {
-        this.mailTenant = mailTenant;
-    }
-
-    public String getTenantPhone() {
-        return tenantPhone;
-    }
-
-    public void setTenantPhone(String tenantPhone) {
-        this.tenantPhone = tenantPhone;
-    }
-
-    public String getMessageInvitation() {
-        return messageInvitation;
-    }
-
-    public void setMessageInvitation(String messageInvitation) {
-        this.messageInvitation = messageInvitation;
+    public void setisRead(Boolean read) {
+        isRead = read;
     }
 }
