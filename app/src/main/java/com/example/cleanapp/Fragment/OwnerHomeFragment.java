@@ -13,8 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cleanapp.OwnerAddHouseActivity;
 import com.example.cleanapp.Model.House;
+import com.example.cleanapp.OwnerAddHouseActivity;
 import com.example.cleanapp.OwnerMainActivity;
 import com.example.cleanapp.R;
 import com.example.cleanapp.ViewHolder.OwnerHouseViewAdapter;
@@ -31,10 +31,10 @@ import java.util.ArrayList;
 public class OwnerHomeFragment extends Fragment {
 
 
-    DatabaseReference mDatabase, getHouse;
+    private DatabaseReference mDatabase, getHouse;
     private RecyclerView homeListRecyclerList;
-    ArrayList<House> houseArrayList;
-    OwnerHouseViewAdapter adapter;
+    private ArrayList<House> houseArrayList;
+    private OwnerHouseViewAdapter adapter;
 
     @Nullable
     @Override
@@ -48,9 +48,9 @@ public class OwnerHomeFragment extends Fragment {
         final OwnerMainActivity activity = (OwnerMainActivity)getActivity();
         String userID = getUserKeyFireAuth();
 
-        homeListRecyclerList = (RecyclerView) view.findViewById(R.id.homeRecyclerView);
+        homeListRecyclerList = view.findViewById(R.id.homeRecyclerView);
         homeListRecyclerList.setLayoutManager(new GridLayoutManager(getContext(),3));
-        houseArrayList = new ArrayList<House>();
+        houseArrayList = new ArrayList<>();
 
         getHouse = FirebaseDatabase.getInstance().getReference().child("House").child(userID);
 
@@ -66,7 +66,7 @@ public class OwnerHomeFragment extends Fragment {
 //                    House h = dataSnapshot1.getValue(House.class);
                     houseArrayList.add(h);
                 }
-                adapter = new OwnerHouseViewAdapter(OwnerHomeFragment.this, houseArrayList);
+                adapter = new OwnerHouseViewAdapter(houseArrayList);
                 homeListRecyclerList.setAdapter(adapter);
             }
 
@@ -76,7 +76,7 @@ public class OwnerHomeFragment extends Fragment {
             }
         });
 
-        Button addHouseButton = (Button) view.findViewById(R.id.add_house_button);
+        Button addHouseButton = view.findViewById(R.id.add_house_button);
 
         addHouseButton.setOnClickListener(new View.OnClickListener() {
             @Override

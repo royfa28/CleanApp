@@ -1,6 +1,5 @@
 package com.example.cleanapp.ViewHolder;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,20 +13,17 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cleanapp.Fragment.OwnerRoomDetailFragment;
-import com.example.cleanapp.Fragment.OwnerHomeFragment;
-import com.example.cleanapp.OwnerHouseActivityTab;
 import com.example.cleanapp.Model.House;
+import com.example.cleanapp.OwnerHouseActivityTab;
 import com.example.cleanapp.R;
 
 import java.util.ArrayList;
 
 public class OwnerHouseViewAdapter extends RecyclerView.Adapter<OwnerHouseViewAdapter.HomeViewHolder> {
 
-    private Context mContext;
-    ArrayList<House> houses;
+    private ArrayList<House> houses;
 
-    public OwnerHouseViewAdapter(OwnerHomeFragment mContext, ArrayList<House> h){
-        mContext = mContext;
+    public OwnerHouseViewAdapter(ArrayList<House> h){
         houses = h;
     }
 
@@ -73,9 +69,9 @@ public class OwnerHouseViewAdapter extends RecyclerView.Adapter<OwnerHouseViewAd
 
         public HomeViewHolder(@NonNull View itemView) {
             super(itemView);
-            house_Name = (TextView) itemView.findViewById(R.id.house_name_id);
-            house_image = (ImageView) itemView.findViewById(R.id.house_image_id);
-            cardView = (CardView) itemView.findViewById(R.id.cardview_id);
+            house_Name = itemView.findViewById(R.id.house_name_id);
+            house_image = itemView.findViewById(R.id.house_image_id);
+            cardView = itemView.findViewById(R.id.cardview_id);
 
         }
     }

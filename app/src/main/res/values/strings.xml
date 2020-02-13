@@ -18,6 +18,7 @@
     <string name="Bathroom">Bathrooms</string>
     <string name="OtherRoom">Other rooms</string>
     <string name="RoomRange">1 - 10</string>
+    <string name="addHouseBtn">Save</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class OwnerAddHouseActivity extends AppCompatActivity {
 
     EditText bathroom_amount, room_amount;
+    protected Button saveHouseButton;
     Integer bedroom, bathroom, rooms;
     TextView label;
 
@@ -38,12 +39,17 @@ public class OwnerAddHouseActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Set House");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Button saveHouseButton = (Button) findViewById(R.id.save_house_button);
-        bathroom_amount = (EditText) findViewById(R.id.bathroom_amount);
+        saveHouseButton = findViewById(R.id.save_house_button);
+        bathroom_amount =  findViewById(R.id.bathroom_amount);
         bathroom_amount.setFilters( new InputFilter[]{ new MinMaxInputFilter( "1" , "10" )}) ;
-        room_amount = (EditText) findViewById(R.id.room_amount);
+        room_amount = findViewById(R.id.room_amount);
         room_amount.setFilters( new InputFilter[]{ new MinMaxInputFilter( "1" , "10" )}) ;
-        label = (TextView) findViewById(R.id.textView3);
+        label = findViewById(R.id.textView3);
+
+        bathroom_amount.addTextChangedListener(mTextWatcher);
+        room_amount.addTextChangedListener(mTextWatcher);
+
+        saveHouseButton.setEnabled(false);
 
         saveHouseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,12 +72,6 @@ public class OwnerAddHouseActivity extends AppCompatActivity {
 
         String houseID = mDatabase.push().getKey();
         addRoom = mDatabase.child("House").child(userID).child(houseID).child("Rooms");
-
-//        for(int i = 1; i <= bedroom ; i++){
-//            addRoom.child("Room " + count).child("roomName").setValue("Bedroom " + i);
-//            addRoom.child("Room " + count).child("roomDescription").setValue("Please fill in task");
-//            count++;
-//        }
 
         for(int j = 1 ; j <= bathroom ; j++){
             addRoom.child("Room " + count).child("roomName").setValue("Bathroom " + j);
@@ -99,9 +99,21 @@ public class OwnerAddHouseActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-
+            checkIsEmpty();
         }
     };
+
+    void checkIsEmpty(){
+        String bathroom = bathroom_amount.getText().toString();
+        String otherRoom = room_amount.getText().toString();
+
+        if(bathroom.equals("") || otherRoom.equals("")){
+            saveHouseButton.setEnabled(false);
+        }else{
+            saveHouseButton.setEnabled(true);
+        }
+
+    }
 
     protected String getUserKeyFireAuth(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
