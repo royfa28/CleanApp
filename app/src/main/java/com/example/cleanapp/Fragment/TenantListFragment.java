@@ -13,10 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.cleanapp.HouseInvitationActivity;
+import com.example.cleanapp.OwnerHouseInvitationActivity;
 import com.example.cleanapp.Model.TenantListModel;
 import com.example.cleanapp.R;
-import com.example.cleanapp.ViewHolder.TenantViewAdapter;
+import com.example.cleanapp.ViewHolder.OwnerTenantViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,7 +35,7 @@ public class TenantListFragment extends Fragment {
     DatabaseReference getHouseTenant;
     String ownerID = getUserKeyFireAuth();
     ArrayList<TenantListModel>Tenants = new ArrayList<>();
-    TenantViewAdapter adapter;
+    OwnerTenantViewAdapter adapter;
     protected RecyclerView tenantRecyclerView ;
 
     //constructo
@@ -77,7 +77,7 @@ public class TenantListFragment extends Fragment {
 //                    House h = dataSnapshot1.getValue(House.class);
                     Tenants.add(t);
                 }
-                adapter = new TenantViewAdapter(TenantListFragment.this, Tenants, houseID);
+                adapter = new OwnerTenantViewAdapter(TenantListFragment.this, Tenants, houseID);
                 tenantRecyclerView.setAdapter(adapter);
             }
 
@@ -93,7 +93,7 @@ public class TenantListFragment extends Fragment {
         {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), HouseInvitationActivity.class);
+                Intent i = new Intent(v.getContext(), OwnerHouseInvitationActivity.class);
                 i.putExtra("houseID",houseID);
                 startActivity(i);
             }

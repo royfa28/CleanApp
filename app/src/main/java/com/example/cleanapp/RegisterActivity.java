@@ -24,16 +24,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class registerActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     protected EditText emailTxt,passwordTxt, editTextPhone, editTextFullName, editTextConfirmPass;
     protected Button btnLogin, btnRegister;
@@ -90,17 +87,17 @@ public class registerActivity extends AppCompatActivity {
 
                 if(password.equals(confirmPass)){
                     if (isValidEmail(mail) && password.length() > 7) {
-                        myFirebaseAuth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(registerActivity.this, new OnCompleteListener<AuthResult>() {
+                        myFirebaseAuth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (!task.isSuccessful()) {
-                                    Toast.makeText(registerActivity.this, "sign up fail", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(RegisterActivity.this, "sign up fail", Toast.LENGTH_SHORT).show();
                                 } else {
                                     //get firebase auth user key
                                     String firebaseAuthUserId = getUserKeyFireAuth();
                                     Log.d("fireAuthKey : ", firebaseAuthUserId);
 
-                                    Toast.makeText(registerActivity.this, firebaseAuthUserId, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(RegisterActivity.this, firebaseAuthUserId, Toast.LENGTH_SHORT).show();
                                     createUserInDB();
                                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                     user.sendEmailVerification();
@@ -113,18 +110,18 @@ public class registerActivity extends AppCompatActivity {
                                     getUser.child(myUser.getUserKey()).child("userLvl").setValue(myUser.getUserLvl());
                                     getUser.child(myUser.getUserKey()).child("userFullName").setValue(myUser.getUserFullName());
 
-                                    Toast.makeText(registerActivity.this, "Please verify your email", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(registerActivity.this, LoginActivity.class));
+                                    Toast.makeText(RegisterActivity.this, "Please verify your email", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                                     //getUserLevel();
                                 }
                             }
                         });
 
                     }else{
-                        Toast.makeText(registerActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
                     }
                 }else {
-                    Toast.makeText(registerActivity.this, "Password are not the same", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Password are not the same", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -135,7 +132,7 @@ public class registerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-             Intent i = new Intent(registerActivity.this, LoginActivity.class);
+             Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
              startActivity(i);
             }
         });

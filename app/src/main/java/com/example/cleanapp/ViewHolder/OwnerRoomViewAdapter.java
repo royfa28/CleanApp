@@ -18,12 +18,12 @@ import com.example.cleanapp.RoomDetailModal;
 
 import java.util.ArrayList;
 
-public class RoomViewAdapter extends RecyclerView.Adapter<RoomViewAdapter.RoomViewHolder> {
+public class OwnerRoomViewAdapter extends RecyclerView.Adapter<OwnerRoomViewAdapter.RoomViewHolder> {
 
     ArrayList<Room> roomArrayList;
     private Context mContext;
 
-    public RoomViewAdapter(OwnerRoomDetailFragment mContext, ArrayList<Room> rooms) {
+    public OwnerRoomViewAdapter(OwnerRoomDetailFragment mContext, ArrayList<Room> rooms) {
         mContext = mContext;
         roomArrayList = rooms;
     }

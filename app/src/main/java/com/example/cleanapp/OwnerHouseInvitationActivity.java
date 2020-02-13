@@ -18,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import com.example.cleanapp.Model.HouseInvitationModel;
 
-public class HouseInvitationActivity extends AppCompatActivity {
+public class OwnerHouseInvitationActivity extends AppCompatActivity {
 
     protected Toolbar myToolbar;
     protected EditText phoneNumberTenant;
@@ -66,8 +66,8 @@ public class HouseInvitationActivity extends AppCompatActivity {
 
     }
     protected  void returntoTenantList(){
-        Toast.makeText(HouseInvitationActivity.this, "Your invitation have been sent",Toast.LENGTH_SHORT).show();
-        Intent i = new Intent(HouseInvitationActivity.this,HouseActivityTab.class);
+        Toast.makeText(OwnerHouseInvitationActivity.this, "Your invitation have been sent",Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(OwnerHouseInvitationActivity.this, OwnerHouseActivityTab.class);
         i.putExtra("houseID",houseID);
         startActivity(i);
     }

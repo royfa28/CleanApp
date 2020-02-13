@@ -14,13 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.cleanapp.AddHouseActivity;
 import com.example.cleanapp.Model.Room;
 import com.example.cleanapp.Model.TaskAssignCardModel;
 import com.example.cleanapp.Model.TenantListModel;
 import com.example.cleanapp.OwnerTaskHistory;
 import com.example.cleanapp.R;
-import com.example.cleanapp.ViewHolder.TaskAssignViewAdapter;
+import com.example.cleanapp.ViewHolder.OwnerTaskAssignViewAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,7 +34,7 @@ import java.util.Date;
 import java.util.Locale;
 
 
-public class CalendarFragment extends Fragment {
+public class OwnerCalendarFragment extends Fragment {
 
     //retrieve the info from db
     DatabaseReference getRoom, getTenant,getTaskAssign, addTaskHistory;
@@ -53,10 +52,10 @@ public class CalendarFragment extends Fragment {
 
     View view;
     //recycler
-    TaskAssignViewAdapter adapter;
+    OwnerTaskAssignViewAdapter adapter;
     RecyclerView TaskAssignRecycler;
 
-    public CalendarFragment(String houseID) {
+    public OwnerCalendarFragment(String houseID) {
         Bundle bundle = new Bundle();
         bundle.putString("house", houseID);
         this.setArguments(bundle);
@@ -68,7 +67,7 @@ public class CalendarFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_owner_calendar, container, false);
         TaskAssignRecycler = (RecyclerView) view.findViewById(R.id.recyclerViewAssignTask);
         TaskAssignRecycler.setLayoutManager(new GridLayoutManager(this.getContext(), 1));
-        adapter = new TaskAssignViewAdapter(assignationList, CalendarFragment.this);
+        adapter = new OwnerTaskAssignViewAdapter(assignationList, OwnerCalendarFragment.this);
         TaskAssignRecycler.setAdapter(adapter);
 
 
@@ -160,7 +159,7 @@ public class CalendarFragment extends Fragment {
                     mytaskAssignCardModel = ds.getValue(TaskAssignCardModel.class);
                     assignationList.add(mytaskAssignCardModel);
                 }
-                adapter = new TaskAssignViewAdapter(assignationList, CalendarFragment.this);
+                adapter = new OwnerTaskAssignViewAdapter(assignationList, OwnerCalendarFragment.this);
                 TaskAssignRecycler.setAdapter(adapter);
             }
             @Override
@@ -265,7 +264,7 @@ public class CalendarFragment extends Fragment {
                     mytaskAssignCardModel = ds.getValue(TaskAssignCardModel.class);
                     assignationList.add(mytaskAssignCardModel);
                 }
-                adapter = new TaskAssignViewAdapter(assignationList, CalendarFragment.this);
+                adapter = new OwnerTaskAssignViewAdapter(assignationList, OwnerCalendarFragment.this);
                 TaskAssignRecycler.setAdapter(adapter);
             }
             @Override

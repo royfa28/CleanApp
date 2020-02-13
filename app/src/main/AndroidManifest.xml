@@ -11,21 +11,21 @@
         android:theme="@style/AppTheme">
         <activity android:name=".OwnerTaskHistory"></activity>
         <activity
-            android:name=".HouseActivityTab"
+            android:name=".OwnerHouseActivityTab"
             android:label="@string/title_activity_house_tab"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".Fragment.TenantHomeFragment" />
         <activity
             android:name=".RoomDetailModal"
             android:theme="@style/AppTheme.Popme" />
-        <activity android:name=".HouseInvitationActivity" />
+        <activity android:name=".OwnerHouseInvitationActivity" />
         <activity android:name=".Fragment.TenantListFragment" />
         <activity android:name=".SetuserlvlActivity" />
-        <activity android:name=".AddHouseActivity" />
+        <activity android:name=".OwnerAddHouseActivity" />
         <activity android:name=".OwnerMainActivity" />
         <activity android:name=".RoomDetailModal$TenantMainActivity" />
-        <activity android:name=".Fragment.RoomDetailFragment" />
-        <activity android:name=".registerActivity" />
+        <activity android:name=".Fragment.OwnerRoomDetailFragment" />
+        <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

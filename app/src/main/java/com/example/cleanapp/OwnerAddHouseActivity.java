@@ -11,21 +11,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.cleanapp.Model.Room;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
-public class AddHouseActivity extends AppCompatActivity {
+public class OwnerAddHouseActivity extends AppCompatActivity {
 
     EditText bathroom_amount, room_amount;
     Integer bedroom, bathroom, rooms;
@@ -56,7 +50,7 @@ public class AddHouseActivity extends AppCompatActivity {
             public void onClick(View v) {
                 getValues();
 
-                Intent intent = new Intent(AddHouseActivity.this, OwnerMainActivity.class);
+                Intent intent = new Intent(OwnerAddHouseActivity.this, OwnerMainActivity.class);
                 startActivity(intent);
             }
         });

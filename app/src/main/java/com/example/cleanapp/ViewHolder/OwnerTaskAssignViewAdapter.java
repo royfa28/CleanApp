@@ -12,24 +12,21 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cleanapp.Fragment.CalendarFragment;
+import com.example.cleanapp.Fragment.OwnerCalendarFragment;
 import com.example.cleanapp.Model.TaskAssignCardModel;
 import com.example.cleanapp.R;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class TaskAssignViewAdapter extends RecyclerView.Adapter<TaskAssignViewAdapter.TaskAssignViewHolder> {
-    private static final String TAG = "TaskAssignViewAdapter";
+public class OwnerTaskAssignViewAdapter extends RecyclerView.Adapter<OwnerTaskAssignViewAdapter.TaskAssignViewHolder> {
+    private static final String TAG = "OwnerTaskAssignViewAdapter";
 
     private ArrayList<TaskAssignCardModel> myTaskAssignCardModelArrayList;
     private Context context;
 
-    public TaskAssignViewAdapter(ArrayList<TaskAssignCardModel> assignArray,  CalendarFragment myContext) {
+    public OwnerTaskAssignViewAdapter(ArrayList<TaskAssignCardModel> assignArray, OwnerCalendarFragment myContext) {
         myTaskAssignCardModelArrayList = assignArray;
         myContext = myContext;
     }

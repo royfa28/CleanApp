@@ -15,18 +15,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cleanapp.Fragment.OwnerRoomDetailFragment;
 import com.example.cleanapp.Fragment.OwnerHomeFragment;
-import com.example.cleanapp.HouseActivityTab;
+import com.example.cleanapp.OwnerHouseActivityTab;
 import com.example.cleanapp.Model.House;
 import com.example.cleanapp.R;
 
 import java.util.ArrayList;
 
-public class HomeViewAdapter extends RecyclerView.Adapter<HomeViewAdapter.HomeViewHolder> {
+public class OwnerHouseViewAdapter extends RecyclerView.Adapter<OwnerHouseViewAdapter.HomeViewHolder> {
 
     private Context mContext;
     ArrayList<House> houses;
 
-    public HomeViewAdapter(OwnerHomeFragment mContext, ArrayList<House> h){
+    public OwnerHouseViewAdapter(OwnerHomeFragment mContext, ArrayList<House> h){
         mContext = mContext;
         houses = h;
     }
@@ -50,7 +50,7 @@ public class HomeViewAdapter extends RecyclerView.Adapter<HomeViewAdapter.HomeVi
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), HouseActivityTab.class);
+                Intent intent = new Intent(v.getContext(), OwnerHouseActivityTab.class);
                 intent.putExtra("houseID", houseID);
                 bundle.putString("house",houseID);
                 OwnerRoomDetailFragment roomDetailFragment = new OwnerRoomDetailFragment(houseID);

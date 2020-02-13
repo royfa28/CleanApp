@@ -3,7 +3,7 @@ package com.example.cleanapp;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.cleanapp.Fragment.CalendarFragment;
+import com.example.cleanapp.Fragment.OwnerCalendarFragment;
 import com.example.cleanapp.Fragment.OwnerRoomDetailFragment;
 import com.example.cleanapp.Fragment.TenantListFragment;
 import com.google.android.material.tabs.TabItem;
@@ -24,7 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class HouseActivityTab extends AppCompatActivity {
+public class OwnerHouseActivityTab extends AppCompatActivity {
 
     Toolbar toolbar;
     TabLayout tabLayout;
@@ -68,7 +68,7 @@ public class HouseActivityTab extends AppCompatActivity {
                 if(tab.getPosition() == 1){
                     new OwnerRoomDetailFragment(houseID);
                 }else if(tab.getPosition() == 2){
-                    new CalendarFragment(houseID);
+                    new OwnerCalendarFragment(houseID);
                 }else{
                     new TenantListFragment(houseID);
                 }
@@ -101,7 +101,7 @@ public class HouseActivityTab extends AppCompatActivity {
                 case 0:
                     return new OwnerRoomDetailFragment(houseID);
                 case 1:
-                    return new CalendarFragment(houseID);
+                    return new OwnerCalendarFragment(houseID);
                 case 2:
                     return new TenantListFragment(houseID);
                 default:

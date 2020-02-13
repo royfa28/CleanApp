@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cleanapp.Model.Room;
 import com.example.cleanapp.R;
-import com.example.cleanapp.ViewHolder.RoomViewAdapter;
+import com.example.cleanapp.ViewHolder.OwnerRoomViewAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,7 +29,7 @@ public class OwnerRoomDetailFragment extends Fragment {
     View view;
     DatabaseReference mDatabase, getRoom;
     private RecyclerView roomListRecycleView;
-    RoomViewAdapter adapter;
+    OwnerRoomViewAdapter adapter;
     ArrayList<Room> rooms;
 
     public OwnerRoomDetailFragment(String houseID){
@@ -43,7 +43,7 @@ public class OwnerRoomDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_owner_room_detail, container,false);
-//        ((HouseActivityTab) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        ((OwnerHouseActivityTab) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         rooms = new ArrayList<>();
         roomListRecycleView = (RecyclerView)view.findViewById(R.id.roomListRecyclerView);
@@ -67,7 +67,7 @@ public class OwnerRoomDetailFragment extends Fragment {
                     room.setHouseID(houseID);
                     rooms.add(room);
                 }
-                adapter = new RoomViewAdapter(OwnerRoomDetailFragment.this, rooms);
+                adapter = new OwnerRoomViewAdapter(OwnerRoomDetailFragment.this, rooms);
                 roomListRecycleView.setAdapter(adapter);
             }
 

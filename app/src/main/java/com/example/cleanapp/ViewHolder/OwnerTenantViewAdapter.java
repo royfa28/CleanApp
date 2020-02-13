@@ -1,11 +1,8 @@
 package com.example.cleanapp.ViewHolder;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +12,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.cleanapp.Fragment.TenantListFragment;
 import com.example.cleanapp.Model.TenantListModel;
@@ -27,7 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class TenantViewAdapter extends RecyclerView.Adapter<TenantViewAdapter.TenantViewHolder> {
+public class OwnerTenantViewAdapter extends RecyclerView.Adapter<OwnerTenantViewAdapter.TenantViewHolder> {
 
     private Context mContext;
     ArrayList<TenantListModel> userTenant;
@@ -35,7 +31,7 @@ public class TenantViewAdapter extends RecyclerView.Adapter<TenantViewAdapter.Te
     String houseID;
 
 
-    public TenantViewAdapter(TenantListFragment mContext, ArrayList<TenantListModel> t, String HouseID){
+    public OwnerTenantViewAdapter(TenantListFragment mContext, ArrayList<TenantListModel> t, String HouseID){
         mContext = mContext;
         userTenant = t;
         houseID = HouseID;
@@ -51,7 +47,7 @@ public class TenantViewAdapter extends RecyclerView.Adapter<TenantViewAdapter.Te
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TenantViewAdapter.TenantViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull OwnerTenantViewAdapter.TenantViewHolder holder, int position) {
 
 //        holder.house_Name.setText(houseID);
         String num = userTenant.get(position).getNumber();
