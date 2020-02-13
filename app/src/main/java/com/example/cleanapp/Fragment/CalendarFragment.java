@@ -26,23 +26,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class CalendarFragment extends Fragment {
 
     //retrieve the info from db
-    DatabaseReference getRoom, getTenant,getTaskAssign;
+    DatabaseReference getRoom, getTenant,getTaskAssign, addTaskHistory;
 
 
     //prep array for assignation
     ArrayList<Room> rooms = new ArrayList<>();
-    ArrayList<TenantListModel> tenant = new ArrayList<>();
+    ArrayList<TenantListModel> tenantArrayList = new ArrayList<>();
     ArrayList<TaskAssignCardModel> taskAssignCard = new ArrayList<>();
     ArrayList<Integer> garbage = new ArrayList<Integer>();
     ArrayList<TaskAssignCardModel>assignationList = new ArrayList<>();
-
-
 
     String houseID;
     String userID;
@@ -52,13 +53,11 @@ public class CalendarFragment extends Fragment {
     TaskAssignViewAdapter adapter;
     RecyclerView TaskAssignRecycler;
 
-
     public CalendarFragment(String houseID) {
         Bundle bundle = new Bundle();
         bundle.putString("house", houseID);
         this.setArguments(bundle);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -81,11 +80,7 @@ public class CalendarFragment extends Fragment {
         btnRandom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prepArrayRoomAndRand();
-                //create the layout for each
-                taskAssignUi();
-
-
+                saveTaskHistory();
             }
         });
         //prep array
@@ -95,7 +90,7 @@ public class CalendarFragment extends Fragment {
         getTenant.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                tenant.clear();
+                tenantArrayList.clear();
                 Iterable<DataSnapshot> childrenTenant = dataSnapshot.getChildren();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     String tenantID = dataSnapshot1.getKey();
@@ -106,9 +101,9 @@ public class CalendarFragment extends Fragment {
                     t = dataSnapshot1.getValue(TenantListModel.class);
                     t.setIdTenant(tenantID);
                     //add to array
-                    tenant.add(t);
+                    tenantArrayList.add(t);
                 }
-                Log.d("TENANT LIST", "onDataChange: " + tenant);
+                Log.d("TENANT LIST", "onDataChange: " + tenantArrayList);
             }
 
             @Override
@@ -135,13 +130,11 @@ public class CalendarFragment extends Fragment {
                 Log.d("TAG", "onDataChange: " + rooms);
             }
 
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
-
 
         assignationList = new ArrayList<>();
         getTaskAssign = FirebaseDatabase.getInstance().getReference().child("House").child(userID).child(houseID).child("TaskAssign");
@@ -154,7 +147,7 @@ public class CalendarFragment extends Fragment {
                 {
                     String taskAssignCardModelID = ds.getKey() ;
                     TaskAssignCardModel mytaskAssignCardModel = new TaskAssignCardModel();
-                    mytaskAssignCardModel=ds.getValue(TaskAssignCardModel.class);
+                    mytaskAssignCardModel = ds.getValue(TaskAssignCardModel.class);
                     assignationList.add(mytaskAssignCardModel);
 
                 }
@@ -166,9 +159,6 @@ public class CalendarFragment extends Fragment {
                 Log.w("tas assign", "Failed to read value.", databaseError.toException());
             }
         });
-
-
-
         return view;
     }
 
@@ -183,44 +173,69 @@ public class CalendarFragment extends Fragment {
         return fireAuthUserKey;
     }
 
+    protected void saveTaskHistory(){
+
+        String date = new SimpleDateFormat("yyyy-MMM-dd", Locale.getDefault()).format(new Date());
+        Log.d("Date", "Current date: " + date);
+
+        addTaskHistory = FirebaseDatabase.getInstance().getReference().child("House").child(userID).child(houseID).child("TaskHistory");
+
+        getTaskAssign = FirebaseDatabase.getInstance().getReference().child("House").child(userID).child(houseID).child("TaskAssign");
+        getTaskAssign.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int count = 0;
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                for (DataSnapshot ds : children){
+                    Boolean isDone = (Boolean) ds.child("isDone").getValue();
+                    Log.d("isDone", "Is done? " + isDone.toString());
+                    if(isDone == false){
+                        String tenantName = (String) ds.child("TenantName").getValue();
+                        count++;
+                        Log.d("Check done", "Tenant Name: " + tenantName + " Count: " + count);
+                        addTaskHistory.child(date).child(tenantName).setValue("Task not completed: " + count);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("tas assign", "Failed to read value.", databaseError.toException());
+            }
+        });
+
+        prepArrayRoomAndRand();
+    }
+
     protected void prepArrayRoomAndRand() {
 
         int totalTask = rooms.size();
         int count = 1;
         while (rooms.size() > 0) {
-            TaskAssignCardModel myTaskCard = new TaskAssignCardModel();
+            TaskAssignCardModel taskAssignCardModel = new TaskAssignCardModel();
 
             int randNumGarb = (int) (Math.random() * ((rooms.size() - 1) + 1)) + 0;
 
-            int tenantIndex = count % tenant.size();
+            int tenantIndex = count % tenantArrayList.size();
 
-            myTaskCard.setRoomName(rooms.get(randNumGarb).getRoomName());
-            myTaskCard.setRoomDescription(rooms.get(randNumGarb).getRoomdescription());
-            myTaskCard.setTenantName(tenant.get(tenantIndex).getName());
-            myTaskCard.setTenantNumber(tenant.get(tenantIndex).getNumber());
+            taskAssignCardModel.setRoomName(rooms.get(randNumGarb).getRoomName());
+            taskAssignCardModel.setRoomDescription(rooms.get(randNumGarb).getRoomdescription());
+            taskAssignCardModel.setTenantName(tenantArrayList.get(tenantIndex).getName());
+            taskAssignCardModel.setTenantNumber(tenantArrayList.get(tenantIndex).getNumber());
 
-            taskAssignCard.add(myTaskCard);
+            taskAssignCard.add(taskAssignCardModel);
             //need to track in db
             String roomID = rooms.get(randNumGarb).getRoomID();
-            String tenantID = tenant.get(tenantIndex).getIdTenant();
+            String tenantID = tenantArrayList.get(tenantIndex).getIdTenant();
             //Write to database
-            //write on House....OWNERID...HouseID ... tenant...TenanID
+            //write on House....OWNERID...HouseID ... tenantArrayList...TenanID
             getRoom = FirebaseDatabase.getInstance().getReference().child("House").child(userID).child(houseID).child("TaskAssign");
+
             //add to house task assign
-            getRoom.child(roomID).child("TenantName").setValue(myTaskCard.getTenantName());
-            getRoom.child(roomID).child("TenantNumber").setValue(myTaskCard.getTenantNumber());
+            getRoom.child(roomID).child("TenantName").setValue(taskAssignCardModel.getTenantName());
+            getRoom.child(roomID).child("TenantNumber").setValue(taskAssignCardModel.getTenantNumber());
             getRoom.child(roomID).child("isDone").setValue(false);
-            getRoom.child(roomID).child("roomDescription").setValue(myTaskCard.getRoomDescription());
-            getRoom.child(roomID).child("roomName").setValue(myTaskCard.getRoomName());
-            //write on Tenant....OWNERID...HouseID...TaskAssign...RoomID
-            getTenant = FirebaseDatabase.getInstance().getReference().child("House").child(userID).child(houseID).child("Tenant").child(tenantID);
-            //add to house tenant Task
-//            getTenant.child("Task").child(roomID).child("roomDesc").setValue(myTaskCard.getRoomDescription());
-//            getTenant.child("Task").child(roomID).child("roomName").setValue(myTaskCard.getRoomName());
-            //problem if owner clic several time on btn it just keep adding to the tenant task
-            //but work well in task assign
-            //adapter + layout
-            //taskAssignUi();
+            getRoom.child(roomID).child("roomDescription").setValue(taskAssignCardModel.getRoomDescription());
+            getRoom.child(roomID).child("roomName").setValue(taskAssignCardModel.getRoomName());
 
             count++;
             rooms.remove(randNumGarb);
@@ -235,13 +250,11 @@ public class CalendarFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 assignationList.clear();
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                for (DataSnapshot ds : children)
-                {
+                for (DataSnapshot ds : children){
                     String taskAssignCardModelID = ds.getKey() ;
                     TaskAssignCardModel mytaskAssignCardModel = new TaskAssignCardModel();
-                    mytaskAssignCardModel=ds.getValue(TaskAssignCardModel.class);
+                    mytaskAssignCardModel = ds.getValue(TaskAssignCardModel.class);
                     assignationList.add(mytaskAssignCardModel);
-
                 }
                 adapter = new TaskAssignViewAdapter(assignationList, CalendarFragment.this);
                 TaskAssignRecycler.setAdapter(adapter);

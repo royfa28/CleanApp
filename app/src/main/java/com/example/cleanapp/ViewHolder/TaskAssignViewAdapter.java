@@ -1,6 +1,8 @@
 package com.example.cleanapp.ViewHolder;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,14 +18,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cleanapp.Fragment.CalendarFragment;
 import com.example.cleanapp.Model.TaskAssignCardModel;
 import com.example.cleanapp.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
 public class TaskAssignViewAdapter extends RecyclerView.Adapter<TaskAssignViewAdapter.TaskAssignViewHolder> {
     private static final String TAG = "TaskAssignViewAdapter";
 
-    ArrayList<TaskAssignCardModel> myTaskAssignCardModelArrayList;
-    private Context myContext;
+    private ArrayList<TaskAssignCardModel> myTaskAssignCardModelArrayList;
+    private Context context;
 
     public TaskAssignViewAdapter(ArrayList<TaskAssignCardModel> assignArray,  CalendarFragment myContext) {
         myTaskAssignCardModelArrayList = assignArray;
@@ -43,14 +47,34 @@ public class TaskAssignViewAdapter extends RecyclerView.Adapter<TaskAssignViewAd
         Log.d(TAG, "onBindViewHolder: CALLED");
 
         String roomName = myTaskAssignCardModelArrayList.get(position).getRoomName();
-        String room_desc = myTaskAssignCardModelArrayList.get(position).getRoomDescription();
         String tenantName = myTaskAssignCardModelArrayList.get(position).getTenantName();
-        String tenantNumber = myTaskAssignCardModelArrayList.get(position).getTenantNumber();
+        String room_desc = myTaskAssignCardModelArrayList.get(position).getRoomDescription();
+        Boolean isDone = myTaskAssignCardModelArrayList.get(position).getisDone();
 
         holder.textView_TenantName.setText(tenantName);
-        holder.textView_TenantNumber.setText(tenantNumber);
         holder.textView_roomName.setText(roomName);
-        //holder.textView_TaskDescription.setText(room_desc);
+        holder.textView_isDone.setText("Task: " + isDone.toString());
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context = v.getContext();
+
+                // Make a dialog box to show more detail
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage(roomName + "\n\nTask to do: \n" + room_desc + "\n\nTenant: " + tenantName + "\nCompletion: " + isDone.toString())
+                        .setTitle("Information")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                builder.show();
+                builder.create();
+            }
+        });
 
     }
 
@@ -62,21 +86,18 @@ public class TaskAssignViewAdapter extends RecyclerView.Adapter<TaskAssignViewAd
     public class TaskAssignViewHolder extends RecyclerView.ViewHolder{
         //hold the widget => declare all elemtents of assign task layout
 
-        CardView cardview_TaskAssign_Parent;
-        ConstraintLayout ConstraintLayout_TaskAssign;
-        TextView textView_TenantName,textView_TenantNumber,textView_roomName,textView_TaskDescription;
+        CardView cardView;
+        TextView textView_TenantName,textView_roomName,textView_isDone;
         ImageView imageView_ProfilePicTenant;
 
 
         public TaskAssignViewHolder(@NonNull View itemView) {
             super(itemView);
-            cardview_TaskAssign_Parent = itemView.findViewById(R.id.cardview_TaskAssign_Parent);
-            ConstraintLayout_TaskAssign = itemView.findViewById(R.id.linearLayout_TaskAssign);
+            cardView = itemView.findViewById(R.id.cardview_TaskAssign_Parent);
 
             textView_TenantName = itemView.findViewById(R.id.textView_TenantName);
-            textView_TenantNumber = itemView.findViewById(R.id.textView_TenantNumber);
             textView_roomName = itemView.findViewById(R.id.textView_roomName);
-            textView_TaskDescription = itemView.findViewWithTag(R.id.textView_TaskDescription);
+            textView_isDone = itemView.findViewById(R.id.textView_isDone);
             imageView_ProfilePicTenant = itemView.findViewById(R.id.imageView_ProfilePicTenant);
         }
     }

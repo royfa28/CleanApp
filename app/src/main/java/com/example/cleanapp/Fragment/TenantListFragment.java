@@ -59,7 +59,7 @@ public class TenantListFragment extends Fragment {
         String houseID = bundle.getString("house");
 
 
-        //get the tenant of the house
+        //get the tenantArrayList of the house
         getHouseTenant = FirebaseDatabase.getInstance().getReference().child("House").child(ownerID).child(houseID).child("Tenant");
         getHouseTenant.addValueEventListener(new ValueEventListener() {
             @Override
@@ -99,7 +99,7 @@ public class TenantListFragment extends Fragment {
             }
         });
 
-        //listner card tenant for delet
+        //listner card tenantArrayList for delet
 
         return view;
     }

@@ -157,7 +157,7 @@ public class TenantHomeFragment extends Fragment {
     }
 
     void getOwnTask(String roomID){
-// Find the tenant number on each child
+// Find the tenantArrayList number on each child
         getTenantTask = FirebaseDatabase.getInstance().getReference().child("House").child(inviteModel.getIdOwner()).child(inviteModel.getIdHouse()).child("TaskAssign").child(roomID);
         getTenantTask.addValueEventListener(new ValueEventListener() {
             @Override

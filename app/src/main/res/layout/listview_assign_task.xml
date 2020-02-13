@@ -6,10 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="16dp"
-    android:layout_marginLeft="16dp"
     android:layout_marginTop="16dp"
     android:layout_marginEnd="16dp"
-    android:layout_marginRight="16dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
@@ -35,48 +33,44 @@
 
         <TextView
             android:id="@+id/textView_roomName"
-            android:layout_width="209dp"
+            android:layout_width="0dp"
             android:layout_height="23dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:layout_weight="1"
             android:text="Room Name"
-            app:layout_constraintBottom_toTopOf="@+id/textView_TaskDescription"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.184"
-            app:layout_constraintStart_toEndOf="@+id/imageView_ProfilePicTenant" />
+            app:layout_constraintEnd_toStartOf="@+id/textView_isDone"
+            app:layout_constraintStart_toEndOf="@+id/imageView_ProfilePicTenant"
+            app:layout_constraintTop_toBottomOf="@+id/textView_TenantName" />
 
         <TextView
             android:id="@+id/textView_TenantName"
-            android:layout_width="95dp"
+            android:layout_width="0dp"
             android:layout_height="18dp"
-            android:layout_marginBottom="1dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:text="Tenant Name"
-            app:layout_constraintBottom_toTopOf="@+id/textView_TenantNumber"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.067"
+            app:layout_constraintEnd_toStartOf="@+id/textView_isDone"
             app:layout_constraintStart_toEndOf="@+id/imageView_ProfilePicTenant"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView_TenantNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tenant Number"
-            app:layout_constraintBottom_toTopOf="@+id/textView_roomName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.068"
-            app:layout_constraintStart_toEndOf="@+id/imageView_ProfilePicTenant" />
-
-        <TextView
-            android:id="@+id/textView_TaskDescription"
-            android:layout_width="211dp"
+            android:id="@+id/textView_isDone"
+            android:layout_width="0dp"
             android:layout_height="19dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:layout_weight="1"
-            android:text="Task Description"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="isDone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.171"
-            app:layout_constraintStart_toEndOf="@+id/imageView_ProfilePicTenant" />
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
