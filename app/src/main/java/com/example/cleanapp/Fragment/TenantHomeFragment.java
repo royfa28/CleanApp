@@ -114,17 +114,26 @@ public class TenantHomeFragment extends Fragment {
         getInvite.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                inviteModel = dataSnapshot.getValue(HouseInvitationModel.class);
 
-                if(inviteModel.getisRead() == true){
-                    Log.d("Read", "ID house" + inviteModel.getIdHouse() + "Get id owner" + inviteModel.getIdOwner() + "Get phone number" + userModel.getUserPhone());
-                    taskListRecyclerView.setVisibility(getView().VISIBLE);
-                    getTaskList();
+                if(dataSnapshot.exists()){
+                    inviteModel = dataSnapshot.getValue(HouseInvitationModel.class);
 
+                    if(inviteModel.getisRead() == true){
+                        Log.d("Read", "ID house" + inviteModel.getIdHouse() + "Get id owner" + inviteModel.getIdOwner() + "Get phone number" + userModel.getUserPhone());
+                        taskListRecyclerView.setVisibility(getView().VISIBLE);
+                        getTaskList();
+
+                    }else{
+                        homepageCard.setVisibility(getView().VISIBLE);
+                        notificationText.setText("You have an invite from " + inviteModel.getIdHouse());
+                    }
                 }else{
                     homepageCard.setVisibility(getView().VISIBLE);
-                    notificationText.setText(userModel.getUserMail());
+                    notificationText.setText("You don't have an invite yet");
+                    agreeBtn.setVisibility(View.GONE);
                 }
+
+
             }
 
             @Override
