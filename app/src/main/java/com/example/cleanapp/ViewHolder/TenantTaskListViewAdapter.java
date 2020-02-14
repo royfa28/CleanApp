@@ -71,6 +71,7 @@ public class TenantTaskListViewAdapter extends RecyclerView.Adapter<TenantTaskLi
                         .setPositiveButton("Finish", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                taskArrayList.clear();
                                 DatabaseReference changeStatus = FirebaseDatabase.getInstance().getReference()
                                         .child("House").child(ownerid).child(houseid).child("TaskAssign").child(roomID);
                                 changeStatus.child("isDone").setValue(true);
