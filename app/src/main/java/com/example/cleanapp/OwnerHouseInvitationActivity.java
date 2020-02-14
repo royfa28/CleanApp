@@ -1,20 +1,27 @@
 package com.example.cleanapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.cleanapp.Model.HouseInvitationModel;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class OwnerHouseInvitationActivity extends AppCompatActivity {
 
@@ -22,8 +29,11 @@ public class OwnerHouseInvitationActivity extends AppCompatActivity {
     protected EditText phoneNumberTenant;
     protected Button validationBtn;
     protected HouseInvitationModel myHouseInvitation;
+
+    Context context;
+
     FirebaseAuth myFirebaseAuth = FirebaseAuth.getInstance();
-    DatabaseReference getHouseInvitation = FirebaseDatabase.getInstance().getReference().child("Invitation House");
+    DatabaseReference getHouseInvitation, checkHouseInvite;
     String houseID;
 
 
@@ -36,7 +46,7 @@ public class OwnerHouseInvitationActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_house_invitation);
 
-        //myFirebaseAuth = FirebaseAuth.getInstance();
+        getHouseInvitation = FirebaseDatabase.getInstance().getReference().child("Invitation House");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -52,20 +62,52 @@ public class OwnerHouseInvitationActivity extends AppCompatActivity {
         validationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prepHouseInvit();
-                addHouseInviteDB();
-                returntoTenantList();
+                context = v.getContext();
+                checkDatabase(phoneNumberTenant.getText().toString(), context);
             }
         });
 
 
     }
+
+    protected void checkDatabase(String tenantNumber, Context mContext){
+        checkHouseInvite = getHouseInvitation.child(tenantNumber);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+
+        checkHouseInvite.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    builder.setMessage("There is an invite for that number already.\nPlease check the number again")
+                            .setTitle("ALERT")
+                            .setPositiveButton("Ok", ((dialog, which) -> dialog.dismiss()));
+
+                    builder.show();
+                    builder.create();
+
+                    Log.d("Data exist", "Error data exist");
+                }else{
+                    prepHouseInvit();
+                    addHouseInviteDB();
+                    returntoTenantList();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     protected  void returntoTenantList(){
         Toast.makeText(OwnerHouseInvitationActivity.this, "Your invitation have been sent",Toast.LENGTH_SHORT).show();
         Intent i = new Intent(OwnerHouseInvitationActivity.this, OwnerHouseActivityTab.class);
         i.putExtra("houseID",houseID);
         startActivity(i);
     }
+
     protected  void addHouseInviteDB(){
         getHouseInvitation.child(phoneNumberTenant.getText().toString());
         getHouseInvitation.child(phoneNumberTenant.getText().toString()).child("House id").setValue(myHouseInvitation.getIdHouse());
@@ -73,6 +115,7 @@ public class OwnerHouseInvitationActivity extends AppCompatActivity {
         getHouseInvitation.child(phoneNumberTenant.getText().toString()).child("isRead").setValue(myHouseInvitation.getisRead());
 
     }
+
     protected void prepHouseInvit(){
         myHouseInvitation.setIdOwner(myFirebaseAuth.getCurrentUser().getUid());
         myHouseInvitation.setIdHouse(houseID);
